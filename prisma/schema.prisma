@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemCategory {
+  SANDWICH
+  BEVERAGE
+  SIDE
+  DESSERT
+}
+
+enum OrderStatus {
+  PENDING
+  RECEIVED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentType {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+}
+
+enum PaymentStatus {
+  APPROVED
+  PENDING
+  REFUSED
+  EXPIRED
+  CANCELLED
+}
+
+enum RoleType {
+  ADMIN
+  STAFF
+}
+
+model Item {
+  id          String        @id @default(uuid())
+  name        String
+  description String
+  images      String[]
+  price       Decimal       @db.Decimal(10, 2)
+  quantity    Int
+  category    ItemCategory
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  isDeleted   Boolean       @default(false)
+
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  status       OrderStatus @default(RECEIVED)
+  totalAmount  Decimal     @db.Decimal(10, 2)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  customerId   String?
+  customer     Customer?   @relation("CustomerToOrder", fields: [customerId], references: [id])
+
+  orderItems   OrderItem[]
+  payment      Payment?
+}
+
+model OrderItem {
+  itemId       String
+  orderId      String
+  quantity     Int 
+  price    Decimal     @db.Decimal(10, 2)
+
+  item     Item   @relation(fields: [itemId], references: [id])
+  order    Order  @relation(fields: [orderId], references: [id])
+
+  @@id([itemId, orderId])
+}
+
+model Payment {
+  id                    String        @id @default(uuid())
+  status                PaymentStatus
+  type                  PaymentType
+  mercadoPagoPaymentId  String?
+  qrCode                String?
+
+  orderId     String        @unique
+  order       Order         @relation(fields: [orderId], references: [id])
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  cpf       String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]  @relation("CustomerToOrder")
+}
+
+model InternalUser {
+  id                  String   @id @default(uuid())
+  registrationNumber  String   @unique
+  name                String
+  cpf                 String   @unique
+  email               String   @unique
+  password            String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  roleId              String
+  role                Role     @relation(fields: [roleId], references: [id])
+}
+
+model Role {
+  id            String         @id @default(uuid())
+  type          RoleType
+  description   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  internalUsers InternalUser[]
+}

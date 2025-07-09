@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: fiap-lanchonete-postgress
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - docker_postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  node:
+    container_name: fiap-tc-lanchonete-g38
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@fiap-lanchonete-postgress:5432/${DB_NAME}?schema=public"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - docker_postgresql
+    command: sh -c "npx prisma migrate dev --name init && npm run seed && npm run start"
+
+volumes:
+  db-data:
+
+networks:
+  docker_postgresql:
+    driver: bridge
