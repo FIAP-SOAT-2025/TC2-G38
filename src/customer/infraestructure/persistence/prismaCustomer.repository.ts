@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import CustomerRepository from 'src/customer/domain/repository/customer.repository';
-import { CustomerMapper } from './mappers/customer.mapper';
-import { Customer } from 'src/customer/domain/model/customer.entity';
+import CustomerGatewayInterface from '../../interfaces/gateways';
+import { Customer } from '../../entities/customer.entity';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-import { CreateCustomerDTO } from 'src/customer/domain/dto/create-customer.dto';
+
 
 @Injectable()
-export class PrismaCustomerRepository implements CustomerRepository {
+export class PrismaCustomerRepository implements CustomerGatewayInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(newCustomer: Customer): Promise<Customer> {
@@ -25,29 +24,29 @@ export class PrismaCustomerRepository implements CustomerRepository {
     }
   }
 
-  async findById(id: string): Promise<Customer> {
+  async findById(id: string): Promise<any> {
     const customer = await this.prisma.customer.findUnique({
       where: { id },
     });
     if (!customer) throw new NotFoundException('Customer not found');
 
-    return CustomerMapper.mapRepositoryToCustomerEntity(customer);
+    return customer;
   }
 
-  async findByCpf(cpf: string): Promise<Customer> {
+  async findByCpf(cpf: string): Promise<any> {
     try {
       const customer = await this.prisma.customer.findUnique({
         where: { cpf },
       });
-      if (!customer) throw new NotFoundException('Customer not found');
-      return CustomerMapper.mapRepositoryToCustomerEntity(customer);
+      if (!customer) return null;
+      return customer;
     } catch (error) {
       console.error('Error fetching customer by CPF:', error);
       throw new Error(`Failed to fetch customer by CPF: ${error}`);
     }
   }
 
-  async findByCpfOrEmail(cpf: string, email: string): Promise<Customer> {
+  async findByCpfOrEmail(cpf: string, email: string): Promise<any> {
     try {
       const customer = await this.prisma.customer.findFirst({
         where: {
@@ -55,7 +54,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
         },
       });
       if (!customer) throw new NotFoundException('Customer not found');
-      return CustomerMapper.mapRepositoryToCustomerEntity(customer);
+      return customer;
     } catch (error) {
       console.error('Error fetching customer by CPF:', error);
       throw new Error(`Failed to fetch customer by CPF: ${error}`);
@@ -66,7 +65,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
     id: string,
     customer: Partial<Customer>,
     customerEntity: Customer,
-  ): Promise<Customer> {
+  ): Promise<any> {
     try {
       const updatedCustomer = await this.prisma.customer.update({
         where: { id },
@@ -78,7 +77,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
           updatedAt: new Date(),
         },
       });
-      return CustomerMapper.mapRepositoryToCustomerEntity(updatedCustomer);
+      return updatedCustomer;
     } catch (error) {
       throw new Error(`Error updating customer: ${error}`);
     }

@@ -1,5 +1,3 @@
-import onlyNumbers from 'src/shared/utils/string';
-
 export interface CustomerInterface {
   name: string;
   cpf: string;
@@ -20,7 +18,7 @@ export class Customer implements CustomerInterface {
   constructor(props: CustomerInterface) {
     this._id = String(props.id);
     this.name = props.name;
-    this.cpf = props.cpf;
+    this.cpf = new Cpf(props.cpf).getCpf();
     this.email = props.email;
     this._createdAt = props.createdAt ?? new Date();
     this._updatedAt = props.updatedAt ?? new Date();
@@ -48,7 +46,7 @@ export class Customer implements CustomerInterface {
     this._name = name;
   }
   set cpf(cpf: string) {
-    this._cpf = onlyNumbers(cpf);
+    this._cpf = new Cpf(cpf).getCpf();
   }
   set email(email: string) {
     this._email = email;
@@ -69,5 +67,28 @@ export class Customer implements CustomerInterface {
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
     };
+  }
+}
+
+export class Cpf {
+  private readonly cpf: string;
+  constructor(cpf: string) {
+    this.cpf = this.onlyNumbers(cpf);
+    if (!Cpf.isValid(this.cpf)) {
+      throw new Error('Invalid CPF');
+    }
+  }
+
+  private onlyNumbers(str: string) {
+    return str.replace(/\D/g, '');
+  }
+
+  static isValid(cpf: string): boolean {
+    if (cpf.length !== 11) return false;
+    return true;
+  }
+  
+  getCpf(): string {
+    return this.cpf;
   }
 }
