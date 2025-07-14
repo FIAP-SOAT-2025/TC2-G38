@@ -1,11 +1,30 @@
+import PaymentGatewayInterface from '../interfaces/gateways';
+import { PaymentStatusEnum } from '../shared/enums/payment-status.enum';
+import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
 export default class UpdatePaymentStatusUseCase {
-  constructor() {}
+  constructor(private readonly eventEmitter: IEventEmitter) {}
 
-  static async updateStatus() {
-    try {
-      
-    } catch (error) {
-      throw new Error('Failed to update payment status');
+  async updateStatus(
+    paymentGateway: PaymentGatewayInterface,
+    id: string,
+    newStatus: PaymentStatusEnum
+  ): Promise<{ message: string }> {
+    const payment = await paymentGateway.find(id);
+
+    if (payment.status === newStatus) {
+      throw new Error(`Payment with ID ${id} is already in ${payment.status} status`);
     }
+
+    if (payment.status === PaymentStatusEnum.APPROVED) {
+      throw new Error(`Payment with ID ${id} is approved and cannot be updated.`);
+    }
+
+    const updatedPayment = await paymentGateway.updateStatus(id, newStatus);
+
+    if (newStatus === PaymentStatusEnum.APPROVED) {
+      this.eventEmitter.emit('payment.approved', { orderId: updatedPayment.orderId });
+    }
+
+    return { message: `Payment with ID ${id} updated successfully` };
   }
 }

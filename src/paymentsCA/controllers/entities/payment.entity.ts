@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { PaymentStatusEnum } from '../shared/enums/payment-status.enum';
-import { PaymentTypeEnum } from '../shared/enums/payment-type.enum';
+import { PaymentStatusEnum } from '../../shared/enums/payment-status.enum';
+import { PaymentTypeEnum } from '../../shared/enums/payment-type.enum';
 
 export class Payment {
   id: string;
@@ -20,3 +20,5 @@ export class Payment {
     this.updatedAt = new Date();
   }
 }
+export { PaymentStatusEnum };
+

@@ -1,28 +1,27 @@
-import { PrismaService } from "src/shared/infra/prisma.service";
-import { Payment } from "../entities/payment.entity";
-import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
+import { BadRequestException } from "@nestjs/common";
 import PaymentGatewayInterface from "../interfaces/gateways";
+import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
+import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
+import { DbConnection } from "../interfaces/db.connection";
+import { Payment } from "../controllers/entities/payment.entity";
 
-class PaymentGateway implements PaymentGatewayInterface {
-  constructor(private readonly prisma: PrismaService) {}
-
-  async updateStatus(
-    paymentId: string,
-    status: PaymentStatusEnum,
-  ): Promise<Payment> {
-    try {
-      const updatedPayment = await this.prisma.payment.update({
-        where: { id: paymentId },
-        data: { status },
-      });
-      
-      return mapPrismaPaymentToPaymentEntity(updatedPayment);
-    } catch (error) {
-      console.error('Error updating payment status:', error);
-      throw new Error('Failed to update payment status');
-    }
+export default class PaymentGateway implements PaymentGatewayInterface {
+  private dbRepository: DbConnection;
+  constructor(connection: DbConnection) {
+    this.dbRepository = connection;
   }
-  
-}
 
-export { PaymentGateway};
+ async updateStatus( paymentId: string, status: PaymentStatusEnum): Promise<Payment> {
+    const updatedPayment = await this.dbRepository.updateStatus(paymentId, status);
+
+    return updatedPayment;
+  }
+ 
+  async find(id: string): Promise<Payment> {
+    const payment = await this.dbRepository.find(id);
+    if (!payment) {
+      throw new Error(`Payment with ID ${id} not found`);
+    }
+    return payment;
+  }
+}
