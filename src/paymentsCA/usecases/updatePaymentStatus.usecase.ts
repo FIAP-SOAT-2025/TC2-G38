@@ -5,11 +5,11 @@ export default class UpdatePaymentStatusUseCase {
   constructor(private readonly eventEmitter: IEventEmitter) {}
 
   async updateStatus(
-    paymentGateway: PaymentGatewayInterface,
+    paymentGatewayI: PaymentGatewayInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ): Promise<{ message: string }> {
-    const payment = await paymentGateway.find(id);
+    const payment = await paymentGatewayI.find(id);
 
     if (payment.status === newStatus) {
       throw new Error(`Payment with ID ${id} is already in ${payment.status} status`);
@@ -19,7 +19,7 @@ export default class UpdatePaymentStatusUseCase {
       throw new Error(`Payment with ID ${id} is approved and cannot be updated.`);
     }
 
-    const updatedPayment = await paymentGateway.updateStatus(id, newStatus);
+    const updatedPayment = await paymentGatewayI.updateStatus(id, newStatus);
 
     if (newStatus === PaymentStatusEnum.APPROVED) {
       this.eventEmitter.emit('payment.approved', { orderId: updatedPayment.orderId });

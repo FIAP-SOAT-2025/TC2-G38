@@ -1,12 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../../shared/infra/prisma.service";
 import { Payment, PaymentStatusEnum } from "../../controllers/entities/payment.entity";
-import PaymentGatewayInterface from "../../../paymentsCA/interfaces/gateways";
+import PaymentGatewayInterface from "../../interfaces/gateways";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
+import { PrismaCustomerRepository } from "src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository";
 
 @Injectable()
 export class prismaPaymentRepository implements PaymentGatewayInterface {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService,
+    private readonly customerRepository: PrismaCustomerRepository,// AJUSTAR ESSE IMPORT DE CUSTOMER
+  ) {}
   
     async updateStatus(
       paymentId: string,
@@ -36,4 +39,13 @@ export class prismaPaymentRepository implements PaymentGatewayInterface {
   
       return mapPrismaPaymentToPaymentEntity(payment);
     }
+
+  async getOrGenerateCustomerEmail(orderId: string): Promise<string> {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+    });
+    if (!order?.customerId) return `anonymous+${orderId}@gmail.com`;
+
+    return this.customerRepository.getEmailById(order.customerId);
+  }
 }

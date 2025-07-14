@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaymentStatusEnum, PaymentTypeEnum } from '../model/payment.entity';
+import { PaymentStatusEnum } from 'src/paymentsCA/shared/enums/payment-status.enum';
+import { PaymentTypeEnum } from 'src/paymentsCA/shared/enums/payment-type.enum';
 
 export class PaymentResponse {
   @ApiProperty()

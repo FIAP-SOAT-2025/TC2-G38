@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsNotEmpty } from "class-validator";
-import { PaymentStatusEnum } from "../model/payment.entity";
+import { PaymentStatusEnum } from "src/paymentsCA/shared/enums/payment-status.enum";
 
 export class UpdateStatusDto {
   constructor(

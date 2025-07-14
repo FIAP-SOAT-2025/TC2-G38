@@ -1,4 +1,4 @@
-import { PaymentResponseAdapter } from "../infraestructure/adapters/payment-response.adapter";
+import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
 import PaymentGateway from "../gateways/payment.gateway";
 import { DbConnection } from "../interfaces/db.connection";
 import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
