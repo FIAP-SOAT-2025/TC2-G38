@@ -1,4 +1,4 @@
-import { Customer } from "../entities/customer.entity";
+import { Customer, CustomerInterface } from "../entities/customer.entity";
 import CustomerGatewayInterface from "../interfaces/gateways";
 
 
@@ -7,11 +7,11 @@ export class CustomerGateway implements CustomerGatewayInterface {
     private readonly customerRepository: CustomerGatewayInterface
   ) {}
 
-  async create(newCustomer: Customer): Promise<any> {
+  async create(customer: Customer): Promise<Customer> {
     try {
-      return
+      const newCustomer = await this.customerRepository.create(customer);
+      return new Customer(newCustomer);
     } catch (error) {
-      console.error('Error creating item:', error);
       throw new Error('Failed to create customer');
     }
   }
@@ -33,11 +33,11 @@ export class CustomerGateway implements CustomerGatewayInterface {
     }
   }
 
-  async findByCpfOrEmail(cpf: string, email: string): Promise<any> {
+  async findByCpfOrEmail(cpf: string, email: string): Promise<boolean> {
     try {
-      return
+      const customer = await this.customerRepository.findByCpfOrEmail(cpf, email);
+      return !!customer;
     } catch (error) {
-      console.error('Error fetching customer by CPF:', error);
       throw new Error(`Failed to fetch customer by CPF: ${error}`);
     }
   }

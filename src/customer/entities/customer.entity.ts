@@ -19,7 +19,7 @@ export class Customer implements CustomerInterface {
     this._id = String(props.id);
     this.name = props.name;
     this.cpf = new Cpf(props.cpf).getCpf();
-    this.email = props.email;
+    this.email = new Email(props.email).getEmail();
     this._createdAt = props.createdAt ?? new Date();
     this._updatedAt = props.updatedAt ?? new Date();
   }
@@ -49,7 +49,7 @@ export class Customer implements CustomerInterface {
     this._cpf = new Cpf(cpf).getCpf();
   }
   set email(email: string) {
-    this._email = email;
+    this._email = new Email(email).getEmail();
   }
   set updatedAt(updatedAt: Date) {
     this._updatedAt = updatedAt;
@@ -90,5 +90,24 @@ export class Cpf {
   
   getCpf(): string {
     return this.cpf;
+  }
+}
+
+export class Email {
+  private readonly email: string;
+  constructor(email: string) {
+    this.email = email.toLowerCase();
+    if (!Email.isValid(this.email)) {
+      throw new Error('Invalid Email');
+    }
+  }
+
+  static isValid(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  getEmail(): string {
+    return this.email;
   }
 }

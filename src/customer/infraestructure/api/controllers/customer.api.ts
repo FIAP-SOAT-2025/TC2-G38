@@ -7,10 +7,10 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UpdateCustomerDTO } from '../dto/update-customer.dto';
 import { CreateCustomerDTO } from '../dto/create-customer.dto';
-import { ApiTags } from '@nestjs/swagger';
-import { CustomerController } from 'src/customer/controllers/customer.controller';
+import { CustomerController } from '../../../controllers/customer.controller';
 import { PrismaCustomerRepository } from '../../persistence/prismaCustomer.repository';
 
 

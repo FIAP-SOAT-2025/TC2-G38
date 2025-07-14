@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import CustomerGatewayInterface from '../../interfaces/gateways';
-import { Customer } from '../../entities/customer.entity';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 
 
@@ -8,16 +7,16 @@ import { PrismaService } from 'src/shared/infra/prisma.service';
 export class PrismaCustomerRepository implements CustomerGatewayInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(newCustomer: Customer): Promise<Customer> {
+  async create(customer: any): Promise<any> {
     try {
       const createdRecord = await this.prisma.customer.create({
         data: {
-          name: newCustomer.name,
-          cpf: newCustomer.cpf,
-          email: newCustomer.email,
+          name: customer.name,
+          cpf: customer.cpf,
+          email: customer.email,
         },
       });
-      return new Customer(createdRecord);
+      return createdRecord;
     } catch (error) {
       console.error('Error creating item:', error);
       throw new Error('Failed to create customer');
@@ -46,15 +45,15 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
     }
   }
 
-  async findByCpfOrEmail(cpf: string, email: string): Promise<any> {
+  async findByCpfOrEmail(cpf: string, email: string): Promise<boolean> {
     try {
       const customer = await this.prisma.customer.findFirst({
         where: {
           OR: [{ email: email }, { cpf: cpf }],
         },
       });
-      if (!customer) throw new NotFoundException('Customer not found');
-      return customer;
+      if (!customer) return false
+      return true;
     } catch (error) {
       console.error('Error fetching customer by CPF:', error);
       throw new Error(`Failed to fetch customer by CPF: ${error}`);
@@ -63,8 +62,8 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
 
   async update(
     id: string,
-    customer: Partial<Customer>,
-    customerEntity: Customer,
+    customer: Partial<any>,
+    customerEntity: any,
   ): Promise<any> {
     try {
       const updatedCustomer = await this.prisma.customer.update({
@@ -108,7 +107,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
     }
   }
 
-  async findAll(): Promise<Customer[]> {
+  async findAll(): Promise<any[]> {
     // corrected return type
     // Implement the logic to find all customers using Prisma
     return [];
