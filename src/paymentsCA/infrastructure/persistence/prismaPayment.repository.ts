@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../../shared/infra/prisma.service";
-import { Payment, PaymentStatusEnum } from "../../controllers/entities/payment.entity";
+import { Payment, PaymentStatusEnum } from "../../domains/entities/payment.entity";
 import PaymentGatewayInterface from "../../interfaces/gateways";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
 import { PrismaCustomerRepository } from "src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository";
 
 @Injectable()
-export class prismaPaymentRepository implements PaymentGatewayInterface {
+export class PrismaPaymentRepository implements PaymentGatewayInterface {
   constructor(private readonly prisma: PrismaService,
     private readonly customerRepository: PrismaCustomerRepository,// AJUSTAR ESSE IMPORT DE CUSTOMER
   ) {}

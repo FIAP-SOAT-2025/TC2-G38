@@ -1,8 +1,8 @@
-import { Payment } from "../controllers/entities/payment.entity";
-import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
+import { Payment } from "../domains/entities/payment.entity";
+import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 
 export default interface PaymentGatewayInterface {
   find(id: string): Promise<Payment>;
   updateStatus(paymentId: string, status: PaymentStatusEnum):  Promise<Payment>;
-  getOrGenerateCustomerEmail(orderId: string): Promise<string>;
+  //getOrGenerateCustomerEmail(orderId: string): Promise<string>;
 }

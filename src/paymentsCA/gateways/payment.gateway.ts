@@ -1,13 +1,13 @@
 import { BadRequestException } from "@nestjs/common";
 import PaymentGatewayInterface from "../interfaces/gateways";
-import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
+import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
-import { DbConnection } from "../interfaces/db.connection";
-import { Payment } from "../controllers/entities/payment.entity";
+import { PaymentInterface } from "../interfaces/payment";
+import { Payment } from "../domains/entities/payment.entity";
 
 export default class PaymentGateway implements PaymentGatewayInterface {
-  private dbRepository: DbConnection;
-  constructor(connection: DbConnection) {
+  private dbRepository: PaymentInterface;
+  constructor(connection: PaymentInterface) {
     this.dbRepository = connection;
   }
 

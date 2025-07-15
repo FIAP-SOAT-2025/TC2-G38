@@ -1,4 +1,4 @@
-import { Payment } from '../../controllers/entities/payment.entity';
+import { Payment } from '../../domains/entities/payment.entity';
 
 export const PaymentResponseAdapter = {
   adaptJsonToPayment: function (data: Payment | null) {

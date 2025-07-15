@@ -1,7 +1,7 @@
 import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
 import PaymentGateway from "../gateways/payment.gateway";
-import { DbConnection } from "../interfaces/db.connection";
-import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
+import { PaymentInterface } from "../interfaces/payment";
+import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 import UpdatePaymentStatusUseCase from "../usecases/updatePaymentStatus.usecase";
 
 import { EventEmitter } from "events";
@@ -9,12 +9,14 @@ import { EventEmitter } from "events";
 const eventEmitter = new EventEmitter();
 
 export class PaymentController {
+  constructor() {}
+
   static async updatePaymentStatus(
-    prisma: DbConnection,
+    paymentRepository: PaymentInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ) {
-    const paymentGateway = new PaymentGateway(prisma);
+    const paymentGateway = new PaymentGateway(paymentRepository);
     const eventEmitter = new EventEmitter();
     const useCase = new UpdatePaymentStatusUseCase(eventEmitter);
     const updatedPayment = await useCase.updateStatus(
