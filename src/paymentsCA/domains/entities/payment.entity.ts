@@ -51,6 +51,39 @@ export class Payment {
   get qrCode(): string | undefined {
     return this._qrCode;
   }
+
+  set status(status: PaymentStatusEnum) {
+    this._status = status;
+    this._updatedAt = new Date();
+  }
+
+  set mercadoPagoPaymentId(id: string | undefined) {
+    this._mercadoPagoPaymentId = id;
+  }
+
+  set qrCode(qrCode: string | undefined) {
+    this._qrCode = qrCode;
+  }
+
+  set orderId(orderId: string) {
+    this._orderId = orderId;
+  }
+
+  set type(type: PaymentTypeEnum) {
+    this._type = type;
+  }
+
+  set createdAt(createdAt: Date) {
+    this._createdAt = createdAt;
+  }
+
+  set updatedAt(updatedAt: Date) {
+    this._updatedAt = updatedAt;
+  }
+
+  set id(id: string) {
+    this._id = id;
+  }
 }
 export { PaymentStatusEnum };
 

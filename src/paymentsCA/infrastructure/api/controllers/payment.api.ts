@@ -2,7 +2,6 @@ import { Body, Controller, Param, Patch } from '@nestjs/common';
 import { UpdateStatusDto } from '../dto/update-status.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PaymentController } from 'src/paymentsCA/controllers/payment.controller';
-import { PaymentInterface } from 'src/paymentsCA/interfaces/payment';
 import { PrismaPaymentRepository } from 'src/paymentsCA/infrastructure/persistence/prismaPayment.repository';
 
 @ApiTags('Payment')
