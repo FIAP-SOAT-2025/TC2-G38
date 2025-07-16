@@ -34,11 +34,16 @@ export class CustomerApi {
     @Body() updateCustomerDTO: UpdateCustomerDTO,
     @Param('id') id: string,
   ): Promise<any> {
-    
+    return CustomerController.updateCustomer(
+      id,
+      updateCustomerDTO,
+      this.customerRepository,
+    );
   }
 
   @Delete('/:id')
   async deleteCustomer(@Param('id') id: string): Promise<void> {
+    return CustomerController.deleteCustomer(id, this.customerRepository);
   }
 
   @Get('/:cpf')

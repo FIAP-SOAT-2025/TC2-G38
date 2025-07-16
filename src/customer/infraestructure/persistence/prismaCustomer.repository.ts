@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import CustomerGatewayInterface from '../../interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-
+import { CustomerInterface, Customer } from '../../entities/customer.entity';
 
 @Injectable()
 export class PrismaCustomerRepository implements CustomerGatewayInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(customer: any): Promise<any> {
+  async create(customer: CustomerInterface): Promise<any> {
     try {
       const createdRecord = await this.prisma.customer.create({
         data: {
@@ -27,7 +27,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
     const customer = await this.prisma.customer.findUnique({
       where: { id },
     });
-    if (!customer) throw new NotFoundException('Customer not found');
+    if (!customer) return null;
 
     return customer;
   }
@@ -62,8 +62,8 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
 
   async update(
     id: string,
-    customer: Partial<any>,
-    customerEntity: any,
+    customer: Partial<CustomerInterface>,
+    customerEntity: Customer,
   ): Promise<any> {
     try {
       const updatedCustomer = await this.prisma.customer.update({
@@ -105,11 +105,5 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
       console.error('Error fetching customer email:', error);
       throw new Error('Failed to fetch customer email');
     }
-  }
-
-  async findAll(): Promise<any[]> {
-    // corrected return type
-    // Implement the logic to find all customers using Prisma
-    return [];
   }
 }

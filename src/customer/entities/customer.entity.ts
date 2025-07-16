@@ -16,6 +16,12 @@ export class Customer implements CustomerInterface {
   private _updatedAt: Date;
 
   constructor(props: CustomerInterface) {
+    if (!props.id) {
+      throw new Error('ID is required');
+    }
+    if(!props.name.trim()) {
+      throw new Error('Name cannot be empty');
+    }
     this._id = String(props.id);
     this.name = props.name;
     this.cpf = new Cpf(props.cpf).getCpf();
@@ -24,7 +30,7 @@ export class Customer implements CustomerInterface {
     this._updatedAt = props.updatedAt ?? new Date();
   }
 
-  get id(): string | undefined {
+  get id(): string {
     return this._id;
   }
   get name(): string {

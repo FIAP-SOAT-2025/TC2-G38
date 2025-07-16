@@ -1,4 +1,4 @@
-import { Customer, Cpf, CustomerInterface } from '../entities/customer.entity';
+import { Cpf, CustomerInterface } from '../entities/customer.entity';
 import CustomerGatewayInterface from '../interfaces/gateways';
 import { CustomerPresenter } from "../presenters/customer.presenter";
 

@@ -1,16 +1,21 @@
-// import { Inject } from '@nestjs/common';
-// import CustomerRepository from 'src/customer/domain/repository/customer.repository';
-// import { DeleteCustomerServiceInterface } from 'src/customer/domain/services/delete-customer.interface';
+import { Customer, CustomerInterface } from '../entities/customer.entity';
+import CustomerGatewayInterface from '../interfaces/gateways';
 
-// export default class DeleteCustomerService
-//   implements DeleteCustomerServiceInterface
-// {
-//   constructor(
-//     @Inject('CustomerRepository')
-//     private readonly customerRepository: CustomerRepository,
-//   ) {}
+export default class DeleteCustomerUseCase {
+  constructor(
+  ) {}
 
-//   async delete(id: string): Promise<void> {
-//     await this.customerRepository.delete(id);
-//   }
-// }
+  static async delete(
+    id: string,
+    customerGateway: CustomerGatewayInterface
+  ): Promise<any> {
+
+    const customerExists = await customerGateway.findById(id);
+    if (!customerExists) {
+      return false
+    }
+    await customerGateway.delete(id);
+    return true;
+  }
+}
+

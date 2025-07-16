@@ -16,8 +16,12 @@ export class CustomerGateway implements CustomerGatewayInterface {
     }
   }
 
-  async findById(id: string): Promise<any> {
-    return
+  async findById(id: string): Promise<Customer | null> {
+    const customer = await this.customerRepository.findById(id);
+    if (!customer) {
+      return null;
+    }
+    return new Customer(customer);
   }
 
   async findByCpf(cpf: string): Promise<Customer | null> {
@@ -48,7 +52,7 @@ export class CustomerGateway implements CustomerGatewayInterface {
     customerEntity: Customer,
   ): Promise<any> {
     try {
-      return
+      return await this.customerRepository.update(id, customer, customerEntity);
     } catch (error) {
       throw new Error(`Error updating customer: ${error}`);
     }
@@ -56,7 +60,7 @@ export class CustomerGateway implements CustomerGatewayInterface {
 
   async delete(id: string): Promise<void> {
     try {
-      return
+      return await this.customerRepository.delete(id);
     } catch (e) {
       console.log(e);
       throw new Error('Failed to delete customer');
@@ -65,14 +69,10 @@ export class CustomerGateway implements CustomerGatewayInterface {
 
   async getEmailById(customerId: string): Promise<string> {
     try {
-      return ''
+      return await this.customerRepository.getEmailById(customerId);
     } catch (error) {
       console.error('Error fetching customer email:', error);
       throw new Error('Failed to fetch customer email');
     }
-  }
-
-  async findAll(): Promise<Customer[]> {
-    return [];
   }
 }
