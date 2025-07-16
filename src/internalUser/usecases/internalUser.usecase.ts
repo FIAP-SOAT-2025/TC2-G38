@@ -1,53 +1,44 @@
-import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { Buffer } from 'buffer';
-import { InternalUserServiceInterface } from '../gateways/interfaces/usecases/internalUser.usecase.interface';
-import { InternalUserGatewayInterface } from '../gateways/interfaces/internalUser.repository';
-import { CreateInternalUserDto } from '../infrastructure/api/dto/createInternalUser.dto';
-import { InternalUser } from '../entities/internalUser.entity';
+import { Injectable } from '@nestjs/common';
+import {
+  InternalUser,
+  InternalUserProps,
+} from '../entities/internalUser.entity';
+import { InternalUserServiceInterface } from '../interfaces/internalUser.usecase.interface';
+import { InternalUserGatewayInterface } from '../interfaces/gateways.interface';
+import { RoleType } from '../infrastructure/api/dto/role-type';
 
 @Injectable()
 export class InternalUserUseCase implements InternalUserServiceInterface {
-  constructor(
-    @Inject('InternalUserRepository')
-    private readonly internalUserGateway: InternalUserGatewayInterface,
-  ) {}
+  constructor(private internalUserGateway: InternalUserGatewayInterface) {}
 
-  async create(
-    createInternalUserDto: CreateInternalUserDto,
-  ): Promise<InternalUser> {
+  async create(createInternalUser: InternalUserProps): Promise<InternalUser> {
     try {
-      const { password } = createInternalUserDto;
-      createInternalUserDto.password = this.hashPassword(password);
-
       const userExists =
-        await this.internalUserGateway.findByCpfOrEmailOrRegistrationNumber(
-          createInternalUserDto.cpf,
-          createInternalUserDto.email,
-          createInternalUserDto.registrationNumber,
+        await this.internalUserGateway.getInternalUserByCpfOrEmailOrRegistrationNumber(
+          createInternalUser.cpf,
+          createInternalUser.email,
+          createInternalUser.registrationNumber,
         );
-
       if (userExists) {
-        throw new BadRequestException('Internal User Already Registered.');
+        throw new Error('Internal User Already Registered.');
       }
-
-      const roleId = await this.internalUserGateway.findRoleId(
-        createInternalUserDto.roleName,
+      const roleId = await this.internalUserGateway.getInternalUserRoleId(
+        createInternalUser.roleName as RoleType,
       );
-
-      const newInternalUser = await this.internalUserGateway.create(
-        new InternalUser({ ...createInternalUserDto, roleId }),
+      const newInternalUser = await this.internalUserGateway.createInternalUser(
+        new InternalUser({
+          registrationNumber: createInternalUser.registrationNumber,
+          name: createInternalUser.name,
+          cpf: createInternalUser.cpf,
+          email: createInternalUser.email,
+          password: createInternalUser.password,
+          roleId,
+        }),
       );
-
       return newInternalUser;
     } catch (error) {
       console.log('Error when creating internal user:', error);
       throw error;
     }
-  }
-
-  private hashPassword(password: string): string {
-    const buffer = Buffer.from(password, 'utf-8');
-    const hashedPassword = buffer.toString('base64');
-    return hashedPassword;
   }
 }

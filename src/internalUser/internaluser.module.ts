@@ -1,20 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { InternalUserController } from './infra/adapters/in/controller/internalUser.controller';
-import { InternalUserService } from './application/services/internalUser.service';
-import { PrismaInternalUserRepository } from './infrastructure/persistence/prismaInternalUser.repository';
 import { PrismaService } from 'src/shared/infra/prisma.service';
+import { InternalUserApiController } from './infrastructure/api/controllers/internalUser.api';
+import { PrismaInternalUserRepository } from './infrastructure/persistence/prismaInternalUser.repository';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  controllers: [InternalUserController],
+  controllers: [InternalUserApiController],
   providers: [
-    InternalUserService,
-    PrismaService,
     {
-      provide: 'InternalUserRepository',
-      useClass: PrismaInternalUserRepository,
+      provide: 'DbConnection',
+      useClass: PrismaInternalUserRepository, // Replace with your actual implementation class
     },
+    PrismaService,
   ],
   exports: [],
 })

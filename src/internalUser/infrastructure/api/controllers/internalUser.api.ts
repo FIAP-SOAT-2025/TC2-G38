@@ -1,20 +1,37 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Inject } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateInternalUserDto } from '../dto/createInternalUser.dto';
-import { PrismaInternalUserRepository } from '../../persistence/prismaInternalUser.repository';
+import { DbConnection } from '../../../interfaces/dbconnection';
+import { InternalUserController } from '../../../controllers/internalUser.controller';
+import { InternalUserProps } from 'src/internalUser/entities/internalUser.entity';
 
 @ApiTags('InternalUser')
 @Controller('/internal-user')
-export class InternalUserController {
-  constructor(private readonly internalUserRepository: PrismaInternalUserRepository) {}
+export class InternalUserApiController {
+  constructor(
+    // private internalUserController: InternalUserController,
+    @Inject('DbConnection')
+    private readonly dbConnection: DbConnection,
+  ) {}
 
   @Post('/create')
   async createUser(
     @Body() createInternalUserDto: CreateInternalUserDto,
   ): Promise<any> {
-    const userCreate = await this.internalUserRepository.create(createInternalUserDto);
+    const newInternalUser: InternalUserProps = {
+      registrationNumber: createInternalUserDto.registrationNumber,
+      name: createInternalUserDto.name,
+      cpf: createInternalUserDto.cpf,
+      email: createInternalUserDto.email,
+      password: createInternalUserDto.password,
+      roleName: createInternalUserDto.roleName,
+      roleId: '',
+    };
+
+    const userCreate = await InternalUserController.createInternalUser(
+      newInternalUser,
+      this.dbConnection,
+    );
     return userCreate;
   }
 }
-
-

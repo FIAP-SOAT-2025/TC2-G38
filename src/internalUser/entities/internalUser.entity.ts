@@ -8,6 +8,7 @@ export interface InternalUserProps {
   email: string;
   password: string;
   roleId: string;
+  roleName?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -20,6 +21,7 @@ export class InternalUser {
   private _email: string;
   private _password: string;
   private _roleId: string;
+  private _roleName?: string;
   private _createdAt: Date;
   private _updatedAt: Date;
 
@@ -35,6 +37,7 @@ export class InternalUser {
     this.email = props.email;
     this.password = props.password;
     this._roleId = props.roleId;
+    this._roleName = props.roleName;
     this._createdAt = props.createdAt ?? new Date();
     this._updatedAt = props.updatedAt ?? new Date();
   }
@@ -67,6 +70,10 @@ export class InternalUser {
     return this._roleId;
   }
 
+  get roleName(): string {
+    return this._roleName || '';
+  }
+
   set name(newName: string) {
     if (!newName || newName.length < 3) {
       throw new Error('Name must be at least 3 characters.');
@@ -78,7 +85,9 @@ export class InternalUser {
     if (newPassword.length < 8) {
       throw new Error('Password too short.');
     }
-    this._password = newPassword;
+    const buffer = Buffer.from(newPassword, 'utf-8');
+    const hashedPassword = buffer.toString('base64');
+    this._password = hashedPassword;
   }
 
   set cpf(newCpf: string) {
@@ -100,6 +109,7 @@ export class InternalUser {
       cpf: this._cpf,
       email: this._email,
       roleId: this._roleId,
+      roleName: this._roleName,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
     };
