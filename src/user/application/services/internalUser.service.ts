@@ -9,7 +9,7 @@ import { Buffer } from 'buffer';
 export class InternalUserService implements InternalUserServiceInterface {
   constructor(
     @Inject('InternalUserRepository')
-    private readonly internalUserRepository: InternalUserRepositoryInterface<InternalUser>,
+    private readonly internalUserRepository: InternalUserRepositoryInterface,
   ) {}
 
   async create(
