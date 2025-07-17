@@ -7,7 +7,6 @@ import { InternalUserServiceInterface } from '../interfaces/internalUser.usecase
 import { InternalUserGatewayInterface } from '../interfaces/gateways.interface';
 import { RoleType } from '../infrastructure/api/dto/role-type';
 
-@Injectable()
 export class InternalUserUseCase implements InternalUserServiceInterface {
   constructor(private internalUserGateway: InternalUserGatewayInterface) {}
 
