@@ -1,5 +1,3 @@
-import onlyNumbers from 'src/shared/utils/string';
-
 export interface CustomerInterface {
   name: string;
   cpf: string;
@@ -18,15 +16,21 @@ export class Customer implements CustomerInterface {
   private _updatedAt: Date;
 
   constructor(props: CustomerInterface) {
+    if (!props.id) {
+      throw new Error('ID is required');
+    }
+    if(!props.name.trim()) {
+      throw new Error('Name cannot be empty');
+    }
     this._id = String(props.id);
     this.name = props.name;
-    this.cpf = props.cpf;
-    this.email = props.email;
+    this.cpf = new Cpf(props.cpf).getCpf();
+    this.email = new Email(props.email).getEmail();
     this._createdAt = props.createdAt ?? new Date();
     this._updatedAt = props.updatedAt ?? new Date();
   }
 
-  get id(): string | undefined {
+  get id(): string {
     return this._id;
   }
   get name(): string {
@@ -48,10 +52,10 @@ export class Customer implements CustomerInterface {
     this._name = name;
   }
   set cpf(cpf: string) {
-    this._cpf = onlyNumbers(cpf);
+    this._cpf = new Cpf(cpf).getCpf();
   }
   set email(email: string) {
-    this._email = email;
+    this._email = new Email(email).getEmail();
   }
   set updatedAt(updatedAt: Date) {
     this._updatedAt = updatedAt;
@@ -69,5 +73,47 @@ export class Customer implements CustomerInterface {
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
     };
+  }
+}
+
+export class Cpf {
+  private readonly cpf: string;
+  constructor(cpf: string) {
+    this.cpf = this.onlyNumbers(cpf);
+    if (!Cpf.isValid(this.cpf)) {
+      throw new Error('Invalid CPF');
+    }
+  }
+
+  private onlyNumbers(str: string) {
+    return str.replace(/\D/g, '');
+  }
+
+  static isValid(cpf: string): boolean {
+    if (cpf.length !== 11) return false;
+    return true;
+  }
+  
+  getCpf(): string {
+    return this.cpf;
+  }
+}
+
+export class Email {
+  private readonly email: string;
+  constructor(email: string) {
+    this.email = email.toLowerCase();
+    if (!Email.isValid(this.email)) {
+      throw new Error('Invalid Email');
+    }
+  }
+
+  static isValid(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  getEmail(): string {
+    return this.email;
   }
 }
