@@ -1,4 +1,4 @@
-import PaymentGatewayInterface from '../interfaces/gateways';
+import PaymentGatewayInterface from '../interfaces/gateways.interface';
 import { PaymentStatusEnum } from '../domains/enums/payment-status.enum';
 import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
 export default class UpdatePaymentStatusUseCase {

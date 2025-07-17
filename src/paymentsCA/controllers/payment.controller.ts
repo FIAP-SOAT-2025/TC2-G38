@@ -1,6 +1,6 @@
 import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
 import PaymentGateway from "../gateways/payment.gateway";
-import { PaymentRepositoryInterface } from "../interfaces/payment";
+import { PaymentRepositoryInterface } from "../interfaces/payment-repository.interface";
 import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 import UpdatePaymentStatusUseCase from "../usecases/updatePaymentStatus.usecase";
 import { EventEmitter } from "events";

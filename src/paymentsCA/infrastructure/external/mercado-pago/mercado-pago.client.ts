@@ -2,9 +2,9 @@ import { HttpService } from "@nestjs/axios";
 import { Inject, Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
-import { PaymentProviderInterface } from "src/paymentsCA/interfaces/payment-provider";
+import { PaymentProviderInterface } from "src/paymentsCA/interfaces/payment-provider.interface";
 import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
-import { PaymentRepositoryInterface } from "src/paymentsCA/interfaces/payment";
+import { PaymentRepositoryInterface } from "src/paymentsCA/interfaces/payment-repository.interface";
 
 @Injectable()
 export class MercadoPagoClient implements PaymentProviderInterface{

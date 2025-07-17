@@ -1,6 +1,6 @@
 import { Payment } from "../domains/entities/payment.entity";
-import { PaymentRepositoryInterface } from "../interfaces/payment";
-import { PaymentProviderInterface } from "../interfaces/payment-provider";
+import { PaymentRepositoryInterface } from "../interfaces/payment-repository.interface";
+import { PaymentProviderInterface } from "../interfaces/payment-provider.interface";
 import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
 import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
 

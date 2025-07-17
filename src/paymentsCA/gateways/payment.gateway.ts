@@ -1,8 +1,8 @@
 
 import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
-import { PaymentRepositoryInterface } from "../interfaces/payment";
+import { PaymentRepositoryInterface } from "../interfaces/payment-repository.interface";
 import { Payment } from "../domains/entities/payment.entity";
-import PaymentGatewayInterface from "../interfaces/gateways";
+import PaymentGatewayInterface from "../interfaces/gateways.interface";
 
 export default class PaymentGateway implements PaymentGatewayInterface {
   private dbRepository: PaymentRepositoryInterface;
