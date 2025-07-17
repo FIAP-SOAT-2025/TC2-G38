@@ -10,4 +10,4 @@ import { PaymentApi } from './infrastructure/api/controllers/payment.api';
   providers: [PrismaService, PrismaPaymentRepository],
   exports: [],
 })
-export class CustomerModule {}
+export class PaymentCAModule {}

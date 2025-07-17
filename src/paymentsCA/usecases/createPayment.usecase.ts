@@ -1,8 +1,8 @@
 import { Payment } from "../domains/entities/payment.entity";
 import { PaymentRepositoryInterface } from "../interfaces/payment";
 import { PaymentProviderInterface } from "../interfaces/payment-provider";
-import { PaymentStatusEnum } from "../shared/enums/payment-status.enum";
-import { PaymentTypeEnum } from "../shared/enums/payment-type.enum";
+import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
+import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
 
 export class CreatePaymentUseCase  {
   constructor(

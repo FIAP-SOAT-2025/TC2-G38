@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../../shared/infra/prisma.service";
-import { Payment, PaymentStatusEnum } from "../../domains/entities/payment.entity";
+import { Payment } from "../../domains/entities/payment.entity";
+import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
+import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
 import PaymentGatewayInterface from "../../interfaces/gateways";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
 import { PrismaCustomerRepository } from "src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository";
@@ -10,6 +12,31 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
   constructor(private readonly prisma: PrismaService,
     private readonly customerRepository: PrismaCustomerRepository,// AJUSTAR ESSE IMPORT DE CUSTOMER
   ) {}
+
+  async create(
+      orderId: string,
+      type: PaymentTypeEnum,
+      status: PaymentStatusEnum,
+      mercadoPagoPaymentId: string,
+      qrCode: string,
+    ): Promise<Payment> {
+      try {
+        const payment = await this.prisma.payment.create({
+          data: {
+            orderId: orderId,
+            type: type as PaymentTypeEnum,
+            status: status as PaymentStatusEnum,
+            mercadoPagoPaymentId: mercadoPagoPaymentId,
+            qrCode: qrCode,
+          },
+        });
+  
+        return mapPrismaPaymentToPaymentEntity(payment);
+      } catch (error) {
+        console.error('Error creating payment:', error);
+        throw new Error('Failed to create payment');
+      }
+    }
   
     async updateStatus(
       paymentId: string,
@@ -48,4 +75,5 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
 
     return this.customerRepository.getEmailById(order.customerId);
   }
+
 }

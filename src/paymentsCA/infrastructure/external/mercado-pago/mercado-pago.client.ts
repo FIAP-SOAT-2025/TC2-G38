@@ -3,15 +3,15 @@ import { Inject, Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
 import { PaymentProviderInterface } from "src/paymentsCA/interfaces/payment-provider";
-import PaymentGatewayInterface from "src/paymentsCA/interfaces/gateways";
 import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
+import { PaymentRepositoryInterface } from "src/paymentsCA/interfaces/payment";
 
 @Injectable()
 export class MercadoPagoClient implements PaymentProviderInterface{
   constructor(
     private readonly httpService: HttpService,
     @Inject('PaymentRepository')
-    private readonly paymentRepository: PaymentGatewayInterface,
+    private readonly paymentRepository: PaymentRepositoryInterface,
   ){}
 
   async callPaymentApi(orderId: string, totalAmount: number): Promise<any> {

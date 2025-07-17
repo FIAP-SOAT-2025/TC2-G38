@@ -1,15 +1,19 @@
 import { Payment } from "../domains/entities/payment.entity";
-import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
-import { PaymentTypeEnum } from "../shared/enums/payment-type.enum";
+import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
+import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
 
 export interface PaymentRepositoryInterface {
-  updateStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
-  find(id: string): Promise<Payment>;
   create(
-      orderId: string,
-      type: PaymentTypeEnum,
-      status: PaymentStatusEnum,
-      mercadoPagoPaymentId: string,
-      qrCode: string,
-    ): Promise<Payment>;
+    orderId: string,
+    type: PaymentTypeEnum,
+    status: PaymentStatusEnum,
+    mercadoPagoPaymentId: string,
+    qrCode: string,
+  ): Promise<Payment>;
+
+  updateStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
+
+  find(id: string): Promise<Payment>;
+
+  getOrGenerateCustomerEmail(orderId: string): Promise<string>;
 }

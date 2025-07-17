@@ -7,6 +7,7 @@ import { InternalUserModule } from './user/internaluser.module';
 import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payments/payment.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { PaymentCAModule } from './paymentsCA/payment.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     CustomerModule,
     InternalUserModule,
     OrderModule,
-    PaymentModule,
+    //PaymentModule,
+    PaymentCAModule,
     EventEmitterModule.forRoot(),
   ],
   controllers: [],
