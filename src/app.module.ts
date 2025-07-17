@@ -14,7 +14,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     ItemModule,
     CustomerModule,
     InternalUserModule,
-    OrderModule,
+    // OrderModule,
     PaymentModule,
     EventEmitterModule.forRoot(),
   ],

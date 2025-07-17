@@ -23,10 +23,15 @@ export class CustomerApi {
 
   @Post()
   async createCustomer(@Body() createCustomerDTO: CreateCustomerDTO) {
-    return CustomerController.createCustomer(
+    try {
+      return await CustomerController.createCustomer(
       createCustomerDTO,
       this.customerRepository,
     );
+    } catch (error) {
+      throw new Error(`Failed to create customer:`);
+    }
+    
   }
 
   @Patch('/:id')
@@ -48,7 +53,11 @@ export class CustomerApi {
 
   @Get('/:cpf')
   async getCustomerByCpf(@Param('cpf') cpf: string): Promise<any> {
-    return CustomerController.getCustomerByCpf(cpf, this.customerRepository);
+    try {
+      return await CustomerController.getCustomerByCpf(cpf, this.customerRepository);
+    } catch (error) {
+      throw new Error(`Failed to fetch customer by CPF: ${error}`);
+    }
   }
 
 }

@@ -6,16 +6,21 @@ import CreateCustomer from "../usecases/createCustomer.usecase";
 import UpdateCustomer from "../usecases/updateCustomer.usecase";
 import DeleteCustomerUseCase from "../usecases/deleteCustomer.usecase";
 import { Customer, CustomerInterface } from "../entities/customer.entity";
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 export class CustomerController {
   constructor() {}
 
-  static getCustomerByCpf(cpf: string, customerRepository: CustomerGatewayInterface) {
+  static async getCustomerByCpf(cpf: string, customerRepository: CustomerGatewayInterface) {
     const customerGateway = new CustomerGateway(customerRepository);
     try {
-      const customerByCpf = GetCustomerByCpf.getCustomerByCpf(cpf, customerGateway);
+      const customerByCpf = await GetCustomerByCpf.getCustomerByCpf(cpf, customerGateway);
       return customerByCpf;
-    } catch (error) {
-      throw new Error('Failed to fetch customer by CPF');
+    } catch (error: any) {
+      throw new BaseException(
+        error.message || `Error fetching customer by CPF`,
+        error.statusCode || 500,
+        error.errorCode || 'CUSTOMER_FETCH_ERROR',
+      );
     }
   }
 
