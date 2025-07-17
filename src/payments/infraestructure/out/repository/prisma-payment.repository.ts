@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PaymentStatus, PaymentType } from '@prisma/client';
-import { PrismaCustomerRepository } from 'src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository';
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 import {
   Payment,

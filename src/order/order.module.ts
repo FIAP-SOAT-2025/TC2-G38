@@ -5,7 +5,7 @@ import ProcessOrderService from './application/processOrder.service';
 import { OrderController } from './infrastructure/adapters/in/controller/order.controller';
 import { PrismaOrderRepository } from './infrastructure/adapters/out/repository/order.repository';
 import { PrismaItemRepository } from 'src/item/infraestructure/adapters/out/repository/prismaItem.repository';
-import { PrismaCustomerRepository } from 'src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository';
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
 import UpdateOrderService from './application/updateOrder.service';
