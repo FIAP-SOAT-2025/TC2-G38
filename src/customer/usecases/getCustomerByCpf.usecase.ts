@@ -1,20 +1,21 @@
 import { Cpf, CustomerInterface } from '../entities/customer.entity';
 import CustomerGatewayInterface from '../interfaces/gateways';
 import { CustomerPresenter } from "../presenters/customer.presenter";
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 export default class GetCustomerByCpf {
   constructor() {}
   static async getCustomerByCpf(cpf: string, customerGateway: CustomerGatewayInterface): Promise<CustomerInterface> {
-    try {
-      const customer = await customerGateway.findByCpf(
-        new Cpf(cpf).getCpf(),
+    const customer = await customerGateway.findByCpf(
+      new Cpf(cpf).getCpf(),
+    );
+    if (!customer) {
+      throw new BaseException(
+        `Customer with CPF ${cpf} not found`,
+        404,
+        'CUSTOMER_NOT_FOUND',
       );
-      if (!customer) {
-        throw new Error('Customer not found');
-      }
-      return CustomerPresenter.formatCustomerToJson(customer);
-    } catch (error) {
-      throw new Error(`Failed to fetch customer by CPF ${cpf}: ${error}`);
     }
+    return CustomerPresenter.formatCustomerToJson(customer);
   }
 }

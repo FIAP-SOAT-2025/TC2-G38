@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import CustomerGatewayInterface from '../../interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 import { CustomerInterface, Customer } from '../../entities/customer.entity';
