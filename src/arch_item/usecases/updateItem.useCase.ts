@@ -36,8 +36,8 @@ export default class UpdateItemUseCase {
       updatedAt: new Date(),
     });
 
-    const itemChanged =  await itemGateway.update(id, updatedItem);
-     return new Item(itemChanged)
+     
+     return await itemGateway.update(id, updatedItem);
   }
 
   /*async updateQuantity(

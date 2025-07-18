@@ -16,7 +16,8 @@ export class ItemGatway implements ItemGatewayInterface {
         return this.itemRepository.findByIdIfNotDeleted(id, isDelete);
     }
     async update(id: string, item: Item): Promise<Item> {
-        return await this.itemRepository.update(id, item);
+       const itemUpdate =  await this.itemRepository.update(id, item);
+         return new Item(itemUpdate);
     }
     async findByCategory(category: ItemCategoryEnum): Promise<Item[]>{
         return this.itemRepository.findByCategory(category);
