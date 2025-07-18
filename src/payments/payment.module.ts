@@ -9,6 +9,8 @@ import { UpdatePaymentStatusService } from './application/update-payment-status.
 import { CustomerModule } from '../customer/customer.module';
 import { MercadoPagoClient } from './infraestructure/out/repository/mercado-pago/mercado-pago.client';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
+//REVER IMPORT DO REPOSITORY
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 
 @Module({
   imports: [
@@ -44,6 +46,7 @@ import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
     },
     PrismaService,
     MercadoPagoClient,
+    PrismaCustomerRepository
   ],
   exports: [
     CreatePaymentService,

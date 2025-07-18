@@ -8,9 +8,11 @@ import { OrderResponse } from '../domain/dto/orderResponse.dto';
 import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
 import { OrderDomainError } from '../domain/model/exceptions/order.exception';
 import { OrderItemProps } from '../domain/model/orderItem.entity';
-import CustomerRepository from 'src/customer/domain/repository/customer.repository';
+//TODO REVER O IMPORT DO REPOSITORY
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { OrderMapper } from '../domain/mappings/mapEntityToResponseDto';
-import { Customer } from 'src/customer/domain/model/customer.entity';
+//TODO REVER O IMPORT DA ENTIDADE
+import { Customer } from 'src/customer/entities/customer.entity';
 import { Payment } from 'src/payments/domain/model/payment.entity';
 import { CreatePaymentServiceInterface } from 'src/payments/domain/services/payment.service.interface';
 import Item from 'src/arch_item/entities/item.entity';
@@ -24,7 +26,7 @@ export default class ProcessOrderService
     @Inject('ItemRepository')
     private readonly PrismaItemRepository: PrismaItemRepository,
     @Inject('CustomerRepository')
-    private readonly customerRepository: CustomerRepository,
+    private readonly customerRepository: PrismaCustomerRepository,
     @Inject('CreatePaymentServiceInterface')
     private readonly paymentService: CreatePaymentServiceInterface,
   ) {}
