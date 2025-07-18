@@ -5,7 +5,7 @@ import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum"
 import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
 import PaymentGatewayInterface from "../../interfaces/gateways.interface";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
-import { PrismaCustomerRepository } from "src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository";
+import { PrismaCustomerRepository } from "src/customer/infraestructure/persistence/prismaCustomer.repository";
 
 @Injectable()
 export class PrismaPaymentRepository implements PaymentGatewayInterface {
