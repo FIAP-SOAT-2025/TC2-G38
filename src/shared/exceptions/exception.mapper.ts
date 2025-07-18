@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { BaseException } from './exceptions.base';
 
-export class ExceptionMapperService {
+export class ExceptionMapper {
   
   static mapToHttpException(error: BaseException): HttpException {
 

@@ -13,7 +13,7 @@ import { UpdateCustomerDTO } from '../dto/update-customer.dto';
 import { CreateCustomerDTO } from '../dto/create-customer.dto';
 import { CustomerController } from '../../../controllers/customer.controller';
 import { PrismaCustomerRepository } from '../../persistence/prismaCustomer.repository';
-import { ExceptionMapperService } from '../../../../shared/exceptions/exception-mapper.service';
+import { ExceptionMapper } from '../../../../shared/exceptions/exception.mapper';
 import { BaseException } from '../../../../shared/exceptions/exceptions.base';
 
 @ApiTags('Customer')
@@ -31,7 +31,7 @@ export class CustomerApi {
       this.customerRepository,
     );
     } catch (error) {
-      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+      throw ExceptionMapper.mapToHttpException(error as BaseException);
     }
     
   }
@@ -48,7 +48,7 @@ export class CustomerApi {
         this.customerRepository,
       );
     } catch (error) {
-      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+      throw ExceptionMapper.mapToHttpException(error as BaseException);
     }
   }
   @Delete('/:id')
@@ -60,7 +60,7 @@ export class CustomerApi {
       await CustomerController.deleteCustomer(id, this.customerRepository);
       response.status(204).send();
     } catch (error) {
-      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+      throw ExceptionMapper.mapToHttpException(error as BaseException);
     }
   }
 
@@ -69,7 +69,7 @@ export class CustomerApi {
     try {
       return await CustomerController.getCustomerByCpf(cpf, this.customerRepository);
     } catch (error) {
-      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+      throw ExceptionMapper.mapToHttpException(error as BaseException);
     }
   }
 
