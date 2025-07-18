@@ -30,8 +30,7 @@ export class ItemControllerApi {
     @Post()
     async createItem(@Body() createItemDto: CreateItemDto) {
         try {
-            const item = await ControllerItem.create(createItemDto, this.prismaItemRepository);
-            return ItemPresenter.toResponse(item);
+         return await ControllerItem.create(createItemDto, this.prismaItemRepository); 
         } catch (error) {
             if (error instanceof DomainError) {
             const errorResponse = ErrorPresenter.toResponse(error);
@@ -50,8 +49,8 @@ export class ItemControllerApi {
         @Param('id') id: string,
     ) {
         try {
-            const item = await ControllerItem.update(id, updateItemDto, this.prismaItemRepository);
-            return ItemPresenter.toResponse(item);
+            return await ControllerItem.update(id, updateItemDto, this.prismaItemRepository);
+             
         } catch (error) {
             if (error instanceof DomainError) {
             const errorResponse = ErrorPresenter.toResponse(error);
@@ -67,8 +66,8 @@ export class ItemControllerApi {
     @Get('/category/:category')
     async findByCategory(@Param('category') category: string) {
         try {
-            const items = await ControllerItem.findByCategory(category, this.prismaItemRepository);
-            return CategoryPresenter.toResponse(items || []);
+            return await ControllerItem.findByCategory(category, this.prismaItemRepository);
+            
         } catch (error) {
             if (error instanceof DomainError) {
             const errorResponse = ErrorPresenter.toResponse(error);
@@ -84,8 +83,8 @@ export class ItemControllerApi {
     @Get('/:id')
     async findById(@Param('id') id: string) {
         try {
-            const item = await ControllerItem.findById(id, this.prismaItemRepository);
-            return ItemPresenter.toResponse(item!);
+            return await ControllerItem.findById(id, this.prismaItemRepository);
+             
         } catch (error) {
             if (error instanceof DomainError) {
             const errorResponse = ErrorPresenter.toResponse(error);
@@ -101,8 +100,8 @@ export class ItemControllerApi {
     @Delete('/:id')
     async deleteItem(@Param('id') id: string) {
         try {
-            const item = await ControllerItem.delete(id, this.prismaItemRepository);
-            return DeletePresenter.toResponse(item.id);
+            return await ControllerItem.delete(id, this.prismaItemRepository);
+             
         } catch (error) {
             if (error instanceof DomainError) {
             const errorResponse = ErrorPresenter.toResponse(error);

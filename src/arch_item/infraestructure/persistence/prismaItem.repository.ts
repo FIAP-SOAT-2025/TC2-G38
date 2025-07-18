@@ -18,7 +18,7 @@ import { UpdateItemInterface } from 'src/arch_item/interfaces/updateItemInterfac
 export class PrismaItemRepository implements ItemGatewayInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(newItemData: CreateItemInterface): Promise<Item> {
+  async create(newItemData: CreateItemInterface): Promise<any> {
     try {
       const createdRecord = await this.prisma.item.create({
         data: {
@@ -30,9 +30,9 @@ export class PrismaItemRepository implements ItemGatewayInterface {
           category: newItemData.category,
         },
       }); 
-      const createdItem = mapRepositoryToItemEntity(createdRecord);
+      
 
-      return createdItem;
+      return createdRecord;
     } catch (error: any) {
       console.error('Error creating item:', error);
       throw new CreateItemError(error?.message || 'unknown error creating item');
@@ -41,7 +41,7 @@ export class PrismaItemRepository implements ItemGatewayInterface {
 
   
 
-  async findByCategory(typeCategory: ItemCategoryEnum): Promise<Item[]> {
+  async findByCategory(typeCategory: ItemCategoryEnum): Promise<any> {
    
     const items = await this.prisma.item.findMany({
       where: {
@@ -51,13 +51,13 @@ export class PrismaItemRepository implements ItemGatewayInterface {
     });
 
    
-    return items.map(mapRepositoryToItemEntity);
+    return items;
   }
 
   async findByIdIfNotDeleted(
     itemId: string,
     isDeleted: boolean,
-  ): Promise<Item> {
+  ): Promise<any> {
     const item = await this.prisma.item.findFirst({
       where: {
         id: itemId,
@@ -68,10 +68,10 @@ export class PrismaItemRepository implements ItemGatewayInterface {
     if (!item) {
       throw new ItemNotFoundError(itemId);
     }
-    return mapRepositoryToItemEntity(item);
+    return item;
   }
 
-  async update(id: string, item: Partial<Item>): Promise<Item> {
+  async update(id: string, item: Partial<Item>): Promise<any> {
     const updatedItem = await this.prisma.item.update({
       where: { id },
       data: {
@@ -84,10 +84,10 @@ export class PrismaItemRepository implements ItemGatewayInterface {
         updatedAt: new Date(),
       },
     });
-    return mapRepositoryToItemEntity(updatedItem);
+    return updatedItem;
   }
 
-  async soft_delete(id: string): Promise<Item> {
+  async soft_delete(id: string): Promise<any> {
     try {
       await this.cancelOrdersWithDeletedItems(id);
 
@@ -96,7 +96,7 @@ export class PrismaItemRepository implements ItemGatewayInterface {
         data: { isDeleted: true },
       });
 
-      return mapRepositoryToItemEntity(softDeletedItem);
+      return softDeletedItem;
     } catch (error) {
       if (
         typeof error === 'object' &&

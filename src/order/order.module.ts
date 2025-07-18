@@ -4,15 +4,15 @@ import { PrismaService } from 'src/shared/infra/prisma.service';
 import ProcessOrderService from './application/processOrder.service';
 import { OrderController } from './infrastructure/adapters/in/controller/order.controller';
 import { PrismaOrderRepository } from './infrastructure/adapters/out/repository/order.repository';
-import { PrismaItemRepository } from 'src/item/infraestructure/adapters/out/repository/prismaItem.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/adapters/out/repository/prismaCustomer.repository';
 import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
 import UpdateOrderService from './application/updateOrder.service';
-import UpdateItemService from 'src/item/application/services/updateItem.service';
-import { ItemModule } from 'src/item/item.module';
+import { ItemModule } from 'src/arch_item/item.module';
 import { CreatePaymentService } from 'src/payments/application/payment.service';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
+import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
+import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
 
 @Module({
   imports: [
@@ -50,7 +50,7 @@ import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
     },
     {
       provide: 'UpdateItemServiceInterface',
-      useExisting: UpdateItemService,
+      useExisting: UpdateItemUseCase,
     },
     {
       provide: 'CreatePaymentServiceInterface',

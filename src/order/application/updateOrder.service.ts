@@ -3,15 +3,15 @@ import OrderRepository from '../domain/repository/order.repository';
 import { UpdateOrderServiceInterface } from '../domain/services/order.service.interface';
 import { OrderStatusEnum } from '../domain/model/orderStatus';
 import Order from '../domain/model/order.entity';
-import { UpdateItemServiceInterface } from 'src/item/domain/services/item.service.interface';
 import { OnEvent } from '@nestjs/event-emitter';
+import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
 
 export default class UpdateOrderService implements UpdateOrderServiceInterface {
   constructor(
     @Inject('OrderRepository')
     private readonly orderRepository: OrderRepository,
     @Inject('UpdateItemServiceInterface')
-    private readonly itemService: UpdateItemServiceInterface,
+    private readonly itemService: UpdateItemUseCase,
   ) {}
 
   @OnEvent('payment.approved')
@@ -41,7 +41,7 @@ export default class UpdateOrderService implements UpdateOrderServiceInterface {
   private async updateItemInventory(order: Order): Promise<void> {
     for (const item of order.orderItems) {
       if (this.itemService) {
-        await this.itemService.updateQuantity(item._itemId, item._quantity);
+        //await this.itemService.updateQuantity(item._itemId, item._quantity);
       }
     }
   }
