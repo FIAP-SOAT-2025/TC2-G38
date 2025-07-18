@@ -6,13 +6,15 @@ import {
   Get,
   Post,
   Delete,
+  Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateCustomerDTO } from '../dto/update-customer.dto';
 import { CreateCustomerDTO } from '../dto/create-customer.dto';
 import { CustomerController } from '../../../controllers/customer.controller';
 import { PrismaCustomerRepository } from '../../persistence/prismaCustomer.repository';
-
+import { ExceptionMapperService } from '../../../../shared/exceptions/exception-mapper.service';
+import { BaseException } from '../../../../shared/exceptions/exceptions.base';
 
 @ApiTags('Customer')
 @Controller('/customer')
@@ -29,7 +31,7 @@ export class CustomerApi {
       this.customerRepository,
     );
     } catch (error) {
-      throw new Error(`Failed to create customer:`);
+      throw ExceptionMapperService.mapToHttpException(error as BaseException);
     }
     
   }
@@ -39,16 +41,27 @@ export class CustomerApi {
     @Body() updateCustomerDTO: UpdateCustomerDTO,
     @Param('id') id: string,
   ): Promise<any> {
-    return CustomerController.updateCustomer(
-      id,
-      updateCustomerDTO,
-      this.customerRepository,
-    );
+    try {
+      return await CustomerController.updateCustomer(
+        id,
+        updateCustomerDTO,
+        this.customerRepository,
+      );
+    } catch (error) {
+      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+    }
   }
-
   @Delete('/:id')
-  async deleteCustomer(@Param('id') id: string): Promise<void> {
-    return CustomerController.deleteCustomer(id, this.customerRepository);
+  async deleteCustomer(
+    @Param('id') id: string,
+    @Res() response: any,
+  ): Promise<void> {
+    try {
+      await CustomerController.deleteCustomer(id, this.customerRepository);
+      response.status(204).send();
+    } catch (error) {
+      throw ExceptionMapperService.mapToHttpException(error as BaseException);
+    }
   }
 
   @Get('/:cpf')
@@ -56,7 +69,7 @@ export class CustomerApi {
     try {
       return await CustomerController.getCustomerByCpf(cpf, this.customerRepository);
     } catch (error) {
-      throw new Error(`Failed to fetch customer by CPF: ${error}`);
+      throw ExceptionMapperService.mapToHttpException(error as BaseException);
     }
   }
 

@@ -16,9 +16,6 @@ export class Customer implements CustomerInterface {
   private _updatedAt: Date;
 
   constructor(props: CustomerInterface) {
-    if (!props.id) {
-      throw new Error('ID is required');
-    }
     if(!props.name.trim()) {
       throw new Error('Name cannot be empty');
     }
