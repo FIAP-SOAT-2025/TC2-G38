@@ -1,3 +1,4 @@
+import { BaseException } from "src/shared/exceptions/exceptions.base";
 export interface CustomerInterface {
   name: string;
   cpf: string;
@@ -16,11 +17,8 @@ export class Customer implements CustomerInterface {
   private _updatedAt: Date;
 
   constructor(props: CustomerInterface) {
-    if (!props.id) {
-      throw new Error('ID is required');
-    }
     if(!props.name.trim()) {
-      throw new Error('Name cannot be empty');
+      throw new BaseException('Name cannot be empty', 400, 'NAME_EMPTY');
     }
     this._id = String(props.id);
     this.name = props.name;
@@ -81,7 +79,7 @@ export class Cpf {
   constructor(cpf: string) {
     this.cpf = this.onlyNumbers(cpf);
     if (!Cpf.isValid(this.cpf)) {
-      throw new Error('Invalid CPF');
+      throw new BaseException('Invalid CPF', 400, 'INVALID_CPF');
     }
   }
 
@@ -104,7 +102,7 @@ export class Email {
   constructor(email: string) {
     this.email = email.toLowerCase();
     if (!Email.isValid(this.email)) {
-      throw new Error('Invalid Email');
+      throw new BaseException('Invalid Email', 400, 'INVALID_EMAIL');
     }
   }
 
