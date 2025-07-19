@@ -7,6 +7,9 @@ import { OrderDto } from '../dto/order.dto';
 import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
 import { UpdateOrderStatusDto } from '../dto/update-status.dto';
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
+import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
+import Order from 'src/order-clean/entities/order.entity';
+import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -14,17 +17,18 @@ export class OrderApi {
   constructor(
     private readonly orderRepository: OrderGatewayInterface,
     private readonly itemRepository: ItemGatewayInterface,
+    private readonly customerRepsitory: CustomerGatewayInterface,
   ) { }
 
   @Post()
   createOrder(
     @Body() createOrderDto: OrderDto,
-  ): Promise<{ order: OrderResponse; payment: Payment }> {
-    return OrderController.createOrder(createOrderDto, this.orderRepository, this.itemRepository);
+  ): Promise<OrderResponse> {
+    return OrderController.createOrder(createOrderDto, this.orderRepository, this.itemRepository, this.customerRepsitory);
   }
 
   @Get('/:id')
-  find(@Param('id') id: string): Promise<CompleteOrderResponse> {
+  find(@Param('id') id: string): Promise<Order> {
     return OrderController.find(id, this.orderRepository);
   }
 
@@ -36,7 +40,7 @@ export class OrderApi {
   @Patch(':id/status')
   updateStatus(
     @Param('id') id: string,
-    @Body() statusDto: UpdateOrderStatusDto,
+    @Body() statusDto: OrderStatusEnum,
   ) {
     return OrderController.updateStatus(id, statusDto, this.orderRepository);
   }

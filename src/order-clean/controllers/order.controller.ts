@@ -12,6 +12,7 @@ import { OrderDto } from '../infraestructure/api/dto/order.dto';
 import { CustomerGateway } from 'src/customer/gateways/customer.gateway';
 import Order from '../entities/order.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
+import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 
 export class OrderController {
   constructor() { }
@@ -21,7 +22,7 @@ export class OrderController {
     orderRepository: OrderGatewayInterface,
     itemRepository: ItemGatewayInterface,
     customerRepository: CustomerGatewayInterface
-  ) {
+  ): Promise<OrderResponse> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);
@@ -38,7 +39,7 @@ export class OrderController {
     }
   }
 
-  static async find(id: string, orderRepository: OrderGatewayInterface) {
+  static async find(id: string, orderRepository: OrderGatewayInterface): Promise<Order> {
     const orderGateway = new OrderGateway(orderRepository);
     return FindOrderByIdUseCase.findOrder(id, orderGateway);
   }
@@ -48,7 +49,7 @@ export class OrderController {
     return FindAllOrderUseCase.findAll(orderGateway);
   }
 
-  async updateStatus(
+  static async updateStatus(
     id: string,
     statusDto: OrderStatusEnum,
     orderRepository: OrderGatewayInterface,
