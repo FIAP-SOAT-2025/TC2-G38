@@ -1,5 +1,5 @@
-import { InternalUser } from 'src/user/domain/model/internalUser.entity';
 import { InternalUser as PrismaInternalUser } from '@prisma/client';
+import { InternalUser } from 'src/internalUser/entities/internalUser.entity';
 
 export function mapRepositoryToInternalUserEntity(
   prismaUser: PrismaInternalUser,

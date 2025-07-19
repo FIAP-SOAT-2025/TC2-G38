@@ -1,8 +1,7 @@
-import { InternalUser } from '../model/internalUser.entity';
-import { RoleType } from '../model/role-type';
+import { RoleType } from '../infrastructure/api/dto/role-type';
 
-export interface InternalUserRepositoryInterface {
-  create(internalUser: InternalUser): Promise<InternalUser>;
+export interface DbConnection {
+  create(internalUser: any): Promise<any>;
   findByCpf(cpf: string): Promise<boolean>;
   findByCpfOrEmailOrRegistrationNumber(
     cpf: string,
