@@ -7,10 +7,11 @@ import { CreateItemInterface } from "../interfaces/createItemInterface";
 import ItemGatewayInterface from "../interfaces/itemGatewayInterface";
 import { UpdateItemInterface } from "../interfaces/updateItemInterface";
 import { ItemPresenter } from "../presenter.ts/item.presenter";
-import CreateItemUseCase from "../usecases/createItem.useCase";
-import { DeleteItemUseCase } from "../usecases/deleteItem.useCase";
-import FindItemUseCase from "../usecases/findItem.useCase";
-import UpdateItemUseCase from "../usecases/updateItem.useCase";
+import CreateItemUseCase from "../useCases/createItem.useCase";
+import { DeleteItemUseCase } from "../useCases/deleteItem.useCase";
+import FindItemUseCase from "../useCases/findItem.useCase";
+import FindItemCategory from "../useCases/findItemCategory.useCase";
+import UpdateItemUseCase from "../useCases/updateItem.useCase";
 import { DeletePresenter } from "../presenter.ts/Delete.presenter";
 import { CategoryPresenter } from "../presenter.ts/category.presenter";
 
@@ -38,7 +39,7 @@ export class ControllerItem {
 
      static async findByCategory(categoryEnum: string, prismaItemRepository: ItemGatewayInterface): Promise<ItemResponse[]> {
           const itemGateway = this.createItemGateway(prismaItemRepository);
-          const items = await FindItemUseCase.findByCategory(categoryEnum as ItemCategoryEnum, itemGateway);
+          const items = await FindItemCategory.findByCategory(categoryEnum as ItemCategoryEnum, itemGateway);
          return CategoryPresenter.toResponse(items || [])
      }
 

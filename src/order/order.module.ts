@@ -4,7 +4,6 @@ import { PrismaService } from 'src/shared/infra/prisma.service';
 import ProcessOrderService from './application/processOrder.service';
 import { OrderController } from './infrastructure/adapters/in/controller/order.controller';
 import { PrismaOrderRepository } from './infrastructure/adapters/out/repository/order.repository';
-import { PrismaItemRepository } from 'src/item/infraestructure/adapters/out/repository/prismaItem.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
@@ -13,7 +12,7 @@ import { ItemModule } from 'src/arch_item/item.module';
 import { CreatePaymentService } from 'src/payments/application/payment.service';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
-import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
+import UpdateItemUseCase from 'src/arch_item/useCases/updateItem.useCase';
 
 @Module({
   imports: [
