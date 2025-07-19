@@ -5,9 +5,8 @@ import Order from '../domain/model/order.entity';
 import { ProcessOrderServiceInterface } from '../domain/services/order.service.interface';
 import { OrderResponse } from '../domain/dto/orderResponse.dto';
 
-import ItemRepository from 'src/item/domain/repository/item.repository';
+import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
 import { OrderDomainError } from '../domain/model/exceptions/order.exception';
-import Item from 'src/item/domain/model/item.entity';
 import { OrderItemProps } from '../domain/model/orderItem.entity';
 //TODO REVER O IMPORT DO REPOSITORY
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
@@ -16,6 +15,7 @@ import { OrderMapper } from '../domain/mappings/mapEntityToResponseDto';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Payment } from 'src/payments/domain/model/payment.entity';
 import { CreatePaymentServiceInterface } from 'src/payments/domain/services/payment.service.interface';
+import Item from 'src/arch_item/entities/item.entity';
 
 export default class ProcessOrderService
   implements ProcessOrderServiceInterface
@@ -24,7 +24,7 @@ export default class ProcessOrderService
     @Inject('OrderRepository')
     private readonly orderRepository: OrderRepository,
     @Inject('ItemRepository')
-    private readonly itemRepository: ItemRepository,
+    private readonly PrismaItemRepository: PrismaItemRepository,
     @Inject('CustomerRepository')
     private readonly customerRepository: PrismaCustomerRepository,
     @Inject('CreatePaymentServiceInterface')
@@ -118,7 +118,7 @@ export default class ProcessOrderService
   }
 
   private async _getExistingItem(itemId: string): Promise<Item | null> {
-    const item = await this.itemRepository.findByIdIfNotDeleted(itemId, false);
+    const item = await this.PrismaItemRepository.findByIdIfNotDeleted(itemId, false);
     if (!item) return null;
     return item;
   }
