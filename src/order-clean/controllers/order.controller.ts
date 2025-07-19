@@ -6,8 +6,12 @@ import FindAllOrderUseCase from '../usecases/findAllOrder.usecase';
 import FindOrderByIdUseCase from '../usecases/findOrder.usecase';
 import UpdateStatusOrderUseCase from '../usecases/updateStatusOrder.usecase';
 import { ItemGatway } from 'src/arch_item/gateways/item.gateway';
-import CreateOrderUseCase from '../usecases/createOrder.usecase';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
+import ProcessOrderUseCase from '../usecases/createOrder.usecase';
+import { OrderDto } from '../infraestructure/api/dto/order.dto';
+import { CustomerGateway } from 'src/customer/gateways/customer.gateway';
+import Order from '../entities/order.entity';
+import { OrderStatusEnum } from '../enums/orderStatus.enum';
 
 export class OrderController {
   constructor() { }
@@ -20,10 +24,11 @@ export class OrderController {
   ) {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
-    const customerGateway = new ItemGatway(customerRepository);
+    const customerGateway = new CustomerGateway(customerRepository);
 
     try {
-      return CreateOrderUseCase.createOrder(
+      return ProcessOrderUseCase.processOrder(
+        createOrderDto,
         orderGateway,
         itemGateway,
         customerGateway,
@@ -45,10 +50,10 @@ export class OrderController {
 
   async updateStatus(
     id: string,
-    statusDto: UpdateOrderStatusDto,
+    statusDto: OrderStatusEnum,
     orderRepository: OrderGatewayInterface,
   ) {
     const orderGateway = new OrderGateway(orderRepository);
-    return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway);
+    return UpdateStatusOrderUseCase.updateStatus(id, statusDto as OrderStatusEnum, orderGateway);
   }
 }

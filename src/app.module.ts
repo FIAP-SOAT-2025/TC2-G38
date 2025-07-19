@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './shared/infra/prisma.service';
 import { CustomerModule } from './customer/customer.module';
-import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payments/payment.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { InternalUserModule } from './internalUser/internaluser.module';
+import { ItemModule } from './arch_item/item.module';
+import { OrderModule } from './order-clean/order.module';
 
 
 @Module({
@@ -14,7 +15,7 @@ import { InternalUserModule } from './internalUser/internaluser.module';
     ItemModule,
     CustomerModule,
     InternalUserModule,
-    //OrderModule,
+    OrderModule,
     PaymentModule,
     EventEmitterModule.forRoot(),
   ],
