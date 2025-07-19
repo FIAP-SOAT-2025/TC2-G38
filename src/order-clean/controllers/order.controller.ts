@@ -6,6 +6,8 @@ import FindAllOrderUseCase from '../usecases/findAllOrder.usecase';
 import FindOrderByIdUseCase from '../usecases/findOrder.usecase';
 import UpdateStatusOrderUseCase from '../usecases/updateStatusOrder.usecase';
 import { ItemGatway } from 'src/arch_item/gateways/item.gateway';
+import CreateOrderUseCase from '../usecases/createOrder.usecase';
+import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 
 export class OrderController {
   constructor() { }
@@ -14,13 +16,18 @@ export class OrderController {
     createOrderDto: OrderDto,
     orderRepository: OrderGatewayInterface,
     itemRepository: ItemGatewayInterface,
+    customerRepository: CustomerGatewayInterface
   ) {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
+    const customerGateway = new ItemGatway(customerRepository);
 
     try {
-
-      
+      return CreateOrderUseCase.createOrder(
+        orderGateway,
+        itemGateway,
+        customerGateway,
+      );
     } catch (error) {
       throw new Error('Failed to fetch customer by CPF');
     }
