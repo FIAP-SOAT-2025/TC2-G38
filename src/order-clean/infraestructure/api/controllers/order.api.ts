@@ -6,31 +6,35 @@ import { OrderController } from 'src/order-clean/controllers/order.controller';
 import { OrderDto } from '../dto/order.dto';
 import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
 import { UpdateOrderStatusDto } from '../dto/update-status.dto';
+import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 
 @ApiTags('Order')
 @Controller('/order')
 export class OrderApi {
-  constructor(private readonly orderRepository: OrderGatewayInterface) {}
+  constructor(
+    private readonly orderRepository: OrderGatewayInterface,
+    private readonly itemRepository: ItemGatewayInterface,
+  ) { }
 
   @Post()
-  async createOrder(
+  createOrder(
     @Body() createOrderDto: OrderDto,
   ): Promise<{ order: OrderResponse; payment: Payment }> {
-    return OrderController.createOrder(createOrderDto, this.orderRepository);
+    return OrderController.createOrder(createOrderDto, this.orderRepository, this.itemRepository);
   }
 
   @Get('/:id')
-  async find(@Param('id') id: string): Promise<CompleteOrderResponse> {
+  find(@Param('id') id: string): Promise<CompleteOrderResponse> {
     return OrderController.find(id, this.orderRepository);
   }
 
   @Get()
-  async findAll(): Promise<CompleteOrderResponse[]> {
+  findAll(): Promise<CompleteOrderResponse[]> {
     return OrderController.findAll(this.orderRepository);
   }
 
   @Patch(':id/status')
-  async updateStatus(
+  updateStatus(
     @Param('id') id: string,
     @Body() statusDto: UpdateOrderStatusDto,
   ) {

@@ -10,7 +10,7 @@ export default class FindAllOrderUseCase {
     const order = await orderGateway.findAll();
 
     return order.map((order) =>
-      OrderMapper.mapOrderEntityToFindOrderResponse(order),
+      OrderMapper.mapOrderEntityToFindOrderResponse(order)
     );
   }
 }

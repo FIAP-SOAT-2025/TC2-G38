@@ -13,7 +13,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       const createdRecord = await this.prisma.order.create({
         data: {
           id: order.id,
-          status: order.status as PrismaOrderStatus,
+          status: order.status,
           customerId: order.customerId,
           totalAmount: order.price,
         },
@@ -76,7 +76,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     try {
       const updatedOrder = await this.prisma.order.update({
         where: { id },
-        data: { status: status as PrismaOrderStatus },
+        data: { status: status },
         include: { orderItems: true },
       });
 
