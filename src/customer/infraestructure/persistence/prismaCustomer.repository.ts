@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import CustomerGatewayInterface from '../../interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 import { CustomerInterface, Customer } from '../../entities/customer.entity';
+import e from 'express';
 
 @Injectable()
 export class PrismaCustomerRepository implements CustomerGatewayInterface {
@@ -18,18 +19,20 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
       });
       return createdRecord;
     } catch (error) {
-      console.error('Error creating item:', error);
-      throw new Error('Failed to create customer');
+      throw error
     }
   }
 
   async findById(id: string): Promise<any> {
-    const customer = await this.prisma.customer.findUnique({
-      where: { id },
-    });
-    if (!customer) return null;
-
-    return customer;
+    try {
+      const customer = await this.prisma.customer.findUnique({
+        where: { id },
+      });
+      if (!customer) return null;
+      return customer;
+    } catch (error) {
+      throw error
+    }
   }
 
   async findByCpf(cpf: string): Promise<any> {
@@ -40,8 +43,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
       if (!customer) return null;
       return customer;
     } catch (error) {
-      console.error('Error fetching customer by CPF:', error);
-      throw new Error(`Failed to fetch customer by CPF: ${error}`);
+      throw error
     }
   }
 
@@ -55,8 +57,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
       if (!customer) return false
       return true;
     } catch (error) {
-      console.error('Error fetching customer by CPF:', error);
-      throw new Error(`Failed to fetch customer by CPF: ${error}`);
+      throw error;
     }
   }
 
@@ -78,7 +79,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
       });
       return updatedCustomer;
     } catch (error) {
-      throw new Error(`Error updating customer: ${error}`);
+      throw error;
     }
   }
 
@@ -102,8 +103,7 @@ export class PrismaCustomerRepository implements CustomerGatewayInterface {
 
       return customer.email;
     } catch (error) {
-      console.error('Error fetching customer email:', error);
-      throw new Error('Failed to fetch customer email');
+      throw error;
     }
   }
 }

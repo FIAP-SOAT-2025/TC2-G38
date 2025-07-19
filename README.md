@@ -2,7 +2,7 @@
 
 > **Tech Challenge FIAP - Fase 01 | Grupo 38**
 
----
+----
 
 ## 📋 Sumário
 
