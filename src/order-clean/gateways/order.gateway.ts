@@ -7,8 +7,10 @@ export class OrderGateway implements OrderGatewayInterface {
   constructor(private readonly orderRepository: OrderGatewayInterface) {}
 
   create(item: Order): Promise<Order> {
-    throw new Error('Method not implemented.');
+    const order = this.orderRepository.create(item);
+    return order;
   }
+
   async findById(id: string): Promise<Order> {
     const order = await this.orderRepository.findById(id);
     return order;
