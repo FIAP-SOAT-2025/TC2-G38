@@ -59,7 +59,7 @@ export default class ProcessOrderUseCase {
 
     // TODO: APLICAR PRESENTER DEPOIS
 
-    throw new Error('note implemented')
+    return OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder);
     // return {
     //   order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
     //   payment: null,
