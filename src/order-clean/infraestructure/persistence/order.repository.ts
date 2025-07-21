@@ -6,10 +6,12 @@ import Order from 'src/order-clean/entities/order.entity';
 import { CompleteOrderResponse } from '../api/dto/orderResponse.dto';
 import { mapPrismaOrderToOrderResponse } from 'src/order-clean/presenters/order.presenter';
 import { OrderMapper } from 'src/order-clean/presenters/orderMap';
+import { UpdateStatusDto } from 'src/payments/domain/dto/update-status.dto';
+import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderGatewayInterface {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(order: Order): Promise<Order> {
     try {
@@ -71,7 +73,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     try {
       const updatedOrder = await this.prisma.order.update({
         where: { id },
-        data: { status: status },
+        data: { status: status as OrderStatus },
         include: { orderItems: true },
       });
 

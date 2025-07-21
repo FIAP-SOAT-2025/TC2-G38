@@ -58,9 +58,11 @@ export default class ProcessOrderUseCase {
     // );
 
     // TODO: APLICAR PRESENTER DEPOIS
-    return {
-      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
-      payment: null,
-    };
+
+    throw new Error('note implemented')
+    // return {
+    //   order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+    //   payment: null,
+    // };
   }
 }

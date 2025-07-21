@@ -30,7 +30,9 @@ export class PrismaOrderRepository implements OrderRepository {
         skipDuplicates: true,
       });
 
-      return mapPrismaOrderToOrderResponse(createdRecord, createdItemOrder);
+      throw new Error('not implemented');
+
+      // return mapPrismaOrderToOrderResponse(createdRecord, createdItemOrder);
     } catch (error) {
       console.error('Error creating order:', error);
       throw new Error('Failed to create order');
@@ -46,12 +48,12 @@ export class PrismaOrderRepository implements OrderRepository {
     if (!order) {
       throw new NotFoundException('Order not found');
     }
-
-    return mapPrismaOrderToOrderResponse(
-      order,
-      order.orderItems,
-      order.payment as Payment,
-    );
+    throw new Error('not implemented');
+    // return mapPrismaOrderToOrderResponse(
+    //   order,
+    //   order.orderItems,
+    //   order.payment as Payment,
+    // );
   }
 
   async findAll(): Promise<Order[]> {
@@ -59,14 +61,14 @@ export class PrismaOrderRepository implements OrderRepository {
       const orders = await this.prisma.order.findMany({
         include: { orderItems: true, payment: true },
       });
-
-      return orders.map((order) =>
-        mapPrismaOrderToOrderResponse(
-          order,
-          order.orderItems,
-          order.payment as Payment,
-        ),
-      );
+      throw new Error('not implemented');
+      // return orders.map((order) =>
+      //   mapPrismaOrderToOrderResponse(
+      //     order,
+      //     order.orderItems,
+      //     order.payment as Payment,
+      //   ),
+      // );
     } catch (error) {
       console.error('Error finding all orders:', error);
       throw new Error('Failed to find orders');
@@ -81,10 +83,12 @@ export class PrismaOrderRepository implements OrderRepository {
         include: { orderItems: true },
       });
 
-      return mapPrismaOrderToOrderResponse(
-        updatedOrder,
-        updatedOrder.orderItems,
-      );
+      // return new Order(up);
+      throw new Error('not implemented');
+      // return mapPrismaOrderToOrderResponse(
+      //   updatedOrder,
+      //   updatedOrder.orderItems,
+      // );
     } catch (error) {
       console.error('Error updating order status:', error);
       throw new Error(`Failed to update order status for ${id}`);

@@ -57,10 +57,12 @@ export default class ProcessOrderService
       createdOrder.price,
     );
 
-    return {
-      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
-      payment: payment,
-    };
+    throw new Error('not implemented');
+
+    // return {
+    //   order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+    //   payment: payment,
+    // };
   }
 
   private _hasRepeatedOrderItemIds = (orderItems: OrderItemDto[]): boolean => {

@@ -32,10 +32,10 @@ export class OrderMapper {
     complete_order_response.createdAt = order.createdAt;
     complete_order_response.updatedAt = order.updatedAt;
 
-    if (order.payment) {
-      complete_order_response.payment =
-        PaymentMapper.mapPaymentToPaymentResponseDTO(order.payment);
-    }
+    // if (order.payment) {
+    //   complete_order_response.payment =
+    //     PaymentMapper.mapPaymentToPaymentResponseDTO(order.payment);
+    // }
 
     return complete_order_response;
   }

@@ -35,7 +35,7 @@ export class OrderController {
         customerGateway,
       );
     } catch (error) {
-      throw new Error('Failed to fetch customer by CPF');
+      throw new Error(`Failed to create order  - ${JSON.stringify(error)}`);
     }
   }
 
@@ -54,12 +54,12 @@ export class OrderController {
     return FindAllOrderUseCase.findAll(orderGateway);
   }
 
-  // static async updateStatus(
-  //   id: string,
-  //   statusDto: OrderStatusEnum,
-  //   orderRepository: OrderGatewayInterface,
-  // ): Promise<Order[]> {
-  //   const orderGateway = new OrderGateway(orderRepository);
-  //   return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway);
-  // }
+  static async updateStatus(
+    id: string,
+    statusDto: OrderStatusEnum,
+    orderRepository: OrderGatewayInterface,
+  ): Promise<{ message: string }> {
+    const orderGateway = new OrderGateway(orderRepository);
+    return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway);
+  }
 }
