@@ -10,7 +10,12 @@ import { PrismaCustomerRepository } from 'src/customer/infraestructure/persisten
 @Module({
   imports: [ConfigModule.forRoot()],
   controllers: [OrderApi],
-  providers: [PrismaService, PrismaCustomerRepository, PrismaOrderRepository, PrismaItemRepository],
+  providers: [
+    PrismaService,
+    PrismaCustomerRepository,
+    PrismaOrderRepository,
+    PrismaItemRepository,
+  ],
   exports: [],
 })
 export class OrderModule {}
