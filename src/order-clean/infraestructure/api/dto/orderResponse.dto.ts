@@ -35,6 +35,6 @@ export class CompleteOrderResponse extends OrderResponse {
   @ApiProperty({ type: [OrderItemResponse] })
   orderItems: OrderItemResponse[];
 
-  @ApiProperty({ type: [PaymentResponse] })
-  payment?: PaymentResponse;
+  // @ApiProperty({ type: [PaymentResponse] })
+  // payment?: PaymentResponse;
 }

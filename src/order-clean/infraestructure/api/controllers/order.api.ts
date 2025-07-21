@@ -7,6 +7,7 @@ import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
+import Order from 'src/order-clean/entities/order.entity';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -28,12 +29,12 @@ export class OrderApi {
   }
 
   @Get('/:id')
-  find(@Param('id') id: string): Promise<CompleteOrderResponse> {
+  find(@Param('id') id: string): Promise<Order> {
     return OrderController.find(id, this.orderRepository);
   }
 
   @Get()
-  findAll(): Promise<CompleteOrderResponse[]> {
+  findAll(): Promise<Order[]> {
     return OrderController.findAll(this.orderRepository);
   }
 

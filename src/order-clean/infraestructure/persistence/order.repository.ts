@@ -1,8 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import OrderGatewayInterface from 'src/order-clean/interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-import { mapPrismaOrderToOrderResponse } from 'src/order/infrastructure/adapters/out/repository/mappings/mapRepositoryOrderToDTO';
+
 import Order from 'src/order-clean/entities/order.entity';
+import { CompleteOrderResponse } from '../api/dto/orderResponse.dto';
+import { mapPrismaOrderToOrderResponse } from 'src/order-clean/presenters/order.presenter';
+import { OrderMapper } from 'src/order-clean/presenters/orderMap';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderGatewayInterface {
@@ -46,11 +49,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       throw new NotFoundException('Order not found');
     }
 
-    return mapPrismaOrderToOrderResponse(
-      order,
-      order.orderItems,
-      // order.payment as Payment,
-    );
+    return mapPrismaOrderToOrderResponse(order, order.orderItems);
   }
 
   async findAll(): Promise<Order[]> {
@@ -60,11 +59,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       });
 
       return orders.map((order) =>
-        mapPrismaOrderToOrderResponse(
-          order,
-          order.orderItems,
-          // order.payment as Payment,
-        ),
+        mapPrismaOrderToOrderResponse(order, order.orderItems),
       );
     } catch (error) {
       console.error('Error finding all orders:', error);

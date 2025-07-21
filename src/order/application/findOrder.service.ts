@@ -11,14 +11,15 @@ export default class FindOrderService implements FindOrderServiceInterface {
   ) {}
   async findAll(): Promise<CompleteOrderResponse[]> {
     const order = await this.orderRepository.findAll();
-
-    return order.map((order) =>
-      OrderMapper.mapOrderEntityToFindOrderResponse(order),
-    );
+    return [new CompleteOrderResponse()];
+    // return order.map((order) =>
+    //   OrderMapper.mapOrderEntityToFindOrderResponse(order),
+    // );
   }
 
   async find(orderId: string): Promise<CompleteOrderResponse> {
     const order = await this.orderRepository.findById(orderId);
-    return OrderMapper.mapOrderEntityToFindOrderResponse(order);
+    return new CompleteOrderResponse();
+    // return OrderMapper.mapOrderEntityToFindOrderResponse(order);
   }
 }
