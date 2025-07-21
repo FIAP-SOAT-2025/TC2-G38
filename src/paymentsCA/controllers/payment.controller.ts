@@ -1,19 +1,16 @@
 import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
-import PaymentGateway from "../gateways/payment.gateway";
-import { PaymentRepositoryInterface } from "../interfaces/payment-repository.interface";
+import { UpdatePaymentGatewayInterface } from "src/paymentsCA/interfaces/update-payment-gateways.interface";
 import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 import UpdatePaymentStatusUseCase from "../usecases/updatePaymentStatus.usecase";
 import { EventEmitter } from "events";
-
 export class PaymentController {
   constructor() {}
 
   static async updatePaymentStatus(
-    paymentRepository: PaymentRepositoryInterface,
+    paymentGateway: UpdatePaymentGatewayInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ) {
-    const paymentGateway = new PaymentGateway(paymentRepository);
     const eventEmitter = new EventEmitter();
     const useCase = new UpdatePaymentStatusUseCase(eventEmitter);
     const updatedPayment = await useCase.updateStatus(

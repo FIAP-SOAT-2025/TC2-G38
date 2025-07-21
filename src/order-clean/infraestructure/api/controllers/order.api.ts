@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import OrderGatewayInterface from 'src/order-clean/interfaces/gateways';
 import { OrderController } from 'src/order-clean/controllers/order.controller';
@@ -8,14 +8,16 @@ import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface'
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import Order from 'src/order-clean/entities/order.entity';
+import { PaymentRepositoryInterface } from 'src/paymentsCA/interfaces/payment-repository.interface';
 
 @ApiTags('Order')
 @Controller('/order')
 export class OrderApi {
   constructor(
-    private readonly orderRepository: OrderGatewayInterface,
-    private readonly itemRepository: ItemGatewayInterface,
-    private readonly customerRepsitory: CustomerGatewayInterface,
+    @Inject('OrderGatewayInterface') private readonly orderRepository: OrderGatewayInterface,
+    @Inject('ItemGatewayInterface') private readonly itemRepository: ItemGatewayInterface,
+    @Inject('CustomerGatewayInterface') private readonly customerRepsitory: CustomerGatewayInterface,
+    @Inject('PaymentRepositoryInterface') private readonly paymentRepository: PaymentRepositoryInterface,
   ) {}
 
   @Post()
@@ -25,6 +27,7 @@ export class OrderApi {
       this.orderRepository,
       this.itemRepository,
       this.customerRepsitory,
+      this.paymentRepository,
     );
   }
 

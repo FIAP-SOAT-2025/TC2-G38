@@ -3,14 +3,14 @@ import { PrismaService } from "../../../shared/infra/prisma.service";
 import { Payment } from "../../domains/entities/payment.entity";
 import { PaymentTypeEnum } from "src/paymentsCA/domains/enums/payment-type.enum";
 import { PaymentStatusEnum } from "src/paymentsCA/domains/enums/payment-status.enum";
-import PaymentGatewayInterface from "../../interfaces/gateways.interface";
+import { UpdatePaymentGatewayInterface } from "src/paymentsCA/interfaces/update-payment-gateways.interface";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
 import { PrismaCustomerRepository } from "src/customer/infraestructure/persistence/prismaCustomer.repository";
 
 @Injectable()
-export class PrismaPaymentRepository implements PaymentGatewayInterface {
+export class PrismaPaymentRepository implements UpdatePaymentGatewayInterface {
   constructor(private readonly prisma: PrismaService,
-    private readonly customerRepository: PrismaCustomerRepository,// AJUSTAR ESSE IMPORT DE CUSTOMER
+    private readonly customerRepository: PrismaCustomerRepository,
   ) {}
 
   async create(

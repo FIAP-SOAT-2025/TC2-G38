@@ -1,6 +1,5 @@
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderGateway } from '../gateways/order.gateway';
-import { UpdateOrderStatusDto } from '../infraestructure/api/dto/update-status.dto';
 import OrderGatewayInterface from '../interfaces/gateways';
 import FindAllOrderUseCase from '../usecases/findAllOrder.usecase';
 import FindOrderByIdUseCase from '../usecases/findOrder.usecase';
@@ -12,7 +11,9 @@ import { OrderDto } from '../infraestructure/api/dto/order.dto';
 import { CustomerGateway } from 'src/customer/gateways/customer.gateway';
 import Order from '../entities/order.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
-import { CompleteOrderResponse, OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
+import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
+import { PaymentRepositoryInterface } from 'src/paymentsCA/interfaces/payment-repository.interface';
+import { CreatePaymentServiceGateway } from 'src/paymentsCA/gateways/create-payment.gateway';
 
 export class OrderController {
   constructor() {}
@@ -22,10 +23,12 @@ export class OrderController {
     orderRepository: OrderGatewayInterface,
     itemRepository: ItemGatewayInterface,
     customerRepository: CustomerGatewayInterface,
+    paymentRepository: PaymentRepositoryInterface,
   ): Promise<OrderResponse> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);
+    const paymentGateway = new CreatePaymentServiceGateway(paymentRepository);
 
     try {
       return ProcessOrderUseCase.processOrder(
@@ -33,6 +36,7 @@ export class OrderController {
         orderGateway,
         itemGateway,
         customerGateway,
+        paymentGateway,
       );
     } catch (error) {
       throw new Error(`Failed to create order  - ${JSON.stringify(error)}`);

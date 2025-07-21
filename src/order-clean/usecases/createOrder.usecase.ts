@@ -10,6 +10,7 @@ import { OrderMapper } from 'src/order/domain/mappings/mapEntityToResponseDto';
 import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
+import { CreatePaymentGatewayInterface } from 'src/paymentsCA/interfaces/create-payment.interface';
 
 export default class ProcessOrderUseCase {
   constructor() {}
@@ -18,7 +19,7 @@ export default class ProcessOrderUseCase {
     orderGateway: OrderGatewayInterface,
     itemGateway: ItemGatewayInterface,
     customerGateway: CustomerGatewayInterface,
-    // paymentGateway: PaymentGatewayInterface
+    paymentGateway: CreatePaymentGatewayInterface,
   ): Promise<OrderResponse> {
     let customer: Customer | undefined;
 
@@ -50,9 +51,8 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
+    // const payment = await paymentGateway.createPayment(
 
-    // TODO : QUANDO PASSAR O PAYMENT PARA O CLEAN ARCH - ATUALIZAR AQUI :)
-    // const payment = await this.paymentService.createPayment(
     //     createdOrder.id,
     //     createdOrder.price,
     // );

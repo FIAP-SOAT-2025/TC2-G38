@@ -1,0 +1,25 @@
+
+import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
+import { PaymentRepositoryInterface } from "../interfaces/payment-repository.interface";
+import { Payment } from "../domains/entities/payment.entity";
+import { UpdatePaymentGatewayInterface } from "src/paymentsCA/interfaces/update-payment-gateways.interface";
+
+export default class UpdatePaymentGateway implements UpdatePaymentGatewayInterface {
+ constructor(
+    private readonly paymentRepository: PaymentRepositoryInterface
+  ) {}
+ 
+ async updateStatus( paymentId: string, status: PaymentStatusEnum): Promise<Payment> {
+    const updatedPayment = await this.paymentRepository.updateStatus(paymentId, status);
+
+    return updatedPayment;
+  }
+ 
+  async find(id: string): Promise<Payment> {
+    const payment = await this.paymentRepository.find(id);
+    if (!payment) {
+      throw new Error(`Payment with ID ${id} not found`);
+    }
+    return payment;
+  }
+}
