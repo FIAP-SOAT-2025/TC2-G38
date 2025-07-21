@@ -6,7 +6,7 @@ import Order from 'src/order-clean/entities/order.entity';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderGatewayInterface {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(order: Order): Promise<Order> {
     try {
@@ -49,7 +49,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     return mapPrismaOrderToOrderResponse(
       order,
       order.orderItems,
-      order.payment as Payment,
+      // order.payment as Payment,
     );
   }
 
@@ -63,7 +63,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         mapPrismaOrderToOrderResponse(
           order,
           order.orderItems,
-          order.payment as Payment,
+          // order.payment as Payment,
         ),
       );
     } catch (error) {

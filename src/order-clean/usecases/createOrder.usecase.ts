@@ -12,50 +12,55 @@ import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 
 export default class ProcessOrderUseCase {
-    constructor() { }
-    static async processOrder(
-        orderData: OrderDto,
-        orderGateway: OrderGatewayInterface,
-        itemGateway: ItemGatewayInterface,
-        customerGateway: CustomerGatewayInterface,
-        // paymentGateway: PaymentGatewayInterface
-    ): Promise<OrderResponse> {
-        let customer: Customer | undefined;
+  constructor() {}
+  static async processOrder(
+    orderData: OrderDto,
+    orderGateway: OrderGatewayInterface,
+    itemGateway: ItemGatewayInterface,
+    customerGateway: CustomerGatewayInterface,
+    // paymentGateway: PaymentGatewayInterface
+  ): Promise<OrderResponse> {
+    let customer: Customer | undefined;
 
-        if (HasRepeatedOrderItemIdsUseCase.hasRepeatedOrderItemIds(orderData.orderItems)) {
-            throw new BaseException(
-                'Failed to create order: Order items must be unique. Found duplicate item IDs in order Items.',
-                400,
-                'HAD_ITEM_REPEATED'
-            );
-        }
-
-        if (orderData.customerCpf) {
-            customer = await GetCustomerByCpf.getCustomerByCpf(
-                orderData.customerCpf,
-                customerGateway,
-            );
-        }
-
-        const processedOrderItems = await ProccessOrderItemUseCase.proccessOrderItem(orderData, itemGateway);
-
-        const current_order = new Order({
-            customerId: customer?.id,
-            orderItems: processedOrderItems,
-        });
-
-        const createdOrder = await orderGateway.create(current_order);
-
-        // TODO : QUANDO PASSAR O PAYMENT PARA O CLEAN ARCH - ATUALIZAR AQUI :)
-        // const payment = await this.paymentService.createPayment(
-        //     createdOrder.id,
-        //     createdOrder.price,
-        // );
-
-        // TODO: APLICAR PRESENTER DEPOIS
-        return {
-            order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
-            payment: null,
-        };
+    if (
+      HasRepeatedOrderItemIdsUseCase.hasRepeatedOrderItemIds(
+        orderData.orderItems,
+      )
+    ) {
+      throw new BaseException(
+        'Failed to create order: Order items must be unique. Found duplicate item IDs in order Items.',
+        400,
+        'HAD_ITEM_REPEATED',
+      );
     }
+
+    if (orderData.customerCpf) {
+      customer = await GetCustomerByCpf.getCustomerByCpf(
+        orderData.customerCpf,
+        customerGateway,
+      );
+    }
+
+    const processedOrderItems =
+      await ProccessOrderItemUseCase.proccessOrderItem(orderData, itemGateway);
+
+    const current_order = new Order({
+      customerId: customer?.id,
+      orderItems: processedOrderItems,
+    });
+
+    const createdOrder = await orderGateway.create(current_order);
+
+    // TODO : QUANDO PASSAR O PAYMENT PARA O CLEAN ARCH - ATUALIZAR AQUI :)
+    // const payment = await this.paymentService.createPayment(
+    //     createdOrder.id,
+    //     createdOrder.price,
+    // );
+
+    // TODO: APLICAR PRESENTER DEPOIS
+    return {
+      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+      payment: null,
+    };
+  }
 }

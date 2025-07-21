@@ -1,5 +1,8 @@
-import Order from '../model/order.entity';
-import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
+import Order from 'src/order-clean/entities/order.entity';
+import {
+  CompleteOrderResponse,
+  OrderResponse,
+} from 'src/order-clean/infraestructure/api/dto/orderResponse.dto';
 import { PaymentMapper } from 'src/payments/domain/mapping/mapEntityToResponseDTO';
 
 export class OrderMapper {

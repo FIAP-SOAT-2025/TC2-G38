@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty } from 'class-validator';
-import { OrderStatusEnum } from '../model/orderStatus';
+import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 
 export class UpdateOrderStatusDto {
   @ApiProperty()
