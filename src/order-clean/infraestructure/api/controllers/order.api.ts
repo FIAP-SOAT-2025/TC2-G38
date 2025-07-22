@@ -3,19 +3,22 @@ import { ApiTags } from '@nestjs/swagger';
 import OrderGatewayInterface from 'src/order-clean/interfaces/gateways';
 import { OrderController } from 'src/order-clean/controllers/order.controller';
 import { OrderDto } from '../dto/order.dto';
-import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
+import { OrderResponse } from '../dto/orderResponse.dto';
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import Order from 'src/order-clean/entities/order.entity';
+import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
+import { PrismaOrderRepository } from '../../persistence/order.repository';
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 
 @ApiTags('Order')
 @Controller('/order')
 export class OrderApi {
   constructor(
-    private readonly orderRepository: OrderGatewayInterface,
-    private readonly itemRepository: ItemGatewayInterface,
-    private readonly customerRepsitory: CustomerGatewayInterface,
+    private readonly orderRepository: PrismaOrderRepository,
+    private readonly itemRepository: PrismaItemRepository,
+    private readonly customerRepsitory: PrismaCustomerRepository,
   ) {}
 
   @Post()
