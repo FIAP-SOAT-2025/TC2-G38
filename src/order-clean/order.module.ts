@@ -5,7 +5,7 @@ import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/
 import { OrderApi } from './infraestructure/api/controllers/order.api';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
-import { PrismaPaymentRepository } from 'src/paymentsCA/infrastructure/persistence/prismaPayment.repository';
+import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
 
 @Module({
   imports: [ConfigModule.forRoot()],

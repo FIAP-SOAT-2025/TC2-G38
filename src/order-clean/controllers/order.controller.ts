@@ -12,8 +12,8 @@ import { CustomerGateway } from 'src/customer/gateways/customer.gateway';
 import Order from '../entities/order.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
-import { PaymentRepositoryInterface } from 'src/paymentsCA/interfaces/payment-repository.interface';
-import { CreatePaymentServiceGateway } from 'src/paymentsCA/gateways/create-payment.gateway';
+import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
+import { CreatePaymentServiceGateway } from 'src/payments/gateways/create-payment.gateway';
 
 export class OrderController {
   constructor() {}

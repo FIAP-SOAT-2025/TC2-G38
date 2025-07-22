@@ -10,7 +10,7 @@ import { OrderMapper } from 'src/order/domain/mappings/mapEntityToResponseDto';
 import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
-import { CreatePaymentGatewayInterface } from 'src/paymentsCA/interfaces/create-payment.interface';
+import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/create-payment-gateway.interface';
 
 export default class ProcessOrderUseCase {
   constructor() {}

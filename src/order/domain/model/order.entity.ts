@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { OrderItem, OrderItemProps } from './orderItem.entity';
 
 import { OrderDomainError } from './exceptions/order.exception';
-import { Payment } from 'src/payments/domain/model/payment.entity';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 
 export interface OrderProps {
   id?: string;

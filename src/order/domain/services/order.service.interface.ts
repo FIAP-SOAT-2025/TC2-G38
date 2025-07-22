@@ -1,4 +1,4 @@
-import { Payment } from 'src/payments/domain/model/payment.entity';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 import { OrderDto } from '../dto/order.dto';
 import { OrderResponse } from '../dto/orderResponse.dto';
 import { OrderStatusEnum } from '../model/orderStatus';

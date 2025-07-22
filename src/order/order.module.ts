@@ -9,7 +9,6 @@ import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
 import UpdateOrderService from './application/updateOrder.service';
 import { ItemModule } from 'src/arch_item/item.module';
-import { CreatePaymentService } from 'src/payments/application/payment.service';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
 import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
@@ -51,10 +50,6 @@ import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/
     {
       provide: 'UpdateItemServiceInterface',
       useExisting: UpdateItemUseCase,
-    },
-    {
-      provide: 'CreatePaymentServiceInterface',
-      useExisting: CreatePaymentService,
     },
     {
       provide: 'IEventEmitter',

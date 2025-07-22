@@ -13,8 +13,8 @@ import { PrismaCustomerRepository } from 'src/customer/infraestructure/persisten
 import { OrderMapper } from '../domain/mappings/mapEntityToResponseDto';
 //TODO REVER O IMPORT DA ENTIDADE
 import { Customer } from 'src/customer/entities/customer.entity';
-import { Payment } from 'src/payments/domain/model/payment.entity';
-import { CreatePaymentServiceInterface } from 'src/payments/domain/services/payment.service.interface';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/create-payment-gateway.interface';
 import Item from 'src/arch_item/entities/item.entity';
 
 export default class ProcessOrderService
@@ -27,8 +27,8 @@ export default class ProcessOrderService
     private readonly PrismaItemRepository: PrismaItemRepository,
     @Inject('CustomerRepository')
     private readonly customerRepository: PrismaCustomerRepository,
-    @Inject('CreatePaymentServiceInterface')
-    private readonly paymentService: CreatePaymentServiceInterface,
+    @Inject('CreatePaymentGatewayInterface')
+    private readonly paymentService: CreatePaymentGatewayInterface,
   ) {}
   async process(
     orderData: OrderDto,

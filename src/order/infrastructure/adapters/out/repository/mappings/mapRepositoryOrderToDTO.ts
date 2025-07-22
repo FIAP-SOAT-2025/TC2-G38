@@ -4,7 +4,7 @@ import {
   OrderItem as PrismaOrderItem,
   Payment as PrismaPayment,
 } from '@prisma/client';
-import { mapPrismaPaymentToPaymentEntity } from 'src/payments/infraestructure/out/repository/mappings/mapPrismaPaymentToPaymentEntity';
+import { mapPrismaPaymentToPaymentEntity } from 'src/payments/infrastructure/mappings/mapPrismaPaymentToPaymentEntity';
 import Order from 'src/order-clean/entities/order.entity';
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 

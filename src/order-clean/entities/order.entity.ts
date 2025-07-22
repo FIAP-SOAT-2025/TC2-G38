@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-
-import { Payment } from 'src/payments/domain/model/payment.entity';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
 import {
   OrderItem,

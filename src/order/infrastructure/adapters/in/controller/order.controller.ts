@@ -9,8 +9,7 @@ import {
   OrderResponse,
 } from 'src/order/domain/dto/orderResponse.dto';
 import { UpdateOrderStatusDto } from 'src/order/domain/dto/update-status.dto';
-import { Payment } from 'src/payments/domain/model/payment.entity';
-
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 @ApiTags('Order')
 @Controller('/order')
 export class OrderController {

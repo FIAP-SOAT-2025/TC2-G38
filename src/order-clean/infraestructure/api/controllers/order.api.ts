@@ -8,7 +8,7 @@ import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface'
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import Order from 'src/order-clean/entities/order.entity';
-import { PaymentRepositoryInterface } from 'src/paymentsCA/interfaces/payment-repository.interface';
+import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
 
 @ApiTags('Order')
 @Controller('/order')

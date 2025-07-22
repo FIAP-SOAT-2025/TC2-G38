@@ -6,7 +6,7 @@ import Order from 'src/order-clean/entities/order.entity';
 import { CompleteOrderResponse } from '../api/dto/orderResponse.dto';
 import { mapPrismaOrderToOrderResponse } from 'src/order-clean/presenters/order.presenter';
 import { OrderMapper } from 'src/order-clean/presenters/orderMap';
-import { UpdateStatusDto } from 'src/payments/domain/dto/update-status.dto';
+import { UpdateStatusDto } from 'src/payments/infrastructure/api/dto/update-status.dto';
 import { OrderStatus } from '@prisma/client';
 
 @Injectable()

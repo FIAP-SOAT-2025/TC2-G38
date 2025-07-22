@@ -3,7 +3,7 @@ import {
   CompleteOrderResponse,
   OrderResponse,
 } from 'src/order-clean/infraestructure/api/dto/orderResponse.dto';
-import { PaymentMapper } from 'src/payments/domain/mapping/mapEntityToResponseDTO';
+import { PaymentMapper } from 'src/payments/presenter/mapEntityToResponse.dto';
 
 export class OrderMapper {
   static mapOrderEntityToOrderProcessResponse(order: Order): OrderResponse {
