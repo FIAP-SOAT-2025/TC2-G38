@@ -14,6 +14,7 @@ import { OrderStatusEnum } from '../enums/orderStatus.enum';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
 import { CreatePaymentServiceGateway } from 'src/payments/gateways/create-payment.gateway';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 
 export class OrderController {
   constructor() {}
@@ -24,7 +25,7 @@ export class OrderController {
     itemRepository: ItemGatewayInterface,
     customerRepository: CustomerGatewayInterface,
     paymentRepository: PaymentRepositoryInterface,
-  ): Promise<OrderResponse> {
+  ): Promise<{ order: OrderResponse; payment: Payment }> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);

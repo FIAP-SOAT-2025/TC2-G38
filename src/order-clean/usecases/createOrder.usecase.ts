@@ -12,6 +12,7 @@ import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/create-payment-gateway.interface';
 import { CreatePaymentUseCase } from 'src/payments/usecases/createPayment.usecase';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 
 export default class ProcessOrderUseCase {
   constructor() {}
@@ -21,7 +22,7 @@ export default class ProcessOrderUseCase {
     itemGateway: ItemGatewayInterface,
     customerGateway: CustomerGatewayInterface,
     paymentGateway: CreatePaymentGatewayInterface,
-  ): Promise<OrderResponse> {
+  ): Promise<{ order: OrderResponse; payment: Payment }> {
     let customer: Customer | undefined;
 
     if (
@@ -52,18 +53,16 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
-      const payment = await CreatePaymentUseCase.createPayment(
-        paymentGateway,
-        createdOrder.id,
-        createdOrder.price,
-      );
 
-    // TODO: APLICAR PRESENTER DEPOIS
+    const payment = await CreatePaymentUseCase.createPayment(
+      paymentGateway,
+      createdOrder.id,
+      createdOrder.price,
+    );
 
-    return OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder);
-    // return {
-    //   order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
-    //   payment: null,
-    // };
+    return {
+      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+      payment,
+    };
   }
 }

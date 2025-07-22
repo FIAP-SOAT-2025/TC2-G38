@@ -1,17 +1,15 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import OrderGatewayInterface from 'src/order-clean/interfaces/gateways';
 import { OrderController } from 'src/order-clean/controllers/order.controller';
 import { OrderDto } from '../dto/order.dto';
 import { OrderResponse } from '../dto/orderResponse.dto';
-import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
-import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import Order from 'src/order-clean/entities/order.entity';
 import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
 import { PrismaOrderRepository } from '../../persistence/order.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
+import { Payment } from 'src/payments/domains/entities/payment.entity';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -24,7 +22,9 @@ export class OrderApi {
   ) {}
 
   @Post()
-  createOrder(@Body() createOrderDto: OrderDto): Promise<OrderResponse> {
+  createOrder(
+    @Body() createOrderDto: OrderDto,
+  ): Promise<{ order: OrderResponse; payment: Payment }> {
     return OrderController.createOrder(
       createOrderDto,
       this.orderRepository,
