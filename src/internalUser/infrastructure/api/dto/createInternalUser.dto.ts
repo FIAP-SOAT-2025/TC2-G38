@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { IsCPF } from 'src/shared/utils/validators/cpf.validator';
 import { IsStrongPassword } from 'src/shared/utils/validators/password.validator';
-import { RoleType } from '../model/role-type';
+import { RoleType } from './role-type';
 
 export class CreateInternalUserDto {
   constructor(
