@@ -7,7 +7,7 @@ export class CreatePaymentUseCase  {
     private readonly paymentProvider: PaymentProviderInterface
   ) {}
 
-  async createPayment(
+  static async createPayment(
     paymentGateway: CreatePaymentGatewayInterface,
     orderId: string,
     totalAmount: number
