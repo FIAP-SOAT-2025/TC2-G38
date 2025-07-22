@@ -3,21 +3,24 @@ import { ApiTags } from '@nestjs/swagger';
 import OrderGatewayInterface from 'src/order-clean/interfaces/gateways';
 import { OrderController } from 'src/order-clean/controllers/order.controller';
 import { OrderDto } from '../dto/order.dto';
-import { CompleteOrderResponse, OrderResponse } from '../dto/orderResponse.dto';
+import { OrderResponse } from '../dto/orderResponse.dto';
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderStatusEnum } from 'src/order-clean/enums/orderStatus.enum';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import Order from 'src/order-clean/entities/order.entity';
-import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
+import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
+import { PrismaOrderRepository } from '../../persistence/order.repository';
+import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
+import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
 
 @ApiTags('Order')
 @Controller('/order')
 export class OrderApi {
   constructor(
-    @Inject('OrderGatewayInterface') private readonly orderRepository: OrderGatewayInterface,
-    @Inject('ItemGatewayInterface') private readonly itemRepository: ItemGatewayInterface,
-    @Inject('CustomerGatewayInterface') private readonly customerRepsitory: CustomerGatewayInterface,
-    @Inject('PaymentRepositoryInterface') private readonly paymentRepository: PaymentRepositoryInterface,
+    private readonly orderRepository: PrismaOrderRepository,
+    private readonly itemRepository: PrismaItemRepository,
+    private readonly customerRepsitory: PrismaCustomerRepository,
+    private readonly paymentRepository: PrismaPaymentRepository,
   ) {}
 
   @Post()
