@@ -52,17 +52,17 @@ export default class ProcessOrderService
     });
 
     const createdOrder = await this.orderRepository.create(current_order);
-    const payment = await this.paymentService.createPayment(
-      createdOrder.id,
-      createdOrder.price,
-    );
+    // const payment = await this.paymentService.createPayment(
+    //   createdOrder.id,
+    //   createdOrder.price,
+    // );
 
     throw new Error('not implemented');
 
-    return {
-      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
-      payment: payment,
-    };
+    // return {
+    //   order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+    //   payment: payment,
+    // };
   }
 
   private _hasRepeatedOrderItemIds = (orderItems: OrderItemDto[]): boolean => {
