@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { OrderStatus } from '@prisma/client';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
-import { CreateItemInterface } from 'src/arch_item/interfaces/createItemInterface';
+import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
+import { CreateItemInterface } from 'src/item/interfaces/createItemInterface';
 import { 
   ItemNotFoundError,
   CreateItemError,
   DeleteItemError
-} from 'src/arch_item/entities/errors/item.errors';
-import { mapRepositoryToItemEntity } from 'src/arch_item/infraestructure/persistence/mappers/mapRepositoryToItemEntity';
-import Item from 'src/arch_item/entities/item.entity';
-import ItemCategoryEnum from 'src/arch_item/entities/itemCategory.enum';
-import { UpdateItemInterface } from 'src/arch_item/interfaces/updateItemInterface';
+} from 'src/item/entities/errors/item.errors';
+import { mapRepositoryToItemEntity } from 'src/item/infraestructure/persistence/mappers/mapRepositoryToItemEntity';
+import Item from 'src/item/entities/item.entity';
+import ItemCategoryEnum from 'src/item/entities/itemCategory.enum';
+import { UpdateItemInterface } from 'src/item/interfaces/updateItemInterface';
 
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Decimal } from '@prisma/client/runtime/library';
 import Item from '../../../entities/item.entity'
 import { Item as PrismaItem } from '@prisma/client';
-import ItemCategoryEnum from 'src/arch_item/entities/itemCategory.enum';
+import ItemCategoryEnum from 'src/item/entities/itemCategory.enum';
 
 export function mapRepositoryToItemEntity(prismaItem: PrismaItem): Item {
   return new Item({
