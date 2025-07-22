@@ -6,7 +6,7 @@ import { InternalUserModule } from './user/internaluser.module';
 //import { OrderModule } from './order/order.module';
 //import { PaymentModule } from './payments/payment.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { ItemModule } from './arch_item/item.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [

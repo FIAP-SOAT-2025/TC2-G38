@@ -8,11 +8,11 @@ import { PrismaCustomerRepository } from 'src/customer/infraestructure/persisten
 import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
 import UpdateOrderService from './application/updateOrder.service';
-import { ItemModule } from 'src/arch_item/item.module';
+import { ItemModule } from 'src/item/item.module';
 import { CreatePaymentService } from 'src/payments/application/payment.service';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
-import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
-import UpdateItemUseCase from 'src/arch_item/useCases/updateItem.useCase';
+import { PrismaItemRepository } from 'src/item/infraestructure/persistence/prismaItem.repository';
+import UpdateItemUseCase from 'src/item/useCases/updateItem.useCase';
 
 @Module({
   imports: [

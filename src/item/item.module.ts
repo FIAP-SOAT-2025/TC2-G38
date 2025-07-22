@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../shared/infra/prisma.service';
 import { PrismaItemRepository } from './infraestructure/persistence/prismaItem.repository';
 import { ItemControllerApi } from './infraestructure/api/controller/item.api';
-import CreateItemUseCase from './useCases/createItem.useCase';
+
 
 
 @Module({

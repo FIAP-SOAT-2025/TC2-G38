@@ -4,7 +4,7 @@ import { UpdateOrderServiceInterface } from '../domain/services/order.service.in
 import { OrderStatusEnum } from '../domain/model/orderStatus';
 import Order from '../domain/model/order.entity';
 import { OnEvent } from '@nestjs/event-emitter';
-import UpdateItemUseCase from 'src/arch_item/useCases/updateItem.useCase';
+import UpdateItemUseCase from 'src/item/useCases/updateItem.useCase';
 
 export default class UpdateOrderService implements UpdateOrderServiceInterface {
   constructor(

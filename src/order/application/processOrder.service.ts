@@ -5,7 +5,7 @@ import Order from '../domain/model/order.entity';
 import { ProcessOrderServiceInterface } from '../domain/services/order.service.interface';
 import { OrderResponse } from '../domain/dto/orderResponse.dto';
 
-import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
+import { PrismaItemRepository } from 'src/item/infraestructure/persistence/prismaItem.repository';
 import { OrderDomainError } from '../domain/model/exceptions/order.exception';
 import { OrderItemProps } from '../domain/model/orderItem.entity';
 //TODO REVER O IMPORT DO REPOSITORY
@@ -15,7 +15,7 @@ import { OrderMapper } from '../domain/mappings/mapEntityToResponseDto';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Payment } from 'src/payments/domain/model/payment.entity';
 import { CreatePaymentServiceInterface } from 'src/payments/domain/services/payment.service.interface';
-import Item from 'src/arch_item/entities/item.entity';
+import Item from 'src/item/entities/item.entity';
 
 export default class ProcessOrderService
   implements ProcessOrderServiceInterface
