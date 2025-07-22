@@ -4,7 +4,6 @@ import { PrismaService } from 'src/shared/infra/prisma.service';
 import ProcessOrderService from './application/processOrder.service';
 import { OrderController } from './infrastructure/adapters/in/controller/order.controller';
 import { PrismaOrderRepository } from './infrastructure/adapters/out/repository/order.repository';
-import { PrismaItemRepository } from 'src/item/infraestructure/adapters/out/repository/prismaItem.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import FindOrderService from './application/findOrder.service';
 import { PaymentModule } from 'src/payments/payment.module';
@@ -28,6 +27,7 @@ import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
     FindOrderService,
     UpdateOrderService,
     PrismaService,
+    UpdateItemUseCase,
 
     {
       provide: 'OrderRepository',
@@ -49,10 +49,10 @@ import UpdateItemUseCase from 'src/arch_item/usecases/updateItem.useCase';
       provide: 'UpdateOrderServiceInterface',
       useExisting: UpdateOrderService,
     },
-    {
+    /*{
       provide: 'UpdateItemServiceInterface',
       useExisting: UpdateItemUseCase,
-    },
+    },*/
     {
       provide: 'CreatePaymentServiceInterface',
       useExisting: CreatePaymentService,
