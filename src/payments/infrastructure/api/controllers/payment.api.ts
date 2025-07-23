@@ -16,7 +16,6 @@ export class PaymentApi {
     @Param('id') id: string,
     @Body() updateStatusDto: UpdateStatusDto,
   ) {
-    
     return await PaymentController.updatePaymentStatus(
       this.prismaPaymentRepository,
       id,

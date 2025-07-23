@@ -14,6 +14,4 @@ export interface PaymentRepositoryInterface {
   updateStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
 
   find(id: string): Promise<Payment>;
-
-  getOrGenerateCustomerEmail(orderId: string): Promise<string>;
 }

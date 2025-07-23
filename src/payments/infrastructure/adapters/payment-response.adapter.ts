@@ -18,7 +18,7 @@ export const PaymentResponseAdapter = {
     });
   },
 
-  adaptJsonToMessage: function (data: { message: string }) {
-    return JSON.stringify({ message: data.message });
+  adaptJsonToMessage: function (data: Payment) {
+    return JSON.stringify(data);
   }
 };

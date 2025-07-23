@@ -1,8 +1,8 @@
-import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
 import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 import UpdatePaymentStatusUseCase from "../usecases/updatePaymentStatus.usecase";
 import { EventEmitter } from "events";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
+import { PaymentMapper } from "../presenter/mapEntityToResponse.dto";
 export class PaymentController {
   constructor() {}
 
@@ -18,6 +18,7 @@ export class PaymentController {
       id,
       newStatus
     );
-    return PaymentResponseAdapter.adaptJsonToMessage(updatedPayment);
+
+    return PaymentMapper.mapPaymentToPaymentResponse(updatedPayment);
   }
 }
