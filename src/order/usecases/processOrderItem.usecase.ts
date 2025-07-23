@@ -1,6 +1,6 @@
-import Item from 'src/arch_item/entities/item.entity';
+import Item from 'src/item/entities/item.entity';
 import { OrderDto } from '../infraestructure/api/dto/order.dto';
-import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
+import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import ValidItemOrderUseCase from './validItemOrder.usecase';
 import { OrderItemProps } from '../entities/orderItem.entity';
 

@@ -1,4 +1,4 @@
-import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
+import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import OrderGatewayInterface from '../interfaces/gateways';
 import { OrderDto } from '../infraestructure/api/dto/order.dto';
 import { Customer } from 'src/customer/entities/customer.entity';
@@ -9,12 +9,11 @@ import Order from '../entities/order.entity';
 import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
-import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/create-payment-gateway.interface';
 import { CreatePaymentUseCase } from 'src/payments/usecases/createPayment.usecase';
 import { Payment } from 'src/payments/domains/entities/payment.entity';
 import { OrderMapper } from '../presenters/orderMap';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
-import { GenerateEmailGatewayInterface } from 'src/payments/interfaces/generate-email-gateway.interface';
+import { PaymentGatewayInterface } from 'src/payments/interfaces/payment-gateway.interface';
 
 export default class ProcessOrderUseCase {
   constructor() {}
@@ -23,7 +22,7 @@ export default class ProcessOrderUseCase {
     orderGateway: OrderGatewayInterface,
     itemGateway: ItemGatewayInterface,
     customerGateway: CustomerGatewayInterface,
-    paymentGateway: CreatePaymentGatewayInterface,
+    paymentGateway: PaymentGatewayInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
   ): Promise<{ order: OrderResponse; payment: Payment }> {
     let customer: Customer | undefined;
@@ -56,7 +55,7 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
-
+    console.log(`----------------------------Created order:`, createdOrder);
     const payment = await CreatePaymentUseCase.createPayment(
       paymentGateway,
       paymentProvider,

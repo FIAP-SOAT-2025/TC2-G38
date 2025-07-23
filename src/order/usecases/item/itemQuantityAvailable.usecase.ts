@@ -1,4 +1,4 @@
-import Item from 'src/arch_item/entities/item.entity';
+import Item from 'src/item/entities/item.entity';
 
 export default class ItemQuantityAvailableUseCase {
   constructor() {}

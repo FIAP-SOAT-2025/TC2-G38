@@ -3,10 +3,10 @@ import { Inject, Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
 import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
-import { CallPaymentApiInterface } from "src/payments/interfaces/call-payment-api.interface";
+import { CallPaymentProviderGatewayInterface } from "src/payments/interfaces/call-payment-provider-gateway.interface";
 
 @Injectable()
-export class MercadoPagoClient implements CallPaymentApiInterface{
+export class MercadoPagoClient implements CallPaymentProviderGatewayInterface{
   constructor(
     private readonly httpService: HttpService,
   ){}

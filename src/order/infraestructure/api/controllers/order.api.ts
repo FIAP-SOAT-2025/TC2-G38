@@ -5,7 +5,7 @@ import { OrderDto } from '../dto/order.dto';
 import { OrderResponse } from '../dto/orderResponse.dto';
 import { OrderStatusEnum } from 'src/order/enums/orderStatus.enum';
 import Order from 'src/order/entities/order.entity';
-import { PrismaItemRepository } from 'src/arch_item/infraestructure/persistence/prismaItem.repository';
+import { PrismaItemRepository } from 'src/item/infraestructure/persistence/prismaItem.repository';
 import { PrismaOrderRepository } from '../../persistence/order.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';

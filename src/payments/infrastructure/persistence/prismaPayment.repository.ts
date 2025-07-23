@@ -3,12 +3,12 @@ import { PrismaService } from "../../../shared/infra/prisma.service";
 import { Payment } from "../../domains/entities/payment.entity";
 import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
 import { PaymentStatusEnum } from "src/payments/domains/enums/payment-status.enum";
-import { UpdatePaymentGatewayInterface } from "src/payments/interfaces/update-payment-gateways.interface";
 import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
 import { PrismaCustomerRepository } from "src/customer/infraestructure/persistence/prismaCustomer.repository";
+import { PaymentGatewayInterface } from "src/payments/interfaces/payment-gateway.interface";
 
 @Injectable()
-export class PrismaPaymentRepository implements UpdatePaymentGatewayInterface {
+export class PrismaPaymentRepository implements PaymentGatewayInterface {
   constructor(private readonly prisma: PrismaService,
     private readonly customerRepository: PrismaCustomerRepository,
   ) {}
@@ -21,6 +21,7 @@ export class PrismaPaymentRepository implements UpdatePaymentGatewayInterface {
       qrCode: string,
     ): Promise<Payment> {
       try {
+        console.log("--------ORDER ID NO PRISMA PAYMENT:", orderId);
         const payment = await this.prisma.payment.create({
           data: {
             orderId: orderId,
@@ -47,7 +48,7 @@ export class PrismaPaymentRepository implements UpdatePaymentGatewayInterface {
           where: { id: paymentId },
           data: { status },
         });
-        
+        console.log('----------------------------Updated payment:', updatedPayment);
         return mapPrismaPaymentToPaymentEntity(updatedPayment);
       } catch (error) {
         console.error('Error updating payment status:', error);

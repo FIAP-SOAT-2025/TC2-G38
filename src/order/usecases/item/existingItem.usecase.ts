@@ -1,4 +1,4 @@
-import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
+import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 
 export default class ExistingItemUseCase {
   constructor() {}

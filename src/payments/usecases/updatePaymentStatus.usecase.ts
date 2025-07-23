@@ -1,11 +1,11 @@
-import { UpdatePaymentGatewayInterface } from "src/payments/interfaces/update-payment-gateways.interface";
 import { PaymentStatusEnum } from '../domains/enums/payment-status.enum';
 import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
+import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
 export default class UpdatePaymentStatusUseCase {
   constructor(private readonly eventEmitter: IEventEmitter) {}
 
   async updateStatus(
-    paymentGatewayI: UpdatePaymentGatewayInterface,
+    paymentGatewayI: PaymentGatewayInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ): Promise<{ message: string }> {
