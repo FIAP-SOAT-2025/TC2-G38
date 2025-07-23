@@ -10,9 +10,7 @@ export default class UpdatePaymentGateway implements UpdatePaymentGatewayInterfa
   ) {}
  
  async updateStatus( paymentId: string, status: PaymentStatusEnum): Promise<Payment> {
-    const updatedPayment = await this.paymentRepository.updateStatus(paymentId, status);
-
-    return updatedPayment;
+    return await this.paymentRepository.updateStatus(paymentId, status);
   }
  
   async find(id: string): Promise<Payment> {

@@ -15,7 +15,7 @@ export class CreatePaymentServiceGateway implements CreatePaymentGatewayInterfac
     orderId: string
   ): Promise<Payment> {
     try {
-      return  await this.paymentRepository.create(
+      return await this.paymentRepository.create(
         orderId,
         PaymentTypeEnum.PIX,
         status as PaymentStatusEnum,
