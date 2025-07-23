@@ -1,6 +1,9 @@
-import { Payment } from "../domains/entities/payment.entity";
-import { PaymentProviderInterface } from "./payment-provider.interface";
+import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
 
 export interface CreatePaymentGatewayInterface {
-  createPayment(paymentProvider: PaymentProviderInterface, orderId: string, totalAmount: number): Promise<Payment>;
+  createPayment( paymentId: string,
+      qrCode: string,
+      status: PaymentStatusEnum,
+      orderId: string
+  ): Promise<any>;
 }

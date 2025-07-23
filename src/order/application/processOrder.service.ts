@@ -14,7 +14,7 @@ import { OrderMapper } from '../domain/mappings/mapEntityToResponseDto';
 //TODO REVER O IMPORT DA ENTIDADE
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Payment } from 'src/payments/domains/entities/payment.entity';
-import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/create-payment-gateway.interface';
+import { CreatePaymentGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
 import Item from 'src/arch_item/entities/item.entity';
 
 export default class ProcessOrderService
