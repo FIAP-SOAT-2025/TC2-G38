@@ -13,7 +13,6 @@ export class CreatePaymentUseCase  {
     orderId: string,
     totalAmount: number
   ): Promise<Payment> {
-    console.log("-------ORDER ID USECASE:---------------", orderId);
 
     const provideResponse = await paymentProvider.callPaymentApi(totalAmount, email);
     const paymentId = String(provideResponse.id);

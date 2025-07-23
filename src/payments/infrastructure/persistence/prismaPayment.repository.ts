@@ -21,7 +21,6 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
       qrCode: string,
     ): Promise<Payment> {
       try {
-        console.log("--------ORDER ID NO PRISMA PAYMENT:", orderId);
         const payment = await this.prisma.payment.create({
           data: {
             orderId: orderId,
@@ -48,7 +47,6 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
           where: { id: paymentId },
           data: { status },
         });
-        console.log('----------------------------Updated payment:', updatedPayment);
         return mapPrismaPaymentToPaymentEntity(updatedPayment);
       } catch (error) {
         console.error('Error updating payment status:', error);

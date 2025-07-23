@@ -9,7 +9,6 @@ export class PaymentProviderGateway implements CallPaymentProviderGatewayInterfa
     totalAmount: number,
     email: string,
   ){
-    console.log('--------------------------Calling payment provider with amount:', totalAmount, 'and email:', email);
     return await this.paymentProvider.callPaymentApi(
       totalAmount,
       email,

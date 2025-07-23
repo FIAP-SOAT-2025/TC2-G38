@@ -55,7 +55,7 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
-    console.log(`----------------------------Created order:`, createdOrder);
+
     const payment = await CreatePaymentUseCase.createPayment(
       paymentGateway,
       paymentProvider,

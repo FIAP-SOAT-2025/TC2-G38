@@ -15,7 +15,6 @@ export class PaymentGateway implements PaymentGatewayInterface {
     qrCode: string,
   ): Promise<Payment> {
     try {
-      console.log("--------ORDER ID no PAYMENT GATEWAY:", orderId);
       return await this.paymentRepository.create(
         orderId,
         type,
