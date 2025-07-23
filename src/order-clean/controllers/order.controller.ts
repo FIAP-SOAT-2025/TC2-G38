@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import ItemGatewayInterface from 'src/arch_item/interfaces/itemGatewayInterface';
 import { OrderGateway } from '../gateways/order.gateway';
 import OrderGatewayInterface from '../interfaces/gateways';
@@ -15,9 +16,10 @@ import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
 import { CreatePaymentServiceGateway } from 'src/payments/gateways/create-payment.gateway';
 import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { PaymentProviderInterface } from 'src/payments/interfaces/payment-provider.interface';
 
 export class OrderController {
-  constructor() {}
+  constructor() { }
 
   static async createOrder(
     createOrderDto: OrderDto,
@@ -25,11 +27,13 @@ export class OrderController {
     itemRepository: ItemGatewayInterface,
     customerRepository: CustomerGatewayInterface,
     paymentRepository: PaymentRepositoryInterface,
+    // paymentProvider: PaymentProviderInterface,
   ): Promise<{ order: OrderResponse; payment: Payment }> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGatway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);
     const paymentGateway = new CreatePaymentServiceGateway(paymentRepository);
+  
 
     try {
       return ProcessOrderUseCase.processOrder(

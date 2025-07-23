@@ -10,6 +10,7 @@ import { PrismaOrderRepository } from '../../persistence/order.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
 import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { PaymentProviderInterface } from 'src/payments/interfaces/payment-provider.interface';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -19,6 +20,7 @@ export class OrderApi {
     private readonly itemRepository: PrismaItemRepository,
     private readonly customerRepsitory: PrismaCustomerRepository,
     private readonly paymentRepository: PrismaPaymentRepository,
+    private readonly paymentProvider: PaymentProviderInterface,
   ) {}
 
   @Post()
