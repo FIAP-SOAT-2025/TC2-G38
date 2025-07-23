@@ -3,19 +3,16 @@ import { Inject, Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
 import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
-import { PaymentRepositoryInterface } from "src/payments/interfaces/payment-repository.interface";
 import { CallPaymentApiInterface } from "src/payments/interfaces/call-payment-api.interface";
 
 @Injectable()
 export class MercadoPagoClient implements CallPaymentApiInterface{
   constructor(
     private readonly httpService: HttpService,
-    @Inject('PaymentRepository')
-    private readonly paymentRepository: PaymentRepositoryInterface,
   ){}
 
-  async callPaymentApi(orderId: string, totalAmount: number): Promise<any> {
-    const body = await this.buildPaymentBody(totalAmount, orderId );
+  async callPaymentApi(totalAmount: number, email: string): Promise<any> {
+    const body = await this.buildPaymentBody(totalAmount, email);
     const headers = this.buildHeaders();
     try {
       const response = await firstValueFrom(this.httpService.post(process.env.API_BASE_URL!, body, { headers }));
@@ -26,8 +23,8 @@ export class MercadoPagoClient implements CallPaymentApiInterface{
     }
   }
 
-  private async buildPaymentBody(totalAmount: number, orderId: string): Promise<object> {
-    const payer_email = (await this.paymentRepository.getOrGenerateCustomerEmail(orderId));
+  private async buildPaymentBody(totalAmount: number, email: string): Promise<object> {
+    const payer_email = email;
     return {
       transaction_amount: totalAmount,
       description: 'FIAP Fast Food Payment',

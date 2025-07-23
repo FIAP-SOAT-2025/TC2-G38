@@ -7,12 +7,12 @@ export class PaymentProviderGateway implements CallPaymentProviderGatewayInterfa
    ) {}
  
   async callPaymentProvider(
-    orderId: string,
-    totalAmount: number
+    totalAmount: number,
+    email: string,
   ){
     return await this.paymentProvider.callPaymentApi(
-      orderId,
       totalAmount,
+      email,
     );
   }
 }
