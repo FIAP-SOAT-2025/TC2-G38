@@ -49,6 +49,11 @@ export class OrderApi {
 
   @Patch(':id/status')
   updateStatus(@Param('id') id: string, @Body() statusDto: OrderStatusEnum) {
-    return OrderController.updateStatus(id, statusDto, this.orderRepository);
+    return OrderController.updateStatus(
+      id,
+      statusDto,
+      this.orderRepository,
+      this.itemRepository,
+    );
   }
 }

@@ -1,10 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Payment } from 'src/payments/domains/entities/payment.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
-import {
-  OrderItem,
-  OrderItemProps,
-} from './orderItem.entity';
+import { OrderItem, OrderItemProps } from './orderItem.entity';
 
 export interface OrderProps {
   id?: string;
