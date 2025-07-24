@@ -3,6 +3,7 @@ import Item from '../entities/item.entity';
 import ItemGatewayInterface from '../interfaces/itemGatewayInterface';
 import FindItemUseCase from './findItem.useCase';
 import UpdateItemUseCase from './updateItem.useCase';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 export default class UpdateQuantityItemUseCase {
   constructor() {}
@@ -14,7 +15,11 @@ export default class UpdateQuantityItemUseCase {
     const existingItem = await FindItemUseCase.findById(id, itemGateway);
 
     if (!existingItem) {
-      throw new NotFoundException(`Item with ID ${id} not found`);
+      throw new BaseException(
+        `Item with ID ${id} not found`,
+        400,
+        'NOT_FOUND_ITEM',
+      );
     }
 
     existingItem.updateItemQuantity(quantityToRemoveFromItemInventory);
