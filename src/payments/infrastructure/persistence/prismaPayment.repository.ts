@@ -18,9 +18,9 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
     status: PaymentStatusEnum,
     mercadoPagoPaymentId: string,
     qrCode: string,
-  ): Promise<Payment> {
+  ): Promise<any> {
     try {
-      const payment = await this.prisma.payment.create({
+      return await this.prisma.payment.create({
         data: {
           orderId: orderId,
           type: type as PaymentTypeEnum,
@@ -29,8 +29,6 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
           qrCode: qrCode,
         },
       });
-
-      return mapPrismaPaymentToPaymentEntity(payment);
     } catch (error) {
       console.error('Error creating payment:', error);
       throw new Error('Failed to create payment');
@@ -40,21 +38,19 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
   async updateStatus(
     paymentId: string,
     status: PaymentStatusEnum,
-  ): Promise<Payment> {
+  ): Promise<any> {
     try {
-      const updatedPayment = await this.prisma.payment.update({
+      return await this.prisma.payment.update({
         where: { id: paymentId },
         data: { status },
       });
-
-      return mapPrismaPaymentToPaymentEntity(updatedPayment);
     } catch (error) {
       console.error('Error updating payment status:', error);
       throw new Error('Failed to update payment status');
     }
   }
 
-  async find(id: string): Promise<Payment> {
+  async find(id: string): Promise<any> {
     const payment = await  this.prisma.payment.findUnique({
       where: { id: id },
     });
@@ -63,6 +59,6 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
       throw new NotFoundException(`Payment with ID ${id} not found`);
     }
 
-    return mapPrismaPaymentToPaymentEntity(payment);
+    return payment;
   }
 }
