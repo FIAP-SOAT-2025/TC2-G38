@@ -69,8 +69,9 @@ export class OrderController {
     id: string,
     statusDto: OrderStatusEnum,
     orderRepository: OrderGatewayInterface,
+    itemRepository: ItemGatewayInterface,
   ): Promise<{ message: string }> {
     const orderGateway = new OrderGateway(orderRepository);
-    return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway);
+    return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway, itemRepository);
   }
 }

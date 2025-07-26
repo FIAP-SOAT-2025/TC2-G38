@@ -59,7 +59,7 @@ export default class ProcessOrderUseCase {
     const payment = await CreatePaymentUseCase.createPayment(
       paymentGateway,
       paymentProvider,
-      'email@email.com',
+      customer?.email || this.generateEmailForPaymentClient(createdOrder.id),
       createdOrder.id,
       createdOrder.price,
     );
@@ -68,5 +68,9 @@ export default class ProcessOrderUseCase {
       order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
       payment,
     };
+  }
+
+  private static generateEmailForPaymentClient(orderId: string): string {
+    return `payment.order.id+${orderId}@gmail.com`;
   }
 }
