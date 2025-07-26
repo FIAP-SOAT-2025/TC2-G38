@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate-seed-job
+  namespace: lanchonete-tc2 # Assumindo o namespace 'lanchonete-tc2'
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate-db
+        image: fealves/tc2:latest # Use a mesma imagem da sua aplicação
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed"] # Executa migrações e seeds
+        envFrom:
+        - configMapRef:
+            name: api-configmap
+        - secretRef:
+            name: api-secrets
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+      restartPolicy: Never # Garante que o Job finalize após a conclusão
+  backoffLimit: 4 # Número de tentativas em caso de falha

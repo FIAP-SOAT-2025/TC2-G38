@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-deployment
+  name: lanchonete-api
   namespace: lanchonete-tc2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api
+      app: lanchonete-api
   template:
     metadata:
       labels:
-        app: api
+        app: lanchonete-api
     spec:
       containers:
       - name: api
-        image: fealves/tc2:latest # Use the same image as the app
+        image: fealves/tc2:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000

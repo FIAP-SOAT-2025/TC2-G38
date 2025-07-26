@@ -54,9 +54,47 @@ kubectl apply -f k8s/db-service.yaml
 
 # 5. Finalmente, faça o deploy da aplicação no namespace lanchonete-tc2
 kubectl apply -f k8s/api-deployment.yaml
+
+# 6. Ou execute todos os comandos 
+kubectl apply -f k8s/namespace.yaml && kubectl apply -f k8s/db-namespace.yaml && kubectl apply -f k8s/configMap.yaml && kubectl apply -f k8s/secrets.yaml && kubectl apply -f k8s/api-service.yaml && kubectl apply -f k8s/api-hpa.yaml && kubectl apply -f k8s/db-secrets.yaml && kubectl apply -f k8s/db-deployment.yaml && kubectl apply -f k8s/db-service.yaml && kubectl apply -f k8s/api-deployment.yaml
 ```
 
-### 3. Verificar o Status do Deploy
+### 3. Instalação do Metrics Server
+
+O Metrics Server é um agregador de dados de uso de recursos (CPU e memória) do cluster, essencial para o funcionamento do Horizontal Pod Autoscaler (HPA).
+
+1.  **Aplicar o manifesto do Metrics Server:**
+    Este comando instala os componentes básicos do Metrics Server no namespace `kube-system`.
+    ```bash
+    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    ```
+
+2.  **Obter o nome da imagem do Metrics Server:**
+    Precisamos do nome exato da imagem para carregá-la no cluster Kind.
+    ```bash
+    kubectl get deployment metrics-server -n kube-system -o jsonpath='{.spec.template.spec.containers[0].image}'
+    ```
+    A saída será algo como `registry.k8s.io/metrics-server/metrics-server:v0.8.0`.
+
+3.  **Baixar a imagem do Docker (opcional, se já não tiver):**
+    Se a imagem ainda não estiver no seu cache local do Docker, baixe-a.
+    ```bash
+    docker pull registry.k8s.io/metrics-server/metrics-server:v0.8.0 # Substitua pela imagem obtida no passo anterior
+    ```
+
+4.  **Carregar a imagem no cluster Kind:**
+    Em ambientes Kind, os nós do cluster podem não ter acesso direto ao Docker Hub. Carregar a imagem localmente garante que ela esteja disponível para os pods.
+    ```bash
+    kind load docker-image registry.k8s.io/metrics-server/metrics-server:v0.8.0 -n lanchonete-cluster # Substitua pela imagem e nome do cluster
+    ```
+
+5.  **Aplicar patch de TLS (para Kind):**
+    Em alguns ambientes Kind, o Metrics Server pode ter problemas para se comunicar com o Kubelet devido a certificados TLS. Este patch adiciona um argumento para ignorar a verificação de TLS.
+    ```bash
+    kubectl patch deployment metrics-server -n kube-system --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
+    ```
+
+### 4. Verificar o Status do Deploy
 
 Monitore a criação dos pods em ambos os namespaces para garantir que tudo suba corretamente. Você pode abrir dois terminais para observar ambos simultaneamente.
 
@@ -72,14 +110,14 @@ kubectl get pods -n lanchonete-db --watch
 
 Aguarde até que os pods em ambos os namespaces estejam com o status `Running`.
 
-### 4. Testar a Aplicação
+### 5. Testar a Aplicação
 
 Quando os pods estiverem prontos, a aplicação estará acessível.
 
 -   **Endpoint de Health Check**: Abra seu navegador e acesse [http://localhost:8080/health](http://localhost:8080/health). Você deve receber a resposta `{"status":"ok"}`.
 -   **Outros Endpoints**: Utilize uma ferramenta como Postman ou `curl` para testar as outras funcionalidades da API.
 
-### 5. Limpar o Ambiente
+### 6. Limpar o Ambiente
 
 Após concluir os testes, você pode remover o cluster para liberar os recursos da sua máquina.
 
