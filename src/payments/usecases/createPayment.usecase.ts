@@ -1,7 +1,7 @@
-import { Payment, PaymentStatusEnum } from "../domains/entities/payment.entity";
+import { Payment, PaymentStatusEnum } from "../domain/entities/payment.entity";
 import { CallPaymentProviderGatewayInterface } from "../interfaces/call-payment-provider-gateway.interface";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
-import { PaymentTypeEnum } from "../domains/enums/payment-type.enum";
+import { PaymentTypeEnum } from "../domain/enums/payment-type.enum";
 
 export class CreatePaymentUseCase  {
   constructor() {}
@@ -13,7 +13,6 @@ export class CreatePaymentUseCase  {
     orderId: string,
     totalAmount: number
   ): Promise<Payment> {
-    console.log("-------ORDER ID USECASE:---------------", orderId);
 
     const provideResponse = await paymentProvider.callPaymentApi(totalAmount, email);
     const paymentId = String(provideResponse.id);

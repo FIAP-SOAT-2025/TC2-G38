@@ -1,6 +1,8 @@
-import { PaymentStatusEnum } from '../domains/enums/payment-status.enum';
+import { PaymentStatusEnum } from '../domain/enums/payment-status.enum';
 import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
+import { Payment } from '../domain/entities/payment.entity';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 export default class UpdatePaymentStatusUseCase {
   constructor(private readonly eventEmitter: IEventEmitter) {}
 
@@ -8,16 +10,10 @@ export default class UpdatePaymentStatusUseCase {
     paymentGatewayI: PaymentGatewayInterface,
     id: string,
     newStatus: PaymentStatusEnum
-  ): Promise<{ message: string }> {
+  ): Promise<Payment> {
     const payment = await paymentGatewayI.find(id);
 
-    if (payment.status === newStatus) {
-      throw new Error(`Payment with ID ${id} is already in ${payment.status} status`);
-    }
-
-    if (payment.status === PaymentStatusEnum.APPROVED) {
-      throw new Error(`Payment with ID ${id} is approved and cannot be updated.`);
-    }
+    this.validateStatus(payment, newStatus, id);
 
     const updatedPayment = await paymentGatewayI.updateStatus(id, newStatus);
 
@@ -25,6 +21,24 @@ export default class UpdatePaymentStatusUseCase {
       this.eventEmitter.emit('payment.approved', { orderId: updatedPayment.orderId });
     }
 
-    return { message: `Payment with ID ${id} updated successfully` };
+    return updatedPayment;
+  }
+
+  private validateStatus(payment: Payment, newStatus: PaymentStatusEnum, id: string): void {
+    if (payment.status === newStatus) {
+      throw new BaseException(
+        `Payment with ID ${id} is already in ${payment.status} status`,
+        409,
+        'PAYMENT_ALREADY_IN_STATUS'
+      );
+    }
+
+    if (payment.status === PaymentStatusEnum.APPROVED) {
+      throw new BaseException(
+        `Payment with ID ${id} is approved and cannot be updated.`,
+        409,
+        'PAYMENT_ALREADY_APPROVED'
+      );
+    }
   }
 }

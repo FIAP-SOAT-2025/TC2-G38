@@ -1,5 +1,5 @@
-import { Payment, PaymentStatusEnum } from "../domains/entities/payment.entity";
-import { PaymentTypeEnum } from "../domains/enums/payment-type.enum";
+import { Payment, PaymentStatusEnum } from "../domain/entities/payment.entity";
+import { PaymentTypeEnum } from "../domain/enums/payment-type.enum";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
 
 export class PaymentGateway implements PaymentGatewayInterface {
@@ -15,7 +15,6 @@ export class PaymentGateway implements PaymentGatewayInterface {
     qrCode: string,
   ): Promise<Payment> {
     try {
-      console.log("--------ORDER ID no PAYMENT GATEWAY:", orderId);
       return await this.paymentRepository.create(
         orderId,
         type,

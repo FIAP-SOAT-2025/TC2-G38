@@ -14,7 +14,7 @@ import Order from '../entities/order.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
-import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { PaymentProviderGateway } from 'src/payments/gateways/payment-provider.gateway';
 import { PaymentGateway } from 'src/payments/gateways/payment.gateway';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';

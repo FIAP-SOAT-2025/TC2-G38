@@ -1,4 +1,4 @@
-import { Payment } from '../../domains/entities/payment.entity';
+import { Payment } from '../../domain/entities/payment.entity';
 
 export const PaymentResponseAdapter = {
   adaptJsonToPayment: function (data: Payment | null) {
@@ -18,7 +18,7 @@ export const PaymentResponseAdapter = {
     });
   },
 
-  adaptJsonToMessage: function (data: { message: string }) {
-    return JSON.stringify({ message: data.message });
+  adaptJsonToMessage: function (data: Payment) {
+    return JSON.stringify(data);
   }
 };

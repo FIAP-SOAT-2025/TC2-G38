@@ -1,6 +1,6 @@
-import { Payment } from "../domains/entities/payment.entity";
-import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
-import { PaymentStatusEnum } from "src/payments/domains/enums/payment-status.enum";
+import { Payment } from "../domain/entities/payment.entity";
+import { PaymentTypeEnum } from "src/payments/domain/enums/payment-type.enum";
+import { PaymentStatusEnum } from "src/payments/domain/enums/payment-status.enum";
 
 export interface PaymentRepositoryInterface {
   create(
@@ -14,6 +14,4 @@ export interface PaymentRepositoryInterface {
   updateStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
 
   find(id: string): Promise<Payment>;
-
-  getOrGenerateCustomerEmail(orderId: string): Promise<string>;
 }
