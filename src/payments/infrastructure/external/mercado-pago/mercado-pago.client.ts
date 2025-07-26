@@ -2,7 +2,7 @@ import { HttpService } from "@nestjs/axios";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { firstValueFrom } from 'rxjs';
-import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
+import { PaymentTypeEnum } from "src/payments/domain/enums/payment-type.enum";
 import { CallPaymentProviderGatewayInterface } from "src/payments/interfaces/call-payment-provider-gateway.interface";
 
 @Injectable()

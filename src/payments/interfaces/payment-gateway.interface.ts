@@ -1,6 +1,6 @@
-import { Payment } from "../domains/entities/payment.entity";
-import { PaymentTypeEnum } from "src/payments/domains/enums/payment-type.enum";
-import { PaymentStatusEnum } from "src/payments/domains/enums/payment-status.enum";
+import { Payment } from "../domain/entities/payment.entity";
+import { PaymentTypeEnum } from "src/payments/domain/enums/payment-type.enum";
+import { PaymentStatusEnum } from "src/payments/domain/enums/payment-status.enum";
 
 export interface PaymentGatewayInterface {
   create(

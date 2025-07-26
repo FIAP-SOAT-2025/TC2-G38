@@ -9,7 +9,7 @@ import { PrismaItemRepository } from 'src/item/infraestructure/persistence/prism
 import { PrismaOrderRepository } from '../../persistence/order.repository';
 import { PrismaCustomerRepository } from 'src/customer/infraestructure/persistence/prismaCustomer.repository';
 import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
-import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { MercadoPagoClient } from 'src/payments/infrastructure/external/mercado-pago/mercado-pago.client';
 
 @ApiTags('Order')

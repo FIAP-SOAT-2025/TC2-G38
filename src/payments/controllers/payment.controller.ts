@@ -1,4 +1,4 @@
-import { PaymentStatusEnum } from "../domains/enums/payment-status.enum";
+import { PaymentStatusEnum } from "../domain/enums/payment-status.enum";
 import UpdatePaymentStatusUseCase from "../usecases/updatePaymentStatus.usecase";
 import { EventEmitter } from "events";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";

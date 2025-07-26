@@ -1,7 +1,7 @@
-import { Payment, PaymentStatusEnum } from "../domains/entities/payment.entity";
+import { Payment, PaymentStatusEnum } from "../domain/entities/payment.entity";
 import { CallPaymentProviderGatewayInterface } from "../interfaces/call-payment-provider-gateway.interface";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
-import { PaymentTypeEnum } from "../domains/enums/payment-type.enum";
+import { PaymentTypeEnum } from "../domain/enums/payment-type.enum";
 
 export class CreatePaymentUseCase  {
   constructor() {}

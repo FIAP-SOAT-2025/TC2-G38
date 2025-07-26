@@ -1,6 +1,6 @@
 import { Payment as PrismaPayment } from '@prisma/client';
-import { Payment, PaymentStatusEnum } from 'src/payments/domains/entities/payment.entity';
-import { PaymentTypeEnum } from 'src/payments/domains/enums/payment-type.enum';
+import { Payment, PaymentStatusEnum } from 'src/payments/domain/entities/payment.entity';
+import { PaymentTypeEnum } from 'src/payments/domain/enums/payment-type.enum';
 
 export function mapPrismaPaymentToPaymentEntity(prismaPayment: PrismaPayment): Payment {
   const payment = new Payment(prismaPayment.orderId, prismaPayment.type as PaymentTypeEnum);

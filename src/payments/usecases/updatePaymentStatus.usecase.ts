@@ -1,7 +1,7 @@
-import { PaymentStatusEnum } from '../domains/enums/payment-status.enum';
+import { PaymentStatusEnum } from '../domain/enums/payment-status.enum';
 import { IEventEmitter } from "src/shared/event/domain/eventEmitterInterface";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
-import { Payment } from '../domains/entities/payment.entity';
+import { Payment } from '../domain/entities/payment.entity';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 export default class UpdatePaymentStatusUseCase {
   constructor(private readonly eventEmitter: IEventEmitter) {}

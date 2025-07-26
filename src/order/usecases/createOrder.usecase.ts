@@ -10,7 +10,7 @@ import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { CreatePaymentUseCase } from 'src/payments/usecases/createPayment.usecase';
-import { Payment } from 'src/payments/domains/entities/payment.entity';
+import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { OrderMapper } from '../presenters/orderMap';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
 import { PaymentGatewayInterface } from 'src/payments/interfaces/payment-gateway.interface';

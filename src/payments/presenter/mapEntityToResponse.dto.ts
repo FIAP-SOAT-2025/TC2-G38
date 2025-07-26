@@ -1,4 +1,4 @@
-import { Payment } from '../domains/entities/payment.entity';
+import { Payment } from '../domain/entities/payment.entity';
 import { PaymentResponse } from '../infrastructure/api/dto/payment-response.dto';
 
 export class PaymentMapper {
