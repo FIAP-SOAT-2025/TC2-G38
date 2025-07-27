@@ -56,9 +56,14 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
 
   async findAll(): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
-        include: { orderItems: true, payment: true },
-      });
+      const orders = [];
+
+      orders.push(...(await this.getReadyOrders()));
+      orders.push(...(await this.getPreparingOrders()));
+      orders.push(...(await this.getReceivedOrders()));
+      orders.push(...(await this.getPendingOrders()));
+
+      orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
       return orders.map((order) =>
         mapPrismaOrderToOrderResponse(order, order.orderItems),
@@ -85,5 +90,49 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       console.error('Error updating order status:', error);
       throw new Error(`Failed to update order status for ${id}`);
     }
+  }
+
+  private async getReadyOrders() {
+    return await this.prisma.order.findMany({
+      include: { orderItems: true, payment: true },
+      where: {
+        status: {
+          in: ['READY'],
+        },
+      },
+    });
+  }
+
+  private async getPreparingOrders() {
+    return await this.prisma.order.findMany({
+      include: { orderItems: true, payment: true },
+      where: {
+        status: {
+          in: ['PREPARING'],
+        },
+      },
+    });
+  }
+
+  private async getReceivedOrders() {
+    return await this.prisma.order.findMany({
+      include: { orderItems: true, payment: true },
+      where: {
+        status: {
+          in: ['RECEIVED'],
+        },
+      },
+    });
+  }
+
+  private async getPendingOrders() {
+    return await this.prisma.order.findMany({
+      include: { orderItems: true, payment: true },
+      where: {
+        status: {
+          in: ['PENDING'],
+        },
+      },
+    });
   }
 }
