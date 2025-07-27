@@ -3,7 +3,7 @@ import ItemCategoryEnum from "../entities/itemCategory.enum";
 import { CreateItemInterface } from "../interfaces/createItemInterface";
 import ItemGatewayInterface from "../interfaces/itemGatewayInterface";
 
-export class ItemGatway implements ItemGatewayInterface {
+export class ItemGateway implements ItemGatewayInterface {
 
     constructor(private readonly itemRepository: ItemGatewayInterface) {}
     

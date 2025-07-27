@@ -39,18 +39,4 @@ export default class UpdateItemUseCase {
      
      return await itemGateway.update(id, updatedItem);
   }
-
-  /*async updateQuantity(
-    id: string,
-    quantityToRemoveFromItemInventory: number,
-  ): Promise<Item> {
-    const existingItem = await this.itemRepository.findById(id);
-
-    if (!existingItem) {
-      throw new NotFoundException(`Item with ID ${id} not found`);
-    }
-
-    existingItem.updateItemQuantity(quantityToRemoveFromItemInventory);
-    return await this.itemRepository.update(id, existingItem);
-  }*/
 }
