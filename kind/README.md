@@ -82,13 +82,13 @@ O Metrics Server é um agregador de dados de uso de recursos (CPU e memória) do
 3.  **Baixar a imagem do Docker (opcional, se já não tiver):**
     Se a imagem ainda não estiver no seu cache local do Docker, baixe-a.
     ```bash
-    docker pull registry.k8s.io/metrics-server/metrics-server:v0.8.0 # Substitua pela imagem obtida no passo anterior
+    docker pull registry.k8s.io/metrics-server/metrics-server:v0.8.0
     ```
 
 4.  **Carregar a imagem no cluster Kind:**
     Em ambientes Kind, os nós do cluster podem não ter acesso direto ao Docker Hub. Carregar a imagem localmente garante que ela esteja disponível para os pods.
     ```bash
-    kind load docker-image registry.k8s.io/metrics-server/metrics-server:v0.8.0 -n lanchonete-cluster # Substitua pela imagem e nome do cluster
+    kind load docker-image registry.k8s.io/metrics-server/metrics-server:v0.8.0 -n lanchonete-cluster
     ```
 
 5.  **Aplicar patch de TLS (para Kind):**
