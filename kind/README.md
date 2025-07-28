@@ -55,8 +55,11 @@ kubectl apply -f k8s/db-service.yaml
 # 5. Finalmente, faça o deploy da aplicação no namespace lanchonete-tc2
 kubectl apply -f k8s/api-deployment.yaml
 
-# 6. Ou execute todos os comandos 
-kubectl apply -f k8s/namespace.yaml && kubectl apply -f k8s/db-namespace.yaml && kubectl apply -f k8s/configMap.yaml && kubectl apply -f k8s/secrets.yaml && kubectl apply -f k8s/api-service.yaml && kubectl apply -f k8s/api-hpa.yaml && kubectl apply -f k8s/db-secrets.yaml && kubectl apply -f k8s/db-deployment.yaml && kubectl apply -f k8s/db-service.yaml && kubectl apply -f k8s/api-deployment.yaml
+# 6. Crie o pod para rodar as migrates e seeds. Obs rodar após lanchonete-db esteja Running
+kubectl apply -f k8s/db-migrate-seed-job.yaml
+
+# 7. Ou execute todos os comandos 
+kubectl apply -f k8s/namespace.yaml && kubectl apply -f k8s/db-namespace.yaml && kubectl apply -f k8s/configMap.yaml && kubectl apply -f k8s/secrets.yaml && kubectl apply -f k8s/api-service.yaml && kubectl apply -f k8s/api-hpa.yaml && kubectl apply -f k8s/db-secrets.yaml && kubectl apply -f k8s/db-deployment.yaml && kubectl apply -f k8s/db-service.yaml && kubectl apply -f k8s/api-deployment.yaml && kubectl apply -f k8s/db-migrate-seed-job.yaml
 ```
 
 ### 3. Instalação do Metrics Server
