@@ -4,7 +4,7 @@ import { check, sleep } from 'k6';
 export const options = {
   // Define o número de usuários virtuais (VUs) e a duração do teste
   vus: 100, // 10 usuários virtuais
-  duration: '60s', // Duração do teste de 30 segundos
+  duration: '120s', // Duração do teste de 30 segundos
 
   // Você pode adicionar estágios para simular diferentes cargas ao longo do tempo
   // stages: [
