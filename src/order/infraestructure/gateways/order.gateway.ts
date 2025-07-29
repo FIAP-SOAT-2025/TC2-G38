@@ -1,6 +1,7 @@
 import Order from '../../entities/order.entity';
 import { OrderStatusEnum } from '../../enums/orderStatus.enum';
 import OrderGatewayInterface from '../../interfaces/gateways';
+import { CompleteOrderResponse } from '../../infraestructure/api/dto/orderResponse.dto';
 
 export class OrderGateway implements OrderGatewayInterface {
   constructor(private readonly orderRepository: OrderGatewayInterface) {}
