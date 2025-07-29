@@ -11,7 +11,7 @@ export interface PaymentRepositoryInterface {
     qrCode: string,
   ): Promise<Payment>;
 
-  updateStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
+  updatePaymentStatus( paymentId: string, status: PaymentStatusEnum ): Promise<Payment>;
 
   find(id: string): Promise<Payment>;
 }

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
 import { OrderItem, OrderItemProps } from './orderItem.entity';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 export interface OrderProps {
   id?: string;
@@ -56,17 +57,22 @@ export default class Order {
     const currentIndex = statusOrder.indexOf(this.status);
     const newIndex = statusOrder.indexOf(newStatus);
 
-    if (this.status === OrderStatusEnum.COMPLETED) {
-      throw new Error('Cannot change status of a completed order');
+    if (this.status === OrderStatusEnum.COMPLETED || this.status === OrderStatusEnum.CANCELLED) {
+      throw new BaseException('Cannot change status of a completed or cancelled order', 400, 'ORDER_STATUS_FINALIZED');
     }
+    
+    
 
     if (this.status === newStatus) {
-      throw new Error('Order status is already set to this value');
+      throw new BaseException('Order status is already set to this value', 400, 'ORDER_STATUS_ALREADY_SET');
     }
 
-    if (newIndex !== currentIndex + 1) {
-      throw new Error(
+    if (newIndex !== currentIndex + 1 && newStatus !== OrderStatusEnum.CANCELLED) {
+      console.log("Order status must follow the defined sequence.", this.status, newStatus);
+      throw new BaseException(
         `Order status must follow the defined sequence. Next status must be ${statusOrder[currentIndex + 1]}`,
+        400,
+        'ORDER_STATUS_SEQUENCE'
       );
     }
 

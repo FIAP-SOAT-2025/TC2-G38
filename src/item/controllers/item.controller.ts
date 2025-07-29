@@ -1,7 +1,7 @@
-import { BaseException } from "src/shared/exception/exceptions.base";
+import { BaseException } from "src/shared/exceptions/exceptions.base";
 import Item from "../entities/item.entity";
 import ItemCategoryEnum from "../entities/itemCategory.enum";
-import { ItemGatway } from "../gateways/item.gateway";
+import { ItemGateway } from "../gateways/item.gateway";
 import { ItemResponse } from "../infraestructure/api/dto/itemResponse.dto";
 import { CreateItemInterface } from "../interfaces/createItemInterface";
 import ItemGatewayInterface from "../interfaces/itemGatewayInterface";
@@ -20,7 +20,7 @@ export class ControllerItem {
      constructor() { }
 
       private static createItemGateway(prismaItemRepository: ItemGatewayInterface) {
-        return new ItemGatway(prismaItemRepository);
+        return new ItemGateway(prismaItemRepository);
     }
 
      static async create(createdItem: CreateItemInterface , prismaItemRepository: ItemGatewayInterface): Promise<ItemResponse> {

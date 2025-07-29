@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, HttpException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { OrderController } from 'src/order/controllers/order.controller';
 import { OrderDto } from '../dto/order.dto';
@@ -11,6 +11,9 @@ import { PrismaCustomerRepository } from 'src/customer/infraestructure/persisten
 import { PrismaPaymentRepository } from 'src/payments/infrastructure/persistence/prismaPayment.repository';
 import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { MercadoPagoClient } from 'src/payments/infrastructure/external/mercado-pago/mercado-pago.client';
+import { UpdateOrderStatusDto } from '../dto/update-status.dto';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
+import { ExceptionMapper } from 'src/shared/exceptions/exception.mapper';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -48,12 +51,18 @@ export class OrderApi {
   }
 
   @Patch(':id/status')
-  updateStatus(@Param('id') id: string, @Body() statusDto: OrderStatusEnum) {
-    return OrderController.updateStatus(
-      id,
-      statusDto,
-      this.orderRepository,
-      this.itemRepository,
-    );
+  async updateStatus(@Param('id') id: string, @Body() statusDto: UpdateOrderStatusDto) {
+      console.log(`API Updating order status for ID: ${id} to ${statusDto}`);
+      try {
+      return await OrderController.updateStatus(
+        id,
+        statusDto.status,
+        this.orderRepository,
+        this.itemRepository,
+      );
+    } catch (error) {
+      console.log('Error updating order status:', error);
+      throw ExceptionMapper.mapToHttpException(error as BaseException);
+    }
   }
 }

@@ -35,7 +35,7 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
     }
   }
   
-  async updateStatus(
+  async updatePaymentStatus(
     paymentId: string,
     status: PaymentStatusEnum,
   ): Promise<any> {

@@ -28,8 +28,8 @@ export class PaymentGateway implements PaymentGatewayInterface {
     }
   }
 
-  async updateStatus( paymentId: string, status: PaymentStatusEnum): Promise<Payment> {
-    return await this.paymentRepository.updateStatus(paymentId, status);
+  async updatePaymentStatus( paymentId: string, status: PaymentStatusEnum): Promise<Payment> {
+    return await this.paymentRepository.updatePaymentStatus(paymentId, status);
   }
  
   async find(id: string): Promise<Payment> {
