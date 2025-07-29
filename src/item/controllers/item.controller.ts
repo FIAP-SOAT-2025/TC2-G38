@@ -1,5 +1,3 @@
-import { BaseException } from "src/shared/exception/exceptions.base";
-import Item from "../entities/item.entity";
 import ItemCategoryEnum from "../entities/itemCategory.enum";
 import { ItemGatway } from "../gateways/item.gateway";
 import { ItemResponse } from "../infraestructure/api/dto/itemResponse.dto";

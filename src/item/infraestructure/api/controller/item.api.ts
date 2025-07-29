@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ControllerItem } from '../../../controllers/item.controller';
-import { DomainError } from '../../../entities/errors/domain.error';
 import { UpdateItemDto } from 'src/item/infraestructure/api/dto/updateItem.dto';
 import { CreateItemDto } from 'src/item/infraestructure/api/dto/createItem.dto';
 import { PrismaItemRepository } from 'src/item/infraestructure/persistence/prismaItem.repository';
-import { ErrorPresenter } from 'src/item/presenter.ts/error.presenter';
+import { ExceptionMapper } from 'src/shared/exceptions/exception.mapper';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 @ApiTags('Item')
 @Controller('/item')
@@ -27,16 +27,9 @@ export class ItemControllerApi {
     @Post()
     async createItem(@Body() createItemDto: CreateItemDto) {
         try {
-         return await ControllerItem.create(createItemDto, this.prismaItemRepository); 
+            return await ControllerItem.create(createItemDto, this.prismaItemRepository);
         } catch (error) {
-            if (error instanceof DomainError) {
-            const errorResponse = ErrorPresenter.toResponse(error);
-            throw new HttpException(
-                errorResponse.message,
-                errorResponse.status
-            );
-            }
-            throw error;
+            throw ExceptionMapper.mapToHttpException(error as BaseException);
         }
     }
 
@@ -49,14 +42,7 @@ export class ItemControllerApi {
             return await ControllerItem.update(id, updateItemDto, this.prismaItemRepository);
              
         } catch (error) {
-            if (error instanceof DomainError) {
-            const errorResponse = ErrorPresenter.toResponse(error);
-            throw new HttpException(
-                errorResponse.message,
-                errorResponse.status
-            );
-            }
-            throw error;
+           throw ExceptionMapper.mapToHttpException(error as BaseException);
         }
     }
 
@@ -66,14 +52,7 @@ export class ItemControllerApi {
             return await ControllerItem.findByCategory(category, this.prismaItemRepository);
             
         } catch (error) {
-            if (error instanceof DomainError) {
-            const errorResponse = ErrorPresenter.toResponse(error);
-            throw new HttpException(
-                errorResponse.message,
-                errorResponse.status
-            );
-            }
-            throw error;
+            throw ExceptionMapper.mapToHttpException(error as BaseException);
         }
     }
 
@@ -83,14 +62,7 @@ export class ItemControllerApi {
             return await ControllerItem.findById(id, this.prismaItemRepository);
              
         } catch (error) {
-            if (error instanceof DomainError) {
-            const errorResponse = ErrorPresenter.toResponse(error);
-            throw new HttpException(
-                errorResponse.message,
-                errorResponse.status
-            );
-            }
-            throw error;
+            throw ExceptionMapper.mapToHttpException(error as BaseException);
         }
     }
 
@@ -100,14 +72,7 @@ export class ItemControllerApi {
             return await ControllerItem.delete(id, this.prismaItemRepository);
              
         } catch (error) {
-            if (error instanceof DomainError) {
-            const errorResponse = ErrorPresenter.toResponse(error);
-            throw new HttpException(
-                errorResponse.message,
-                errorResponse.status
-            );
-            }
-            throw error;
+            throw ExceptionMapper.mapToHttpException(error as BaseException);
         }
     }
 }

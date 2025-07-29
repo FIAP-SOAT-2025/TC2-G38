@@ -22,6 +22,10 @@ export class ItemGatway implements ItemGatewayInterface {
     async findByCategory(category: ItemCategoryEnum): Promise<Item[]>{
         return this.itemRepository.findByCategory(category);
     }
+
+    async findByNameAndDescription(name: string, description: string): Promise<boolean> {
+        return this.itemRepository.findByNameAndDescription(name, description);
+    }
     async soft_delete(id: string): Promise<Item> {
         return this.itemRepository.soft_delete(id);
     }
