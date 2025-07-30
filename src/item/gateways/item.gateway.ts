@@ -25,4 +25,8 @@ export class ItemGateway implements ItemGatewayInterface {
     async soft_delete(id: string): Promise<Item> {
         return this.itemRepository.soft_delete(id);
     }
+    findByNameAndDescription(name: string, description: string): Promise<boolean> {
+        return this.itemRepository.findByNameAndDescription(name, description);
+    }
+
 }
