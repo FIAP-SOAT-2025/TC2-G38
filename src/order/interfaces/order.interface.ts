@@ -1,6 +1,6 @@
-import { OrderItemDto } from '../infraestructure/api/dto/order.dto';
+import OrderItemInterface from './order-item.interface';
 
 export default interface OrderInterface {
   customerCpf?: string;
-  orderItems: OrderItemDto[];
+  orderItems: OrderItemInterface[];
 }
