@@ -5,7 +5,7 @@ import OrderGatewayInterface from '../interfaces/gateways';
 import FindAllOrderUseCase from '../usecases/findAllOrder.usecase';
 import FindOrderByIdUseCase from '../usecases/findOrder.usecase';
 import UpdateStatusOrderUseCase from '../usecases/updateStatusOrder.usecase';
-import { ItemGatway } from 'src/item/gateways/item.gateway';
+import { ItemGateway } from 'src/item/gateways/item.gateway';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import ProcessOrderUseCase from '../usecases/createOrder.usecase';
 import { OrderDto } from '../infraestructure/api/dto/order.dto';
@@ -31,7 +31,7 @@ export class OrderController {
     paymentProvider: CallPaymentProviderGatewayInterface,
   ): Promise<{ order: OrderResponse; payment: Payment }> {
     const orderGateway = new OrderGateway(orderRepository);
-    const itemGateway = new ItemGatway(itemRepository);
+    const itemGateway = new ItemGateway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);
     const paymentGateway = new PaymentGateway(paymentRepository);
     const paymentProviderGateway = new PaymentProviderGateway(paymentProvider);
@@ -71,7 +71,7 @@ export class OrderController {
     orderRepository: OrderGatewayInterface,
     itemRepository: ItemGatewayInterface,
   ): Promise<{ message: string }> {
-    const orderGateway = new OrderGateway(orderRepository);
-    return UpdateStatusOrderUseCase.updateStatus(id, statusDto, orderGateway, itemRepository);
+      const orderGateway = new OrderGateway(orderRepository);
+      return UpdateStatusOrderUseCase.updateStatusOrder(id, statusDto, orderGateway, itemRepository);
   }
 }

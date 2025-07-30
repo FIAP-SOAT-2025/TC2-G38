@@ -54,15 +54,22 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     return mapPrismaOrderToOrderResponse(order, order.orderItems);
   }
 
-  async findAll(): Promise<Order[]> {
+  async findAll(): Promise<any> {
     try {
-      const orders = await this.prisma.order.findMany({
-        include: { orderItems: true, payment: true },
-      });
-
-      return orders.map((order) =>
-        mapPrismaOrderToOrderResponse(order, order.orderItems),
-      );
+      return await this.prisma.$queryRaw`
+        SELECT * FROM "Order" as o
+        INNER JOIN "OrderItem" as oi
+        ON oi."orderId" = o.id
+        WHERE o.status
+        IN ('READY', 'PREPARING', 'RECEIVED')
+        ORDER BY
+        CASE o.status
+          WHEN 'READY' THEN 1
+          WHEN 'PREPARING' THEN 2
+          WHEN 'RECEIVED' THEN 3
+        END,  
+        o."createdAt" ASC;
+      `;
     } catch (error) {
       console.error('Error finding all orders:', error);
       throw new Error('Failed to find orders');

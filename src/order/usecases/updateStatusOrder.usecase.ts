@@ -6,7 +6,7 @@ import UpdateQuantityItemUseCase from 'src/item/useCases/updateQuantityItem.usec
 
 export default class UpdateStatusOrderUseCase {
   constructor() {}
-  static async updateStatus(
+  static async updateStatusOrder(
     id: string,
     status: OrderStatusEnum,
     orderGateway: OrderGatewayInterface,

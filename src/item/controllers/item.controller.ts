@@ -18,7 +18,7 @@ export class ControllerItem {
      constructor() { }
 
       private static createItemGateway(prismaItemRepository: ItemGatewayInterface) {
-        return new ItemGatway(prismaItemRepository);
+        return new ItemGateway(prismaItemRepository);
     }
 
      static async create(createdItem: CreateItemInterface , prismaItemRepository: ItemGatewayInterface): Promise<ItemResponse> {
