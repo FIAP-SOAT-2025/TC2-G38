@@ -1,8 +1,8 @@
-import Item from "../entities/item.entity";
-import { ItemResponse } from "../infraestructure/api/dto/itemResponse.dto";
+import Item, { ItemProps } from "../entities/item.entity";
+
 
 export class CategoryPresenter {
-  static toResponse(items: Item[]): ItemResponse[] {    
+  static toResponse(items: Item[]): ItemProps[] {    
     return items.map(item => ({
       id: item.id ?? "",
       name: item.name,

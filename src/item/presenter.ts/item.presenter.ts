@@ -1,8 +1,7 @@
-import Item from "../entities/item.entity";
-import { ItemResponse } from "../infraestructure/api/dto/itemResponse.dto";
+import Item, { ItemProps } from "../entities/item.entity";
 
 export class ItemPresenter {
-  static toResponse(item: Item): ItemResponse {
+  static toResponse(item: Item): ItemProps {
     return {
       id: item.id ?? "" ,
       name: item.name ,

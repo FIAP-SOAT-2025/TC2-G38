@@ -18,6 +18,7 @@ import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { PaymentProviderGateway } from 'src/payments/gateways/payment-provider.gateway';
 import { PaymentGateway } from 'src/payments/gateways/payment.gateway';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
+import ItemRepositoryInterface from 'src/item/interfaces/ItemRepositoryInterface';
 
 export class OrderController {
   constructor() { }
@@ -25,7 +26,7 @@ export class OrderController {
   static async createOrder(
     createOrderDto: OrderDto,
     orderRepository: OrderGatewayInterface,
-    itemRepository: ItemGatewayInterface,
+    itemRepository: ItemRepositoryInterface,
     customerRepository: CustomerGatewayInterface,
     paymentRepository: PaymentRepositoryInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
@@ -69,9 +70,10 @@ export class OrderController {
     id: string,
     statusDto: OrderStatusEnum,
     orderRepository: OrderGatewayInterface,
-    itemRepository: ItemGatewayInterface,
+    itemRepository: ItemRepositoryInterface,
   ): Promise<{ message: string }> {
       const orderGateway = new OrderGateway(orderRepository);
-      return UpdateStatusOrderUseCase.updateStatusOrder(id, statusDto, orderGateway, itemRepository);
+      const itemGateway = new ItemGateway(itemRepository);
+      return UpdateStatusOrderUseCase.updateStatusOrder(id, statusDto, orderGateway, itemGateway);
   }
 }
