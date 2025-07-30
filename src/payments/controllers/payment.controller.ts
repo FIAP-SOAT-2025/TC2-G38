@@ -8,6 +8,7 @@ import { OrderGateway } from "src/order/infraestructure/gateways/order.gateway";
 import { ItemGateway } from "src/item/gateways/item.gateway";
 import { PaymentMapper } from "../presenter/mapEntityToResponse.dto";
 import { PaymentStatusEnum } from "../domain/enums/payment-status.enum";
+import ItemRepositoryInterface from "src/item/interfaces/ItemRepositoryInterface";
 export class PaymentController {
   constructor() { }
 
@@ -20,7 +21,7 @@ export class PaymentController {
   static async updatePaymentStatus(
     paymentRepository: PaymentGatewayInterface,
     orderRepository: OrderGatewayInterface,
-    itemRepository: ItemGatewayInterface,
+    itemRepository: ItemRepositoryInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ) {
