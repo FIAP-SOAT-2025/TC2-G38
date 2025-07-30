@@ -1,17 +1,16 @@
 
 import Item from '../entities/item.entity';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 import ItemGatewayInterface from '../interfaces/itemGatewayInterface';
 import { UpdateItemInterface } from '../interfaces/updateItemInterface';
 import ItemCategoryEnum from '../entities/itemCategory.enum';
-import { UpdateItemError, ItemNotFoundError } from '../entities/errors/item.errors';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 
 export default class UpdateItemUseCase {
   constructor() {}
   static async update(id: string, item: Partial<UpdateItemInterface>, itemGateway: ItemGatewayInterface): Promise<Item> {
     if (!id || Object.keys(item).length === 0) {
-      throw new UpdateItemError(id,'ID is required and at least one field must be provided for update');
+      throw new BaseException(`Id not provided`, 404, 'ITEM_UPDATE_ERROR');
     }
 
 
@@ -21,7 +20,7 @@ export default class UpdateItemUseCase {
     );
 
     if (!existingItem) {
-      throw new ItemNotFoundError(id);
+      throw new BaseException(`Item with ID ${id} not found`, 404, 'ITEM_NOT_FOUND');
     }
     
     const updatedItem = new Item({
@@ -36,7 +35,6 @@ export default class UpdateItemUseCase {
       updatedAt: new Date(),
     });
 
-     
      return await itemGateway.update(id, updatedItem);
   }
 }

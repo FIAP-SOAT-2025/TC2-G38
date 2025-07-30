@@ -1,8 +1,4 @@
-import { 
-    EmptyFieldError, 
-    InvalidFieldError, 
-    NegativeValueError 
-} from './errors/item.errors';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import ItemCategoryEnum from './itemCategory.enum';
 
 export interface ItemProps {
@@ -53,7 +49,7 @@ export default class Item {
 
   set name(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new EmptyFieldError('Name');
+      throw new BaseException('Name cannot be empty', 400, 'ITEM_NAME_EMPTY');
     }
     this._name = value;
   }
@@ -64,7 +60,7 @@ export default class Item {
 
   set description(value: string) {
     if (!value || value.trim().length === 0) {
-      throw new EmptyFieldError('Description');
+       throw new BaseException('Description cannot be empty', 400, 'ITEM_DESCRIPTION_EMPTY');
     }
     this._description = value;
   }
@@ -75,7 +71,7 @@ export default class Item {
 
   set images(value: string[]) {
     if (!Array.isArray(value) || value.length === 0) {
-      throw new  InvalidFieldError('Images', 'must be a non-empty array');
+      throw new BaseException('Images must be a non-empty', 400, 'ITEM_IMAGES_INVALID');
     }
     this._images = value;
   }
@@ -90,7 +86,7 @@ export default class Item {
 
   set price(value: number) {
     if (value <= 0) {
-      throw new InvalidFieldError('Price', 'cannot be 0 or less');
+      throw new BaseException('Price cannot be 0 or less', 400, 'ITEM_PRICE_INVALID');
     }
     this._price = value;
   }
@@ -100,8 +96,8 @@ export default class Item {
   }
 
   set quantity(value: number) {
-    if (value < 0) {
-      throw new NegativeValueError('Quantity');
+    if (value <= 0) {
+      throw new BaseException('Quantity cannot be 0 or less', 400, 'ITEM_QUANTITY_INVALID');
     }
     this._quantity = value;
   }
@@ -111,15 +107,14 @@ export default class Item {
 
     const newQuantity = this._quantity - value;
     if (newQuantity < 0) {
-      throw new InvalidFieldError('quantity', 'cannot be less than current quantity');
+      throw new BaseException('Quantity cannot be less than current quantity', 400, 'ITEM_QUANTITY_INVALID');
     }
     this._quantity = newQuantity;
   }
 
   private _validateQuantity(value: number): void {
-    if (value < 0) {
-      throw new InvalidFieldError('quantity', 'cannot be less than current quantity');
-      
+   if (value < 0) {
+      throw new BaseException('Quantity cannot be less than current quantity', 400, 'ITEM_QUANTITY_INVALID');
     }
   }
 
@@ -129,8 +124,9 @@ export default class Item {
 
   set category(value: ItemCategoryEnum) {
     if (!Object.values(ItemCategoryEnum).includes(value)) {
-      throw new InvalidFieldError('Category', 'invalid category value');
+      throw new BaseException('Invalid category value', 400, 'ITEM_CATEGORY_INVALID');
     }
+    
     this._category = value;
   }
 
@@ -148,7 +144,7 @@ export default class Item {
 
   set updatedAt(value: Date) {
     if (value < this._createdAt || !new Date(value)) {
-      throw new InvalidFieldError('UpdatedAt', 'cannot be before CreatedAt');
+      throw new BaseException('UpdatedAt cannot be before CreatedAt', 400, 'ITEM_UPDATED_AT_INVALID');
     }
     this._updatedAt = value;
   }
