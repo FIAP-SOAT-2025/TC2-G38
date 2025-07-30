@@ -1,6 +1,5 @@
 import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import OrderGatewayInterface from '../interfaces/gateways';
-import { OrderDto } from '../infraestructure/api/dto/order.dto';
 import { Customer } from 'src/customer/entities/customer.entity';
 import GetCustomerByCpf from 'src/customer/usecases/getCustomerByCpf.usecase';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
@@ -8,23 +7,24 @@ import ProccessOrderItemUseCase from './processOrderItem.usecase';
 import Order from '../entities/order.entity';
 import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
-import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { CreatePaymentUseCase } from 'src/payments/usecases/createPayment.usecase';
 import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { OrderMapper } from '../presenters/orderMap';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
 import { PaymentGatewayInterface } from 'src/payments/interfaces/payment-gateway.interface';
+import OrderInterface from '../interfaces/order.interface';
+import OrderResponseInterface from '../interfaces/order-response.interface';
 
 export default class ProcessOrderUseCase {
   constructor() {}
   static async processOrder(
-    orderData: OrderDto,
+    orderData: OrderInterface,
     orderGateway: OrderGatewayInterface,
     itemGateway: ItemGatewayInterface,
     customerGateway: CustomerGatewayInterface,
     paymentGateway: PaymentGatewayInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
-  ): Promise<{ order: OrderResponse; payment: Payment }> {
+  ): Promise<{ order: OrderResponseInterface; payment: Payment }> {
     let customer: Customer | undefined;
 
     if (
