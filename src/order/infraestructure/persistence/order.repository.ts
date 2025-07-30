@@ -1,12 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import OrderGatewayInterface from 'src/order/interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-
 import Order from 'src/order/entities/order.entity';
-import { CompleteOrderResponse } from '../api/dto/orderResponse.dto';
 import { mapPrismaOrderToOrderResponse } from 'src/order/presenters/order.presenter';
-import { OrderMapper } from 'src/order/presenters/orderMap';
-import { UpdateStatusDto } from 'src/payments/infrastructure/api/dto/update-status.dto';
 import { OrderStatus } from '@prisma/client';
 
 @Injectable()
