@@ -19,22 +19,17 @@ async updateStatus(
     let updatedPayment: Payment;
     const payment = await paymentGatewayI.find(id);
     if (!payment) {
-            throw new Error(`Payment with ID ${id} not found`);
-        }
-    console.log("newStatus: ", newStatus);
+      throw new Error(`Payment with ID ${id} not found`);
+    }
     this.validateStatus(payment, newStatus, id);
 
     if (newStatus === PaymentStatusEnum.APPROVED) {
-      console.log("dentro do UpdatePaymentStatusUseCase APPROVED, chamando o webhook payment usecase");
       updatedPayment = await paymentGatewayI.updatePaymentStatus(payment.id, newStatus);
       await UpdateStatusOrderUseCase.updateStatusOrder(payment.orderId, OrderStatusEnum.RECEIVED, orderGatewayI, itemGatewayI);
-    } 
-    else if (newStatus !== PaymentStatusEnum.PENDING) {
-      console.log("dentro do UpdatePaymentStatusUseCase REFUSED, chamando o webhook payment usecase");
+    } else if (newStatus !== PaymentStatusEnum.PENDING) {
       updatedPayment = await paymentGatewayI.updatePaymentStatus(payment.id, newStatus);
       await UpdateStatusOrderUseCase.updateStatusOrder(payment.orderId, OrderStatusEnum.CANCELLED, orderGatewayI, itemGatewayI);
     } 
-
 
     return updatedPayment!;
   }

@@ -2,7 +2,6 @@ import { BaseException } from "src/shared/exceptions/exceptions.base";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
 import { Payment } from "../domain/entities/payment.entity";
 
-
 export default class FindPaymentUseCase {
   constructor() {}
 

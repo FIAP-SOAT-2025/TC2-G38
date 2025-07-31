@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Get } from '@nestjs/common';
+import { Body, Controller, Param, Patch } from '@nestjs/common';
 import { UpdateStatusDto } from '../dto/update-status.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PaymentController } from 'src/payments/controllers/payment.controller';
