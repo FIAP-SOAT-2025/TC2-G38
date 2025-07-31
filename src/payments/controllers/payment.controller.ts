@@ -1,13 +1,12 @@
-import { PaymentResponseAdapter } from "../infrastructure/adapters/payment-response.adapter";
 import { PaymentGatewayInterface } from "../interfaces/payment-gateway.interface";
 import OrderGatewayInterface from "src/order/interfaces/gateways";
-import ItemGatewayInterface from "src/item/interfaces/itemGatewayInterface";
 import WebhookUpdatePaymentStatusUseCase from "../usecases/webhookUpdatePaymentStatus.usecase";
 import { PaymentGateway } from "../gateways/payment.gateway";
-import { OrderGateway } from "src/order/infraestructure/gateways/order.gateway";
+import { OrderGateway } from "src/order/gateways/order.gateway";
 import { ItemGateway } from "src/item/gateways/item.gateway";
-import { PaymentMapper } from "../presenter/mapEntityToResponse.dto";
 import { PaymentStatusEnum } from "../domain/enums/payment-status.enum";
+import ItemRepositoryInterface from "src/item/interfaces/ItemRepositoryInterface";
+import { PaymentPresenter } from "../presenter/payment.presenter";
 export class PaymentController {
   constructor() { }
 
@@ -15,12 +14,10 @@ export class PaymentController {
     return new PaymentGateway(paymentRepository);
   }
 
- 
-
   static async updatePaymentStatus(
     paymentRepository: PaymentGatewayInterface,
     orderRepository: OrderGatewayInterface,
-    itemRepository: ItemGatewayInterface,
+    itemRepository: ItemRepositoryInterface,
     id: string,
     newStatus: PaymentStatusEnum
   ) {
@@ -35,10 +32,8 @@ export class PaymentController {
       id,
       newStatus
     );
-    return  PaymentMapper.mapPaymentToPaymentResponse(updatedPayment);
+    return  PaymentPresenter.toResponse(updatedPayment);
   }
-
-
 
   /*static async getPaymentStatus(
     paymentRepository: PaymentGatewayInterface,
@@ -48,5 +43,4 @@ export class PaymentController {
     //const payment = await FindPaymentUseCase.getPaymentStatus(id, paymentGateway);
     return PaymentResponseAdapter.adaptJsonToMessage(payment);
   }*/
-
 }

@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { OrderStatus } from '@prisma/client';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
-import { CreateItemInterface } from 'src/item/interfaces/createItemInterface';
-import Item from 'src/item/entities/item.entity';
+import Item, { ItemProps } from 'src/item/entities/item.entity';
 import ItemCategoryEnum from 'src/item/entities/itemCategory.enum';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
+import ItemRepositoryInterface from 'src/item/interfaces/ItemRepositoryInterface';
 
 @Injectable()
-export class PrismaItemRepository implements ItemGatewayInterface {
-  constructor(private readonly prisma: PrismaService) {}
+export class PrismaItemRepository implements ItemRepositoryInterface {
+  constructor(private readonly prisma: PrismaService) { }
 
-  async create(newItemData: CreateItemInterface): Promise<any> {
+  async create(newItemData: Item): Promise<ItemProps> {
     try {
       const createdRecord = await this.prisma.item.create({
         data: {
@@ -22,31 +21,53 @@ export class PrismaItemRepository implements ItemGatewayInterface {
           quantity: newItemData.quantity,
           category: newItemData.category,
         },
-      }); 
-      
+      });
 
-      return createdRecord;
+
+      return {
+        id: createdRecord.id,
+        name: createdRecord.name,
+        description: createdRecord.description,
+        images: createdRecord.images,
+        price: Number(createdRecord.price), 
+        quantity: createdRecord.quantity,
+        category: createdRecord.category,
+        createdAt: createdRecord.createdAt,
+        updatedAt: createdRecord.updatedAt,
+        isDeleted: createdRecord.isDeleted
+      } as ItemProps;
     } catch (error: any) {
       throw new BaseException(`Failed to create item: ${error.message}`, 500, 'ITEM_CREATION_ERROR');
     }
   }
 
-  
 
-  async findByCategory(typeCategory: ItemCategoryEnum): Promise<any> {
-   try {
-    const items = await this.prisma.item.findMany({
-      where: {
-        category: typeCategory,
-        isDeleted: false,
-      },
-    });
 
-   
-    return items;
-  } catch (error: any) {
-    throw new BaseException(`Failed to find items by category: ${error.message}`, 500, 'ITEM_CATEGORY_ERROR');
-   }
+  async findByCategory(typeCategory: ItemCategoryEnum): Promise<ItemProps[]> {
+    try {
+      const items = await this.prisma.item.findMany({
+        where: {
+          category: typeCategory,
+          isDeleted: false,
+        },
+      });
+
+      return items.map(item => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        images: item.images,
+        price: Number(item.price),
+        quantity: item.quantity,
+        category: item.category,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        isDeleted: item.isDeleted
+      })) as ItemProps[];
+
+    } catch (error: any) {
+      throw new BaseException(`Failed to find items by category: ${error.message}`, 500, 'ITEM_CATEGORY_ERROR');
+    }
   }
 
   async findByNameAndDescription(name: string, description: string): Promise<boolean> {
@@ -67,7 +88,7 @@ export class PrismaItemRepository implements ItemGatewayInterface {
   async findByIdIfNotDeleted(
     itemId: string,
     isDeleted: boolean,
-  ): Promise<any> {
+  ): Promise<ItemProps> {
     const item = await this.prisma.item.findFirst({
       where: {
         id: itemId,
@@ -78,10 +99,21 @@ export class PrismaItemRepository implements ItemGatewayInterface {
     if (!item) {
       throw new BaseException(`Failed to find item by ID: ${itemId}`, 404, 'ITEM_NOT_FOUND');
     }
-    return item;
+    return {
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        images: item.images,
+        price: Number(item.price), 
+        quantity: item.quantity,
+        category: item.category,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        isDeleted: item.isDeleted
+      } as ItemProps;
   }
 
-  async update(id: string, item: Partial<Item>): Promise<any> {
+  async update(id: string, item: Partial<Item>): Promise<ItemProps> {
 
     try {
       const updatedItem = await this.prisma.item.update({
@@ -96,13 +128,24 @@ export class PrismaItemRepository implements ItemGatewayInterface {
           updatedAt: new Date(),
         },
       });
-      return updatedItem;
+     return {
+        id: updatedItem.id,
+        name: updatedItem.name,
+        description: updatedItem.description,
+        images: updatedItem.images,
+        price: Number(updatedItem.price), 
+        quantity: updatedItem.quantity,
+        category: updatedItem.category,
+        createdAt: updatedItem.createdAt,
+        updatedAt: updatedItem.updatedAt,
+        isDeleted: updatedItem.isDeleted
+      } as ItemProps;
     } catch (error: any) {
       throw new BaseException(`Failed to update item: ${error.message}`, 500, 'ITEM_UPDATE_ERROR');
     }
   }
 
- async soft_delete(id: string): Promise<any> {
+  async soft_delete(id: string): Promise<ItemProps> {
     try {
       await this.cancelOrdersWithDeletedItems(id);
 
@@ -111,7 +154,18 @@ export class PrismaItemRepository implements ItemGatewayInterface {
         data: { isDeleted: true },
       });
 
-      return softDeletedItem;
+       return {
+        id: softDeletedItem.id,
+        name: softDeletedItem.name,
+        description: softDeletedItem.description,
+        images: softDeletedItem.images,
+        price: Number(softDeletedItem.price), 
+        quantity: softDeletedItem.quantity,
+        category: softDeletedItem.category,
+        createdAt: softDeletedItem.createdAt,
+        updatedAt: softDeletedItem.updatedAt,
+        isDeleted: softDeletedItem.isDeleted
+      } as ItemProps;
     } catch (error) {
       if (
         typeof error === 'object' &&

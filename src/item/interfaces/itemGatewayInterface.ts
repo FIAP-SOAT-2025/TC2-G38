@@ -3,7 +3,7 @@ import ItemCategoryEnum from "../entities/itemCategory.enum";
 import { CreateItemInterface } from "./createItemInterface";
 
 export default interface ItemGatewayInterface {
-  create(item: CreateItemInterface): Promise<Item>;
+  create(item: Item): Promise<Item>;
   findByIdIfNotDeleted(id: string, isDelete: boolean): Promise<Item>;
   update(id: string, item: Item): Promise<Item>;
   findByCategory(category: ItemCategoryEnum): Promise<Item[]>;

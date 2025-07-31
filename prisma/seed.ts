@@ -180,7 +180,7 @@ async function main() {
   const customer1 = await prisma.customer.create({
     data: {
       name: 'Ana Souza',
-      cpf: '456.789.012-34',
+      cpf: '45678901234',
       email: 'ana.souza@email.com',
     },
   });
@@ -188,7 +188,7 @@ async function main() {
   const customer2 = await prisma.customer.create({
     data: {
       name: 'Carlos Mendes',
-      cpf: '567.890.123-45',
+      cpf: '56789012345',
       email: 'carlos.mendes@email.com',
     },
   });
@@ -196,7 +196,7 @@ async function main() {
   const customer3 = await prisma.customer.create({
     data: {
       name: 'Beatriz Lima',
-      cpf: '678.901.234-56',
+      cpf: '67890123456',
       email: 'beatriz.lima@email.com',
     },
   });

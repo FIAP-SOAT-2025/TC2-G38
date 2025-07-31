@@ -1,4 +1,4 @@
-import onlyNumbers from 'src/shared/utils/string';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 export interface InternalUserProps {
   id?: string;
@@ -27,7 +27,11 @@ export class InternalUser {
 
   constructor(props: InternalUserProps) {
     if (!props.registrationNumber) {
-      throw new Error('Registration number is required.');
+      throw new BaseException(
+        'Registration number is required.',
+        400,
+        'INVALID_REGISTRATION_NUMBER',
+      );
     }
 
     this._id = props.id;
@@ -76,14 +80,18 @@ export class InternalUser {
 
   set name(newName: string) {
     if (!newName || newName.length < 3) {
-      throw new Error('Name must be at least 3 characters.');
+      throw new BaseException(
+        'Name must be at least 3 characters.',
+        400,
+        'INVALID_NAME',
+      );
     }
     this._name = newName;
   }
 
   set password(newPassword: string) {
     if (newPassword.length < 8) {
-      throw new Error('Password too short.');
+      throw new BaseException('Password too short.', 400, 'INVALID_PASSWORD');
     }
     const buffer = Buffer.from(newPassword, 'utf-8');
     const hashedPassword = buffer.toString('base64');
@@ -91,12 +99,12 @@ export class InternalUser {
   }
 
   set cpf(newCpf: string) {
-    this._cpf = onlyNumbers(newCpf);
+    this._cpf = newCpf.replace(/\D/g, '');
   }
 
   set email(newEmail: string) {
     if (!newEmail.includes('@')) {
-      throw new Error('Invalid email.');
+      throw new BaseException('Invalid email.', 400, 'INVALID_EMAIL');
     }
     this._email = newEmail;
   }
