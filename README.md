@@ -21,7 +21,7 @@
 
 ## 🎯 Objetivo
 
-Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, implementando as melhores práticas de desenvolvimento de software com arquitetura hexagonal e práticas de Domain Driven Design (DDD).
+Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, implementando as melhores práticas de desenvolvimento de software com clean architecture e práticas de Domain Driven Design (DDD).
 
 ---
 
@@ -38,12 +38,12 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 
 ### Gestão de Pedidos (Order)
 - ✅ Criação de pedidos
-- ✅ Controle de status do pedido
+- ✅ Controle de status do pedido com ordenação
 - ✅ Listagem de pedidos
 
 ### Sistema de Pagamento
 - ✅ Integração com API de pagamento via QrCode com PIX do Mercado Pago
-- ✅ Controle de status de pagamento **fake**.
+- ✅ Webhook: Controle de status de pagamento mockado.
 
 ---
 
@@ -55,7 +55,11 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 | **Documentação da Api** | [Payloads e Curl](./api-documentation.md) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
-| **Vídeo de demonstração da API** |  [ Google Drive  ](https://drive.google.com/drive/folders/1J_eUInaJozScoVhH74subFiQPGTSs0it?usp=sharing) |
+| **Vídeo de demonstração da API** |  [ Google Drive - TODO ](TODO) |
+| **Desenho da arquitetura (requisitos do negócio)** |  [ Google Drive  ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
+| **Desenho da arquitetura (infraestrutura)** |  [ Google Drive TODO ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
+### 
+
 ---
 
 ## 🛠️ Tecnologias
@@ -72,70 +76,30 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 ---
 
 ## 🏗️ Arquitetura
-O sistema foi desenvolvido seguindo a *arquitetura hexagonal*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em quatro camadas principais:
+O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais:
 
-- Application: Responsável pela implementação das regras de negócio através dos services.
+- Controller: 
 
-- Domain: Contém as entidades centrais do domínio, os DTOs, as interfaces de repositórios e as interfaces dos services, promovendo a separação entre regra de negócio e infraestrutura.
+- Domain: Contém as entidades centrais do domínio, as interfaces de repositórios e as interfaces dos services, promovendo a separação entre regra de negócio e infraestrutura.
 
-- Infrastructure: Abrange os adapters de entrada (como os controllers) e os adapters de saída( como a implementação do DB ), incluindo a implementação dos repositories e os mappers utilizados para conversão entre modelos de domínio e entidades persistidas.
+- Gateways: 
 
-- A camada de testes unitários para cada módulo.
+- Infrastructure: 
+
+- Presenter:
+
+- UseCases: 
 
 Essa estrutura proporciona um sistema mais coeso, testável e flexível, facilitando a manutenção e a evolução do código.
 
 
 ### Estrutura de Pastas
-
 ```
-src/
-│
-├── app.module.ts
-├── main.ts
-│
-├── shared/                # Utilitários, filtros, infraestrutura compartilhada
-│   ├── filters/
-│   ├── infra/
-│   └── utils/
-│
-├── customer/              # Contexto de Cliente
-│   ├── application/       # Casos de uso (serviços de aplicação)
-│   │   └── services/
-│   ├── domain/            # Entidades, DTOs, regras de negócio
-│   │   ├── dto/
-│   │   └── model/
-│   ├── infraestructure/   # Adapters (entrada/saída)
-│   └── test/
-│
-├── item/                  # Contexto de Item/Cardápio
-│   ├── application/
-│   ├── domain/
-│   ├── infraestructure/
-│   └── test/
-│
-├── order/                 # Contexto de Pedido
-│   ├── application/
-│   ├── domain/
-│   ├── infrastructure/
-│   └── test/
-│
-├── payments/              # Contexto de Pagamento
-│   ├── application/
-│   ├── domain/
-│   └── infraestructure/
-│
-├── repository/            # Ports (interfaces de repositórios)
-│   └── db.port.ts
-│
-└── user/                  # Contexto de Usuário Interno
-    ├── application/
-    ├── domain/
-    ├── infra/
-    └── test/
+TODO
 ```
 
 ### Princípios Arquiteturais
-- **Arquitetura Hexagonal** (Ports & Adapters)
+- **Clean Architecture** 
 - **Domain Driven Design** (DDD)
 
 ---
