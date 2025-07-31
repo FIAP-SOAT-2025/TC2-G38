@@ -12,6 +12,8 @@
 - [Tecnologias](#️-tecnologias)
 - [Arquitetura](#️-arquitetura)
 - [Linguagem Ubíqua](#-linguagem-ubíqua)
+- [Desenho de requisitos do negócio](#️-requisitos-negócio)
+- [Desenho da infraestrutura](#️-requisitos-infra)
 - [Configuração](#️-configuração)
 - [Execução](#️-execução)
 - [Testes](#-testes)
@@ -141,6 +143,15 @@ TODO
 - `STAFF` - Funcionário operacional
 
 ---
+
+## Desenho de requisitos do negócio
+
+![Descrição da imagem](/desenho-arch.png)
+
+
+## Desenho da infraestrutura
+
+![Descrição da imagem](/todo)
 
 
 ## Pré-requisitos
