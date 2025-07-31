@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/shared/infra/prisma.service';
 import { InternalUser, RoleType as PrismaRoleType } from '@prisma/client';
 import { DbConnection } from 'src/internalUser/interfaces/dbconnection';
+import { InternalUserProps } from 'src/internalUser/entities/internalUser.entity';
 
 @Injectable()
 export class PrismaInternalUserRepository implements DbConnection {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createInternalUser: InternalUser): Promise<InternalUser> {
-    return await this.prisma.internalUser.create({
+  async create(createInternalUser: InternalUser): Promise<InternalUserProps> {
+    const internalUser = await this.prisma.internalUser.create({
       data: {
         registrationNumber: createInternalUser.registrationNumber,
         name: createInternalUser.name,
@@ -18,6 +19,7 @@ export class PrismaInternalUserRepository implements DbConnection {
         roleId: createInternalUser.roleId,
       },
     });
+    return internalUser;
   }
 
   async findByCpf(_cpf: string): Promise<boolean> {

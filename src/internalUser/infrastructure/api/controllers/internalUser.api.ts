@@ -9,7 +9,6 @@ import { InternalUserProps } from 'src/internalUser/entities/internalUser.entity
 @Controller('/internal-user')
 export class InternalUserApiController {
   constructor(
-    // private internalUserController: InternalUserController,
     @Inject('DbConnection')
     private readonly dbConnection: DbConnection,
   ) {}

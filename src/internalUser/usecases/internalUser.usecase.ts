@@ -4,7 +4,8 @@ import {
 } from '../entities/internalUser.entity';
 import { InternalUserServiceInterface } from '../interfaces/internalUser.usecase.interface';
 import { InternalUserGatewayInterface } from '../interfaces/gateways.interface';
-import { RoleType } from '../infrastructure/api/dto/role-type';
+import { RoleType } from '../entities/enums/roleType';
+import { BaseException } from 'src/shared/exceptions/exceptions.base';
 
 export class InternalUserUseCase implements InternalUserServiceInterface {
   constructor(private internalUserGateway: InternalUserGatewayInterface) {}
@@ -18,12 +19,16 @@ export class InternalUserUseCase implements InternalUserServiceInterface {
           createInternalUser.registrationNumber,
         );
       if (userExists) {
-        throw new Error('Internal User Already Registered.');
+        throw new BaseException(
+          'Internal User Already Registered.',
+          400,
+          'USER_ALREADY_REGISTERED',
+        );
       }
       const roleId = await this.internalUserGateway.getInternalUserRoleId(
         createInternalUser.roleName as RoleType,
       );
-      const newInternalUser = await this.internalUserGateway.createInternalUser(
+      return await this.internalUserGateway.createInternalUser(
         new InternalUser({
           registrationNumber: createInternalUser.registrationNumber,
           name: createInternalUser.name,
@@ -33,7 +38,6 @@ export class InternalUserUseCase implements InternalUserServiceInterface {
           roleId,
         }),
       );
-      return newInternalUser;
     } catch (error) {
       console.log('Error when creating internal user:', error);
       throw error;
