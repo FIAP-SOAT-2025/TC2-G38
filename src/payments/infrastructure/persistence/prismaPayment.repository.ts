@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../../shared/infra/prisma.service";
-import { Payment } from "../../domain/entities/payment.entity";
 import { PaymentTypeEnum } from "src/payments/domain/enums/payment-type.enum";
 import { PaymentStatusEnum } from "src/payments/domain/enums/payment-status.enum";
-import { mapPrismaPaymentToPaymentEntity } from "../adapters/prisma-payment.mapper";
 import { PaymentGatewayInterface } from "src/payments/interfaces/payment-gateway.interface";
 
 @Injectable()

@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Payment } from 'src/payments/domain/entities/payment.entity';
-import { PaymentResponse } from 'src/payments/infrastructure/api/dto/payment-response.dto';
 
 export class OrderResponse {
   @ApiProperty()
