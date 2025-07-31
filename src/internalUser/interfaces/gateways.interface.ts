@@ -1,5 +1,5 @@
+import { RoleType } from '../entities/enums/roleType';
 import { InternalUser } from '../entities/internalUser.entity';
-import { RoleType } from '../infrastructure/api/dto/role-type';
 
 export interface InternalUserGatewayInterface {
   createInternalUser(internalUser: InternalUser): Promise<InternalUser>;
