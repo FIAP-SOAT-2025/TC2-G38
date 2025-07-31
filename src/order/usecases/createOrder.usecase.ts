@@ -5,7 +5,7 @@ import GetCustomerByCpf from 'src/customer/usecases/getCustomerByCpf.usecase';
 import CustomerGatewayInterface from 'src/customer/interfaces/gateways';
 import ProccessOrderItemUseCase from './processOrderItem.usecase';
 import Order from '../entities/order.entity';
-import HasRepeatedOrderItemIdsUseCase from './item/existingItem.usecase copy';
+import HasRepeatedOrderItemIdsUseCase from './item/hasRepeatedOrderItem.usecase';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { CreatePaymentUseCase } from 'src/payments/usecases/createPayment.usecase';
 import { Payment } from 'src/payments/domain/entities/payment.entity';

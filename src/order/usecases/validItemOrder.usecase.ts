@@ -1,15 +1,15 @@
 import Item from 'src/item/entities/item.entity';
 import ExistingItemUseCase from './item/existingItem.usecase';
-import { OrderItemDto } from '../infraestructure/api/dto/order.dto';
 import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import ItemQuantityAvailableUseCase from './item/itemQuantityAvailable.usecase';
+import OrderItemInterface from '../interfaces/order-item.interface';
 
 export default class ValidItemOrderUseCase {
     constructor() { }
     static async validItemOrderUseCase(
         itemGateway: ItemGatewayInterface,
-        orderItemDto: OrderItemDto
+        orderItemDto: OrderItemInterface
     ): Promise<Item> {
 
         const item = await ExistingItemUseCase._getExistingItem(orderItemDto.itemId, itemGateway);
