@@ -70,7 +70,7 @@ export default class ProcessOrderUseCase {
     );
 
     return {
-      order: OrderPresenter.formatOrderToJson(createdOrder, createdOrder.orderItems),
+      order: OrderPresenter.formatOrderToJson(createdOrder),
       payment,
     };
   }

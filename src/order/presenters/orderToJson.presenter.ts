@@ -1,12 +1,10 @@
 import Order from '../entities/order.entity';
-import { OrderItem } from '../entities/orderItem.entity';
-import OrderItemInterface from '../interfaces/order-item.interface';
 import OrderInterface from '../interfaces/order.interface';
 
 export default class OrderPresenter {
   constructor() {}
 
-  static formatOrderToJson(order: Order, items: OrderItem[]): OrderInterface {
+  static formatOrderToJson(order: Order): OrderInterface {
     return {
       id: order.id,
       status: order.status,
@@ -14,7 +12,7 @@ export default class OrderPresenter {
       createdAt: order.createdAt,
       updatedAt: order.updatedAt,
       customerId: order.customerId ?? undefined,
-      orderItems: items.map((item) => ({
+      orderItems: order.orderItems.map((item) => ({
         itemId: item._itemId,
         quantity: item._quantity,
         price: item._price,
