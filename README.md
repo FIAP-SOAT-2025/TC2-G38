@@ -55,7 +55,7 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 | Recurso | Link |
 |---------|------|
 | **Swagger** | [Swagger UI](http://localhost:3000/api) |
-| **Collection postman com exemplos de request** | [Swagger UI](https://drive.google.com/file/d/1qlXEhMD46muBnStw0IkLSSw9sip2L8JJ/view?usp=sharing) |
+| **Collection postman com exemplos de request** | [Swagger UI](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) |
 | **Documentação da Api** | [Payloads e Curl](./api-documentation.md) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
@@ -235,6 +235,8 @@ npm run start:dev
 - Item
 - Customer
 - Order
+- Webhook Payment
+- Patch de Status da Order
 
 ---
 
