@@ -21,7 +21,7 @@ export class OrderItemDto {
   itemQuantity: number;
 }
 
-export class OrderDto implements OrderInterface {
+export class OrderDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
