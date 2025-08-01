@@ -1,4 +1,3 @@
-import { OrderItemDto } from 'src/order/infraestructure/api/dto/order.dto';
 import OrderItemInterface from 'src/order/interfaces/order-item.interface';
 
 export default class HasRepeatedOrderItemIdsUseCase {

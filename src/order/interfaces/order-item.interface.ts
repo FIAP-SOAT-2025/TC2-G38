@@ -1,4 +1,6 @@
 export default interface OrderItemInterface {
   itemId: string;
-  itemQuantity: number;
+  itemQuantity?: number;
+  quantity?: number;
+  price?: number;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import OrderGatewayInterface from '../interfaces/gateways';
 import { Customer } from 'src/customer/entities/customer.entity';
@@ -16,7 +17,7 @@ import OrderInterface from '../interfaces/order.interface';
 import OrderResponseInterface from '../interfaces/order-response.interface';
 
 export default class ProcessOrderUseCase {
-  constructor() {}
+  constructor() { }
   static async processOrder(
     orderData: OrderInterface,
     orderGateway: OrderGatewayInterface,
@@ -27,17 +28,20 @@ export default class ProcessOrderUseCase {
   ): Promise<{ order: OrderResponseInterface; payment: Payment }> {
     let customer: Customer | undefined;
 
-    if (
-      HasRepeatedOrderItemIdsUseCase.hasRepeatedOrderItemIds(
-        orderData.orderItems,
-      )
-    ) {
-      throw new BaseException(
-        'Failed to create order: Order items must be unique. Found duplicate item IDs in order Items.',
-        400,
-        'HAD_ITEM_REPEATED',
-      );
+    if (orderData.orderItems) {
+      if (
+        HasRepeatedOrderItemIdsUseCase.hasRepeatedOrderItemIds(
+          orderData.orderItems,
+        )
+      ) {
+        throw new BaseException(
+          'Failed to create order: Order items must be unique. Found duplicate item IDs in order Items.',
+          400,
+          'HAD_ITEM_REPEATED',
+        );
+      }
     }
+
 
     if (orderData.customerCpf) {
       customer = await GetCustomerByCpf.getCustomerByCpf(

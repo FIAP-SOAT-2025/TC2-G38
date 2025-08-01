@@ -11,17 +11,19 @@ export default class ProccessOrderItemUseCase {
   ) {
     const processedOrderItems: OrderItemProps[] = [];
 
-    for (const orderItem of order.orderItems) {
-      const { id, price } = await ValidItemOrderUseCase.validItemOrderUseCase(
-        itemGateway,
-        orderItem,
-      );
+    if (order.orderItems) {
+      for (const orderItem of order.orderItems) {
+        const { id, price } = await ValidItemOrderUseCase.validItemOrderUseCase(
+          itemGateway,
+          orderItem,
+        );
 
-      processedOrderItems.push({
-        itemId: id as string,
-        quantity: orderItem.itemQuantity,
-        price,
-      });
+        processedOrderItems.push({
+          itemId: id as string,
+          quantity: orderItem.itemQuantity || 0,
+          price,
+        });
+      }
     }
 
     return processedOrderItems;
