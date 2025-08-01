@@ -8,5 +8,5 @@ export default interface OrderInterface {
   updatedAt?: Date;
   customerId?: string;
   customerCpf?: string;
-  orderItems?: OrderItemInterface[];
+  orderItems: OrderItemInterface[];
 }
