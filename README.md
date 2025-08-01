@@ -151,7 +151,7 @@ TODO
 
 ## Desenho da infraestrutura
 
-![Descrição da imagem](/todo)
+![Descrição da imagem](/desenho-infra.png)
 
 
 ## Pré-requisitos
