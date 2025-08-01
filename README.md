@@ -16,6 +16,7 @@
 - [Desenho da infraestrutura](#️-requisitos-infra)
 - [Configuração](#️-configuração)
 - [Execução](#️-execução)
+- [Order de Execução](#️-ordem-execução)
 - [Testes](#-testes)
 - [Equipe](#-equipe---grupo-38)
 
@@ -54,12 +55,12 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 | Recurso | Link |
 |---------|------|
 | **Swagger** | [Swagger UI](http://localhost:3000/api) |
+| **Collection postman com exemplos de request** | [Collection Postman](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) |
 | **Documentação da Api** | [Payloads e Curl](./api-documentation.md) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
 | **Vídeo de demonstração da API** |  [ Google Drive - TODO ](TODO) |
-| **Desenho da arquitetura (requisitos do negócio)** |  [ Google Drive  ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
-| **Desenho da arquitetura (infraestrutura)** |  [ Google Drive TODO ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
+
 ### 
 
 ---
@@ -80,25 +81,18 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 ## 🏗️ Arquitetura
 O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais:
 
-- Controller: 
+- Controller: Camada responsável por receber as requisições externas (HTTP, por exemplo), orquestrar a entrada dos dados e encaminhá-los para os casos de uso apropriados.
 
-- Domain: Contém as entidades centrais do domínio, as interfaces de repositórios e as interfaces dos services, promovendo a separação entre regra de negócio e infraestrutura.
+- Domain: Contém as entidades centrais do domínio, Essa camada representa a regra de negócio pura e está isolada de detalhes de infraestrutura, promovendo baixo acoplamento e alta coesão.
 
-- Gateways: 
+- UseCases: Implementa os casos de uso da aplicação, coordenando as entidades e serviços necessários para atender as regras de negócio. É a ponte entre a entrada de dados (Controller) e as regras de domínio.
 
-- Infrastructure: 
+- Gateways: Implementa as interfaces de saída , como acesso a banco de dados, serviços externos, promovendo a inversão de dependência.
 
-- Presenter:
+- Infrastructure: Contém as configurações e implementações concretas de tecnologias utilizadas, como clientes HTTP, repositórios com ORM, bancos de dados .
 
-- UseCases: 
+- Presenter: Responsável por formatar a saída dos dados para os consumidores, separando a lógica de apresentação da lógica de negócio.
 
-Essa estrutura proporciona um sistema mais coeso, testável e flexível, facilitando a manutenção e a evolução do código.
-
-
-### Estrutura de Pastas
-```
-TODO
-```
 
 ### Princípios Arquiteturais
 - **Clean Architecture** 
@@ -146,7 +140,7 @@ TODO
 
 ## Desenho de requisitos do negócio
 
-![Descrição da imagem](/desenho-arch.png)
+![Descrição da imagem](/desenho-arch.jpg)
 
 
 ## Desenho da infraestrutura
@@ -232,6 +226,17 @@ npm run start:dev
 ### Acesso à Aplicação
 - **API:** http://localhost:3000
 - **Swagger:** http://localhost:3000/api
+
+--- 
+
+## Order de Execução
+
+- Internal User
+- Item
+- Customer
+- Order
+- Webhook Payment
+- Patch de Status da Order
 
 ---
 
