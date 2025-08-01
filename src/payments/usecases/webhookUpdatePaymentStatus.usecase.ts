@@ -5,7 +5,8 @@ import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import UpdateStatusOrderUseCase from 'src/order/usecases/updateStatusOrder.usecase';
 import { OrderStatusEnum } from 'src/order/enums/orderStatus.enum';
 import { Payment, PaymentStatusEnum } from '../domain/entities/payment.entity';
-import { BaseException } from "src/shared/exceptions/exceptions.base";
+import ValidateStatusUseCase from "./validateStatus.usecase";
+
 
 export default class WebhookUpdatePaymentStatusUseCase {
   constructor() {}
@@ -21,7 +22,7 @@ async updateStatus(
     if (!payment) {
       throw new Error(`Payment with ID ${id} not found`);
     }
-    this.validateStatus(payment, newStatus, id);
+    ValidateStatusUseCase.validate(payment, newStatus, id);
 
     if (newStatus === PaymentStatusEnum.APPROVED) {
       updatedPayment = await paymentGatewayI.updatePaymentStatus(payment.id, newStatus);
@@ -34,23 +35,6 @@ async updateStatus(
     return updatedPayment!;
   }
 
-  private validateStatus(payment: Payment, newStatus: PaymentStatusEnum, id: string): void {
-    if (payment.status === newStatus) {
-      throw new BaseException(
-        `Payment with ID ${id} is already in ${payment.status} status`,
-        409,
-        'PAYMENT_ALREADY_IN_STATUS'
-      );
-    }
-
-    if (payment.status === PaymentStatusEnum.APPROVED) {
-      throw new BaseException(
-        `Payment with ID ${id} is approved and cannot be updated.`,
-        409,
-        'PAYMENT_ALREADY_APPROVED'
-      );
-    }
-  }
 
 
 }
