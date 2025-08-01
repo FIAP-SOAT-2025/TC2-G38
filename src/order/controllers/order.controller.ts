@@ -18,6 +18,7 @@ import { PaymentGateway } from 'src/payments/gateways/payment.gateway';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
 import ItemRepositoryInterface from 'src/item/interfaces/ItemRepositoryInterface';
 import OrderResponseInterface from '../interfaces/order-response.interface';
+import OrderInterface from '../interfaces/order.interface';
 
 export class OrderController {
   constructor() { }
@@ -29,7 +30,7 @@ export class OrderController {
     customerRepository: CustomerGatewayInterface,
     paymentRepository: PaymentRepositoryInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
-  ): Promise<{ order: OrderResponseInterface; payment: Payment }> {
+  ): Promise<{ order: OrderInterface; payment: Payment }> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGateway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);

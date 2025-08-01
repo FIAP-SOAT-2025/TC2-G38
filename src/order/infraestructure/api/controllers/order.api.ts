@@ -14,6 +14,7 @@ import { MercadoPagoClient } from 'src/payments/infrastructure/external/mercado-
 import { UpdateOrderStatusDto } from '../dto/update-status.dto';
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import { ExceptionMapper } from 'src/shared/exceptions/exception.mapper';
+import OrderInterface from 'src/order/interfaces/order.interface';
 
 @ApiTags('Order')
 @Controller('/order')
@@ -29,7 +30,7 @@ export class OrderApi {
   @Post()
   createOrder(
     @Body() createOrderDto: OrderDto,
-  ): Promise<{ order: OrderResponse; payment: Payment }> {
+  ): Promise<{ order: OrderInterface; payment: Payment }> {
     return OrderController.createOrder(
       createOrderDto,
       this.orderRepository,

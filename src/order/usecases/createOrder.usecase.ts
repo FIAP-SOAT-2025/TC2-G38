@@ -15,6 +15,7 @@ import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/cal
 import { PaymentGatewayInterface } from 'src/payments/interfaces/payment-gateway.interface';
 import OrderInterface from '../interfaces/order.interface';
 import OrderResponseInterface from '../interfaces/order-response.interface';
+import OrderPresenter from '../presenters/orderToJson.presenter';
 
 export default class ProcessOrderUseCase {
   constructor() { }
@@ -25,7 +26,7 @@ export default class ProcessOrderUseCase {
     customerGateway: CustomerGatewayInterface,
     paymentGateway: PaymentGatewayInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
-  ): Promise<{ order: OrderResponseInterface; payment: Payment }> {
+  ): Promise<{ order: OrderInterface; payment: Payment }> {
     let customer: Customer | undefined;
 
     if (orderData.orderItems) {
@@ -69,7 +70,7 @@ export default class ProcessOrderUseCase {
     );
 
     return {
-      order: OrderMapper.mapOrderEntityToOrderProcessResponse(createdOrder),
+      order: OrderPresenter.formatOrderToJson(createdOrder, createdOrder.orderItems),
       payment,
     };
   }
