@@ -1,6 +1,6 @@
 # 🍔 Sistema de Controle de Pedidos
 
-> **Tech Challenge FIAP - Fase 01 | Grupo 38**
+> **Tech Challenge FIAP - Fase 02 | Grupo  147**
 
 ----
 
@@ -157,8 +157,8 @@ O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura mod
 ### Clonar Repositório do projeto
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/FIAP-SOAT-2025/fiap-tc-lanchonete-g38.git
-cd fiap-tc-lanchonete-g38
+git clone https://github.com/FIAP-SOAT-2025/TC2-G38.git
+cd TC2-G38
 ```
 ### Variáveis de Ambiente
 
