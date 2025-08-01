@@ -16,7 +16,7 @@
 - [Desenho da infraestrutura](#️-requisitos-infra)
 - [Configuração](#️-configuração)
 - [Execução](#️-execução)
-- [Order de Execução](#️-execução)
+- [Order de Execução](#️-ordem-execução)
 - [Testes](#-testes)
 - [Equipe](#-equipe---grupo-38)
 
@@ -210,16 +210,18 @@ npm run seed
 npm run start:dev
 ```
 
-### Order de Execução
+### Acesso à Aplicação
+- **API:** http://localhost:3000
+- **Swagger:** http://localhost:3000/api
+
+--- 
+
+## Order de Execução
 
 - Internal User
 - Item
 - Customer
 - Order
-
-### Acesso à Aplicação
-- **API:** http://localhost:3000
-- **Swagger:** http://localhost:3000/api
 
 ---
 
