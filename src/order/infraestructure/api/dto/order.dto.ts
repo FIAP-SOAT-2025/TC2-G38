@@ -4,16 +4,12 @@ import {
   IsArray,
   ValidateNested,
   IsOptional,
-  IsNumber,
   IsInt,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import OrderInterface from 'src/order/interfaces/order.interface';
-import OrderItemInterface from 'src/order/interfaces/order-item.interface';
 
-export class OrderItemDto implements OrderInterface {
-  customerCpf?: string | undefined;
-  orderItems: OrderItemInterface[];
+export class OrderItemDto {
   @ApiPropertyOptional()
   @IsString()
   @IsOptional()
