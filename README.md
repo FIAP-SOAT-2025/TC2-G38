@@ -79,7 +79,20 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 ---
 
 ## 🏗️ Arquitetura
-O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais: Controller, Domain, Gateways, Infrastructure, Presenter e UseCases. Essa estrutura proporciona um sistema mais coeso, testável e flexível, facilitando a manutenção e a evolução do código.
+O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais:
+
+- Controller: Camada responsável por receber as requisições externas (HTTP, por exemplo), orquestrar a entrada dos dados e encaminhá-los para os casos de uso apropriados.
+
+- Domain: Contém as entidades centrais do domínio, Essa camada representa a regra de negócio pura e está isolada de detalhes de infraestrutura, promovendo baixo acoplamento e alta coesão.
+
+- UseCases: Implementa os casos de uso da aplicação, coordenando as entidades e serviços necessários para atender as regras de negócio. É a ponte entre a entrada de dados (Controller) e as regras de domínio.
+
+- Gateways: Implementa as interfaces de saída , como acesso a banco de dados, serviços externos, promovendo a inversão de dependência.
+
+- Infrastructure: Contém as configurações e implementações concretas de tecnologias utilizadas, como clientes HTTP, repositórios com ORM, bancos de dados .
+
+- Presenter: Responsável por formatar a saída dos dados para os consumidores, separando a lógica de apresentação da lógica de negócio.
+
 
 ### Princípios Arquiteturais
 - **Clean Architecture** 
