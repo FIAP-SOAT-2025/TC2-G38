@@ -7,10 +7,12 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { InternalUserModule } from './internalUser/internaluser.module';
 import { OrderModule } from './order/order.module';
 import { ItemModule } from './item/item.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    HealthModule,
     ItemModule,
     CustomerModule,
     InternalUserModule,
