@@ -16,6 +16,7 @@
 - [Desenho da infraestrutura](#️-requisitos-infra)
 - [Configuração](#️-configuração)
 - [Execução](#️-execução)
+- [Order de Execução](#️-execução)
 - [Testes](#-testes)
 - [Equipe](#-equipe---grupo-38)
 
@@ -54,12 +55,12 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 | Recurso | Link |
 |---------|------|
 | **Swagger** | [Swagger UI](http://localhost:3000/api) |
+| **Collection postman com exemplos de request** | [Swagger UI](https://drive.google.com/file/d/1qlXEhMD46muBnStw0IkLSSw9sip2L8JJ/view?usp=sharing) |
 | **Documentação da Api** | [Payloads e Curl](./api-documentation.md) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
 | **Vídeo de demonstração da API** |  [ Google Drive - TODO ](TODO) |
-| **Desenho da arquitetura (requisitos do negócio)** |  [ Google Drive  ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
-| **Desenho da arquitetura (infraestrutura)** |  [ Google Drive TODO ](https://drive.google.com/file/d/1gxV9DWxMtAiZHdykgVN9BhCuK3L0s48X/view?usp=drive_link) |
+
 ### 
 
 ---
@@ -78,27 +79,7 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 ---
 
 ## 🏗️ Arquitetura
-O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais:
-
-- Controller: 
-
-- Domain: Contém as entidades centrais do domínio, as interfaces de repositórios e as interfaces dos services, promovendo a separação entre regra de negócio e infraestrutura.
-
-- Gateways: 
-
-- Infrastructure: 
-
-- Presenter:
-
-- UseCases: 
-
-Essa estrutura proporciona um sistema mais coeso, testável e flexível, facilitando a manutenção e a evolução do código.
-
-
-### Estrutura de Pastas
-```
-TODO
-```
+O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura modular composta por: *Order, Item, Customer, InternalUser e Payments*. Cada um desses módulos está organizado em camadas principais: Controller, Domain, Gateways, Infrastructure, Presenter e UseCases. Essa estrutura proporciona um sistema mais coeso, testável e flexível, facilitando a manutenção e a evolução do código.
 
 ### Princípios Arquiteturais
 - **Clean Architecture** 
@@ -146,7 +127,7 @@ TODO
 
 ## Desenho de requisitos do negócio
 
-![Descrição da imagem](/desenho-arch.png)
+![Descrição da imagem](/desenho-arch.jpg)
 
 
 ## Desenho da infraestrutura
@@ -228,6 +209,13 @@ npm run seed
 ```bash
 npm run start:dev
 ```
+
+### Order de Execução
+
+- Internal User
+- Item
+- Customer
+- Order
 
 ### Acesso à Aplicação
 - **API:** http://localhost:3000
