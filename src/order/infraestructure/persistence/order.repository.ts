@@ -29,7 +29,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         })),
         skipDuplicates: true,
       });
-
+      
       return mapPrismaOrderToOrderResponse(createdRecord, createdItemOrder);
     } catch (error) {
       console.error('Error creating order:', error);
@@ -37,7 +37,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     }
   }
 
-  async findById(id: string): Promise<Order> {
+  async findById(id: string): Promise<any> {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: { orderItems: true, payment: true },
@@ -47,7 +47,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       throw new NotFoundException('Order not found');
     }
 
-    return mapPrismaOrderToOrderResponse(order, order.orderItems);
+    return order;
   }
 
   async findAll(): Promise<any> {
@@ -72,7 +72,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
     }
   }
 
-  async updateStatus(id: string, status: string): Promise<Order> {
+  async updateStatus(id: string, status: string): Promise<any> {
     try {
       const updatedOrder = await this.prisma.order.update({
         where: { id },
@@ -80,10 +80,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         include: { orderItems: true },
       });
 
-      return mapPrismaOrderToOrderResponse(
-        updatedOrder,
-        updatedOrder.orderItems,
-      );
+      return updatedOrder;
     } catch (error) {
       console.error('Error updating order status:', error);
       throw new Error(`Failed to update order status for ${id}`);
