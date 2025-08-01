@@ -1,9 +1,9 @@
 import { BaseException } from 'src/shared/exceptions/exceptions.base';
 import OrderGatewayInterface from '../interfaces/gateways';
-import Order from '../entities/order.entity';
+import Order, { OrderProps } from '../entities/order.entity';
 
 export default class FindOrderByIdUseCase {
-  constructor() {}
+  constructor() { }
   static async findOrder(
     id: string,
     orderGateway: OrderGatewayInterface,
@@ -17,6 +17,13 @@ export default class FindOrderByIdUseCase {
         'ORDER_NOT_FOUND',
       );
     }
+
+    const orderFinal = new Order(order as unknown as OrderProps);
+
+    if (orderFinal.payment) {
+      orderFinal.addPayment(orderFinal.payment);
+    }
+
     return order;
   }
 }

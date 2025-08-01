@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import ItemGatewayInterface from 'src/item/interfaces/itemGatewayInterface';
 import { OrderGateway } from '../gateways/order.gateway';
 import OrderGatewayInterface from '../interfaces/gateways';
 import FindAllOrderUseCase from '../usecases/findAllOrder.usecase';
@@ -12,13 +11,14 @@ import { OrderDto } from '../infraestructure/api/dto/order.dto';
 import { CustomerGateway } from 'src/customer/gateways/customer.gateway';
 import Order from '../entities/order.entity';
 import { OrderStatusEnum } from '../enums/orderStatus.enum';
-import { OrderResponse } from '../infraestructure/api/dto/orderResponse.dto';
 import { PaymentRepositoryInterface } from 'src/payments/interfaces/payment-repository.interface';
 import { Payment } from 'src/payments/domain/entities/payment.entity';
 import { PaymentProviderGateway } from 'src/payments/gateways/payment-provider.gateway';
 import { PaymentGateway } from 'src/payments/gateways/payment.gateway';
 import { CallPaymentProviderGatewayInterface } from 'src/payments/interfaces/call-payment-provider-gateway.interface';
 import ItemRepositoryInterface from 'src/item/interfaces/ItemRepositoryInterface';
+import OrderResponseInterface from '../interfaces/order-response.interface';
+import OrderInterface from '../interfaces/order.interface';
 
 export class OrderController {
   constructor() { }
@@ -30,7 +30,7 @@ export class OrderController {
     customerRepository: CustomerGatewayInterface,
     paymentRepository: PaymentRepositoryInterface,
     paymentProvider: CallPaymentProviderGatewayInterface,
-  ): Promise<{ order: OrderResponse; payment: Payment }> {
+  ): Promise<{ order: OrderInterface; payment: Payment }> {
     const orderGateway = new OrderGateway(orderRepository);
     const itemGateway = new ItemGateway(itemRepository);
     const customerGateway = new CustomerGateway(customerRepository);

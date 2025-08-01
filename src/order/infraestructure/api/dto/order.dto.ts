@@ -4,10 +4,10 @@ import {
   IsArray,
   ValidateNested,
   IsOptional,
-  IsNumber,
   IsInt,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import OrderInterface from 'src/order/interfaces/order.interface';
 
 export class OrderItemDto {
   @ApiPropertyOptional()

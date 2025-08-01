@@ -1,19 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import OrderGatewayInterface from 'src/order/interfaces/gateways';
 import { PrismaService } from 'src/shared/infra/prisma.service';
-
 import Order from 'src/order/entities/order.entity';
-import { CompleteOrderResponse } from '../api/dto/orderResponse.dto';
 import { mapPrismaOrderToOrderResponse } from 'src/order/presenters/order.presenter';
-import { OrderMapper } from 'src/order/presenters/orderMap';
-import { UpdateStatusDto } from 'src/payments/infrastructure/api/dto/update-status.dto';
 import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderGatewayInterface {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create(order: Order): Promise<Order> {
+  async create(order: Order): Promise<any> {
     try {
       const createdRecord = await this.prisma.order.create({
         data: {
@@ -34,14 +30,19 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         skipDuplicates: true,
       });
 
-      return mapPrismaOrderToOrderResponse(createdRecord, createdItemOrder);
+      return {
+        ...createdRecord,
+        price: Number(createdRecord.totalAmount),
+        orderItems: createdItemOrder,
+        payment: undefined,
+      };
     } catch (error) {
       console.error('Error creating order:', error);
       throw new Error('Failed to create order');
     }
   }
 
-  async findById(id: string): Promise<Order> {
+  async findById(id: string): Promise<any> {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: { orderItems: true, payment: true },
@@ -51,32 +52,37 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       throw new NotFoundException('Order not found');
     }
 
-    return mapPrismaOrderToOrderResponse(order, order.orderItems);
+    return order;
   }
 
   async findAll(): Promise<any> {
     try {
-      return await this.prisma.$queryRaw`
-        SELECT * FROM "Order" as o
-        INNER JOIN "OrderItem" as oi
-        ON oi."orderId" = o.id
-        WHERE o.status
-        IN ('READY', 'PREPARING', 'RECEIVED')
-        ORDER BY
-        CASE o.status
-          WHEN 'READY' THEN 1
-          WHEN 'PREPARING' THEN 2
-          WHEN 'RECEIVED' THEN 3
-        END,  
-        o."createdAt" ASC;
-      `;
+      return await this.prisma.$queryRaw`SELECT 
+        o.id, 
+        o.status, 
+        o."totalAmount", 
+        o."createdAt",
+        JSON_AGG(
+          JSON_BUILD_OBJECT(
+            'itemId', oi."itemId",
+            'orderId', oi."orderId",
+            'quantity', oi.quantity,
+            'price', oi.price
+          )
+        ) AS items
+      FROM "Order" o
+      JOIN "OrderItem" oi ON oi."orderId" = o.id
+      WHERE o.status IN ('READY', 'PREPARING', 'RECEIVED')
+      GROUP BY o.id, o.status, o."totalAmount", o."createdAt"
+      ORDER BY o."createdAt" ASC;
+`;
     } catch (error) {
       console.error('Error finding all orders:', error);
       throw new Error('Failed to find orders');
     }
   }
 
-  async updateStatus(id: string, status: string): Promise<Order> {
+  async updateStatus(id: string, status: string): Promise<any> {
     try {
       const updatedOrder = await this.prisma.order.update({
         where: { id },
@@ -84,10 +90,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         include: { orderItems: true },
       });
 
-      return mapPrismaOrderToOrderResponse(
-        updatedOrder,
-        updatedOrder.orderItems,
-      );
+      return updatedOrder;
     } catch (error) {
       console.error('Error updating order status:', error);
       throw new Error(`Failed to update order status for ${id}`);

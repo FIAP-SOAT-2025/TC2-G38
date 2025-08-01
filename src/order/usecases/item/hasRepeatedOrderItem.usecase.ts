@@ -1,8 +1,8 @@
-import { OrderItemDto } from 'src/order/infraestructure/api/dto/order.dto';
+import OrderItemInterface from 'src/order/interfaces/order-item.interface';
 
 export default class HasRepeatedOrderItemIdsUseCase {
   constructor() {}
-  static hasRepeatedOrderItemIds(orderItems: OrderItemDto[]): boolean {
+  static hasRepeatedOrderItemIds(orderItems: OrderItemInterface[]): boolean {
     const seen = new Set<string>();
 
     for (const { itemId } of orderItems) {
