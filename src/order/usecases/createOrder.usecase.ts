@@ -60,7 +60,7 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
-
+  
     const payment = await CreatePaymentUseCase.createPayment(
       paymentGateway,
       paymentProvider,

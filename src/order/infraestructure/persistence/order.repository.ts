@@ -9,7 +9,7 @@ import { OrderStatus } from '@prisma/client';
 export class PrismaOrderRepository implements OrderGatewayInterface {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create(order: Order): Promise<Order> {
+  async create(order: Order): Promise<any> {
     try {
       const createdRecord = await this.prisma.order.create({
         data: {
@@ -30,7 +30,12 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
         skipDuplicates: true,
       });
 
-      return mapPrismaOrderToOrderResponse(createdRecord, createdItemOrder);
+      return {
+        ...createdRecord,
+        price: Number(createdRecord.totalAmount),
+        orderItems: createdItemOrder,
+        payment: undefined,
+      };
     } catch (error) {
       console.error('Error creating order:', error);
       throw new Error('Failed to create order');
