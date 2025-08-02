@@ -18,7 +18,7 @@ import OrderResponseInterface from '../interfaces/order-response.interface';
 import OrderPresenter from '../presenters/orderToJson.presenter';
 
 export default class ProcessOrderUseCase {
-  constructor() { }
+  constructor() {}
   static async processOrder(
     orderData: OrderInterface,
     orderGateway: OrderGatewayInterface,
@@ -43,7 +43,6 @@ export default class ProcessOrderUseCase {
       }
     }
 
-
     if (orderData.customerCpf) {
       customer = await GetCustomerByCpf.getCustomerByCpf(
         orderData.customerCpf,
@@ -60,7 +59,7 @@ export default class ProcessOrderUseCase {
     });
 
     const createdOrder = await orderGateway.create(current_order);
-  
+
     const payment = await CreatePaymentUseCase.createPayment(
       paymentGateway,
       paymentProvider,

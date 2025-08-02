@@ -56,7 +56,6 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 |---------|------|
 | **Swagger** | [Swagger UI](http://localhost:3000/api) |
 | **Collection postman com exemplos de request** | [Collection Postman](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) |
-| **Documentação da Api** | [Payloads e Curl](./api-documentation.md) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
 | **Vídeo de demonstração da API** |  [ Google Drive - TODO ](TODO) |
