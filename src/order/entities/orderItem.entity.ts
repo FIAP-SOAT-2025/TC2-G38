@@ -25,6 +25,22 @@ export class OrderItem {
     this._orderId = orderId;
   }
 
+  get itemId(): string {
+    return this._itemId;
+  }
+
+  get orderId(): string | undefined {
+    return this._orderId;
+  }
+
+  get quantity(): number {
+    return this._quantity;
+  }
+
+  get price(): number {
+    return this._price;
+  }
+
   setOrderId(orderId: string): void {
     if (!orderId) {
       throw new Error('Order ID cannot be empty');

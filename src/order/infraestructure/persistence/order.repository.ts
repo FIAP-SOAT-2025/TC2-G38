@@ -7,7 +7,7 @@ import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderGatewayInterface {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(order: Order): Promise<any> {
     try {

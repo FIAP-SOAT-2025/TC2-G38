@@ -13,9 +13,9 @@ export default class OrderPresenter {
       updatedAt: order.updatedAt,
       customerId: order.customerId ?? undefined,
       orderItems: order.orderItems.map((item) => ({
-        itemId: item._itemId,
-        quantity: item._quantity,
-        price: item._price,
+        itemId: item.itemId,
+        quantity: item.quantity,
+        price: item.price,
       })),
     };
   }
