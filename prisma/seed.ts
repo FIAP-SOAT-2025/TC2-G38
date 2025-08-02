@@ -214,8 +214,10 @@ async function main() {
   const payment1 = await prisma.payment.create({
     data: {
       status: PaymentStatus.APPROVED,
-      type: PaymentType.CREDIT_CARD,
+      type: PaymentType.PIX,
       orderId: order1.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
     },
   });
 
@@ -276,6 +278,8 @@ async function main() {
       status: PaymentStatus.APPROVED,
       type: PaymentType.PIX,
       orderId: order2.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
     },
   });
 
@@ -324,9 +328,11 @@ async function main() {
 
   const payment3 = await prisma.payment.create({
     data: {
-      status: PaymentStatus.PENDING,
+      status: PaymentStatus.APPROVED,
       type: PaymentType.PIX,
       orderId: order3.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
     },
   });
 
