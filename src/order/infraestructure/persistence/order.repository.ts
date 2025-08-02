@@ -57,7 +57,7 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
 
   async findAll(): Promise<any> {
     try {
-      return await this.prisma.$queryRaw`SELECT 
+      return await this.prisma.$queryRaw`SELECT
         o.id, 
         o.status, 
         o."totalAmount", 
@@ -74,8 +74,14 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
       JOIN "OrderItem" oi ON oi."orderId" = o.id
       WHERE o.status IN ('READY', 'PREPARING', 'RECEIVED')
       GROUP BY o.id, o.status, o."totalAmount", o."createdAt"
-      ORDER BY o."createdAt" ASC;
-`;
+      ORDER BY
+        CASE o.status
+          WHEN 'READY' THEN 1
+          WHEN 'PREPARING' THEN 2
+          WHEN 'RECEIVED' THEN 3
+        END,  
+        o."createdAt" ASC;
+      `;
     } catch (error) {
       console.error('Error finding all orders:', error);
       throw new Error('Failed to find orders');
