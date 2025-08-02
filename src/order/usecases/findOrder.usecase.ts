@@ -19,9 +19,9 @@ export default class FindOrderByIdUseCase {
     }
 
     const orderFinal = new Order(order as unknown as OrderProps);
-
-    if (orderFinal.payment) {
-      orderFinal.addPayment(orderFinal.payment);
+    
+    if (!orderFinal.payment && order.payment) {
+      orderFinal.addPayment(order.payment);
     }
 
     return orderFinal;

@@ -2,14 +2,14 @@ import ItemCategoryEnum from "../entities/itemCategory.enum";
 import { ItemGateway } from "../gateways/item.gateway";
 import { CreateItemInterface } from "../interfaces/createItemInterface";
 import { UpdateItemInterface } from "../interfaces/updateItemInterface";
-import { ItemPresenter } from "../presenter.ts/item.presenter";
+import { ItemPresenter } from "../presenter/item.presenter";
 import CreateItemUseCase from "../useCases/createItem.useCase";
 import { DeleteItemUseCase } from "../useCases/deleteItem.useCase";
 import FindItemUseCase from "../useCases/findItem.useCase";
 import FindItemCategory from "../useCases/findItemCategory.useCase";
 import UpdateItemUseCase from "../useCases/updateItem.useCase";
-import { DeletePresenter } from "../presenter.ts/Delete.presenter";
-import { CategoryPresenter } from "../presenter.ts/category.presenter";
+import { DeletePresenter } from "../presenter/Delete.presenter";
+import { CategoryPresenter } from "../presenter/category.presenter";
 import { ItemProps } from "../entities/item.entity";
 import ItemRepositoryInterface from "../interfaces/ItemRepositoryInterface";
 

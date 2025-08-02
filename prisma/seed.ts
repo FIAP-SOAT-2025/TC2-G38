@@ -325,7 +325,7 @@ async function main() {
   const payment3 = await prisma.payment.create({
     data: {
       status: PaymentStatus.PENDING,
-      type: PaymentType.DEBIT_CARD,
+      type: PaymentType.PIX,
       orderId: order3.id,
     },
   });
