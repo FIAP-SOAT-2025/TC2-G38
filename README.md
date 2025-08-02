@@ -216,6 +216,9 @@ npm run seed
 
 ---
 
+## Opção 3: Setup Kubernets local com kind
+[Testando o Ambiente Kubernetes Localmente com Kind](/kind/README.md)
+
 ## ▶️ Execução
 
 ### Desenvolvimento
