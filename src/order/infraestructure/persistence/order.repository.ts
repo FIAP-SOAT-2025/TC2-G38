@@ -57,30 +57,39 @@ export class PrismaOrderRepository implements OrderGatewayInterface {
 
   async findAll(): Promise<any> {
     try {
-      return await this.prisma.$queryRaw`SELECT
-        o.id, 
-        o.status, 
-        o."totalAmount", 
-        o."createdAt",
-        JSON_AGG(
-          JSON_BUILD_OBJECT(
-            'itemId', oi."itemId",
-            'orderId', oi."orderId",
-            'quantity', oi.quantity,
-            'price', oi.price
-          )
-        ) AS items
-      FROM "Order" o
-      JOIN "OrderItem" oi ON oi."orderId" = o.id
-      WHERE o.status IN ('READY', 'PREPARING', 'RECEIVED')
-      GROUP BY o.id, o.status, o."totalAmount", o."createdAt"
-      ORDER BY
-        CASE o.status
-          WHEN 'READY' THEN 1
-          WHEN 'PREPARING' THEN 2
-          WHEN 'RECEIVED' THEN 3
-        END,  
-        o."createdAt" ASC;
+      return await this.prisma.$queryRaw`
+      SELECT
+      o.id, 
+      o.status, 
+      o."totalAmount", 
+      o."createdAt",
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'itemId', oi."itemId",
+          'orderId', oi."orderId",
+          'quantity', oi.quantity,
+          'price', oi.price
+        )
+      ) AS items,
+      JSON_BUILD_OBJECT(
+        'id', p.id,
+        'status', p.status,
+        'type', p.type,
+        'mercadoPagoPaymentId', p."mercadoPagoPaymentId",
+        'qrCode', p."qrCode"
+      ) AS payment 
+FROM "Order" o
+JOIN "OrderItem" oi ON oi."orderId" = o.id
+LEFT JOIN "Payment" p ON p."orderId" = o.id
+WHERE o.status IN ('READY', 'PREPARING', 'RECEIVED')
+GROUP BY o.id, o.status, o."totalAmount", o."createdAt", p.id, p.status, p.type, p."mercadoPagoPaymentId", p."qrCode"
+ORDER BY
+  CASE o.status
+    WHEN 'READY' THEN 1
+    WHEN 'PREPARING' THEN 2
+    WHEN 'RECEIVED' THEN 3
+  END,  
+  o."createdAt" ASC;
       `;
     } catch (error) {
       console.error('Error finding all orders:', error);
