@@ -58,7 +58,7 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 | **Collection postman com exemplos de request** | [Collection Postman](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) |
 | **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
 | **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
-| **Vídeo de demonstração da API** |  [ Google Drive - TODO ](TODO) |
+| **Vídeo de demonstração da API** |  [ Google Drive ](https://drive.google.com/file/d/1JhdipvJSaBG3Y6AfwtVFg9SpMQWJFGbw/view?usp=drive_link) |
 
 ### 
 
