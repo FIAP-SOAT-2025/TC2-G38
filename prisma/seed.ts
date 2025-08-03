@@ -208,6 +208,7 @@ async function main() {
       status: OrderStatus.COMPLETED,
       totalAmount: 59.7,
       customerId: customer1.id,
+      createdAt: new Date('2025-08-01T09:30:40Z'),
     },
   });
 
@@ -268,8 +269,9 @@ async function main() {
   const order2 = await prisma.order.create({
     data: {
       status: OrderStatus.READY,
-      totalAmount: 74.7,
+      totalAmount: 145.43,
       customerId: customer2.id,
+      createdAt: new Date('2025-08-01T10:29:40Z'),
     },
   });
 
@@ -313,7 +315,7 @@ async function main() {
       itemId: onionRings.id,
       orderId: order2.id,
       quantity: 1,
-      price: 5.0,
+      price: 15.90,
     },
   });
 
@@ -323,6 +325,7 @@ async function main() {
       status: OrderStatus.RECEIVED,
       totalAmount: 41.8,
       customerId: customer3.id,
+      createdAt: new Date('2025-08-01T10:20:40Z'),
     },
   });
 
@@ -369,6 +372,278 @@ async function main() {
       price: 7.0,
     },
   });
+  
+
+
+  // Pedido 4
+  const order4 = await prisma.order.create({
+    data: {
+      status: OrderStatus.READY,
+      totalAmount: 298.80,
+      customerId: customer2.id,
+      createdAt: new Date('2025-08-01T10:35:40Z'),
+    },
+  });
+
+  const payment4 = await prisma.payment.create({
+    data: {
+      status: PaymentStatus.APPROVED,
+      type: PaymentType.PIX,
+      orderId: order4.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
+    },
+  });
+
+  // Atualizar o orderId do payment4
+  await prisma.payment.update({
+    where: { id: payment4.id },
+    data: { orderId: order4.id },
+  });
+
+  // Adicionar itens ao pedido 4
+  await prisma.orderItem.create({
+    data: {
+      itemId: cheeseburger.id,
+      orderId: order4.id,
+      quantity: 4,
+      price: 59.8,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: juice.id,
+      orderId: order4.id,
+      quantity: 4,
+      price: 9.9,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: onionRings.id,
+      orderId: order4.id,
+      quantity: 4,
+      price: 15.90,
+    },
+  });
+
+  // Pedido 5
+  const order5 = await prisma.order.create({
+    data: {
+      status: OrderStatus.READY,
+      totalAmount: 209.00,
+      customerId: customer3.id,
+      createdAt: new Date('2025-08-01T10:31:40Z'),
+    },
+  });
+
+  const payment5 = await prisma.payment.create({
+    data: {
+      status: PaymentStatus.APPROVED,
+      type: PaymentType.PIX,
+      orderId: order5.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
+    },
+  });
+
+  // Atualizar o orderId do payment5
+  await prisma.payment.update({
+    where: { id: payment5.id },
+    data: { orderId: order5.id },
+  });
+
+  // Adicionar itens ao pedido 5
+  await prisma.orderItem.create({
+    data: {
+      itemId: veggieburger.id,
+      orderId: order5.id,
+      quantity: 5,
+      price: 24.9,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: juice.id,
+      orderId: order5.id,
+      quantity: 5,
+      price: 9.9,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: brownie.id,
+      orderId: order5.id,
+      quantity: 5,
+      price: 7.0,
+    },
+  });
+  // Pedido 6
+  const order6 = await prisma.order.create({
+    data: {
+      status: OrderStatus.PREPARING,
+      totalAmount: 36.90,
+      customerId: customer2.id,
+      createdAt: new Date('2025-08-01T10:22:40Z'),
+    },
+  });
+
+  const payment6 = await prisma.payment.create({
+    data: {
+      status: PaymentStatus.APPROVED,
+      type: PaymentType.PIX,
+      orderId: order6.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
+    },
+  });
+
+  // Atualizar o orderId do payment6
+  await prisma.payment.update({
+    where: { id: payment6.id },
+    data: { orderId: order6.id },
+  });
+
+  // Adicionar itens ao pedido 6
+  await prisma.orderItem.create({
+    data: {
+      itemId: onionRings.id,
+      orderId: order6.id,
+      quantity: 4,
+      price: 15.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: juice.id,
+      orderId: order6.id,
+      quantity: 1,
+      price: 9.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: brownie.id,
+      orderId: order6.id,
+      quantity: 1,
+      price: 7.0,
+    },
+  });
+
+  // Pedido 7
+  const order7 = await prisma.order.create({
+    data: {
+      status: OrderStatus.PREPARING,
+      totalAmount: 51.60,
+      customerId: customer1.id,
+      createdAt: new Date('2025-08-01T10:23:40Z'),
+    },
+  });
+
+  const payment7 = await prisma.payment.create({
+    data: {
+      status: PaymentStatus.APPROVED,
+      type: PaymentType.PIX,
+      orderId: order7.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
+    },
+  });
+
+  // Atualizar o orderId do payment7
+  await prisma.payment.update({
+    where: { id: payment7.id },
+    data: { orderId: order7.id },
+  });
+
+  // Adicionar itens ao pedido 7
+  await prisma.orderItem.create({
+    data: {
+      itemId: onionRings.id,
+      orderId: order7.id,
+      quantity: 1,
+      price: 15.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: juice.id,
+      orderId: order7.id,
+      quantity: 1,
+      price: 9.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: iceCream.id,
+      orderId: order7.id,
+      quantity: 2,
+      price: 12.90,
+    },
+  });
+
+  // Pedido 8
+  const order8 = await prisma.order.create({
+    data: {
+      status: OrderStatus.RECEIVED,
+      totalAmount: 65.70,
+      customerId: customer1.id,
+      createdAt: new Date('2025-08-01T10:40:40Z'),
+    },
+  });
+
+  const payment8 = await prisma.payment.create({
+    data: {
+      status: PaymentStatus.APPROVED,
+      type: PaymentType.PIX,
+      orderId: order8.id,
+      qrCode: "00020126580014br.gov.bcb.pix0136b76aa9c2-2ec4-4110-954e-ebfe34f05b615204000053039865406157.205802BR5925DIkGwOMywWUXuWnQWchGHFiZE6009Sao Paulo62230519mpqrinter1340016447630411F6",
+      mercadoPagoPaymentId: "1340016447",
+    },
+  });
+
+  // Atualizar o orderId do payment8
+  await prisma.payment.update({
+    where: { id: payment8.id },
+    data: { orderId: order8.id },
+  });
+
+  // Adicionar itens ao pedido 8
+  await prisma.orderItem.create({
+    data: {
+      itemId: veggieburger.id,
+      orderId: order8.id,
+      quantity: 1,
+      price: 24.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: juice.id,
+      orderId: order8.id,
+      quantity: 2,
+      price: 9.90,
+    },
+  });
+
+  await prisma.orderItem.create({
+    data: {
+      itemId: brownie.id,
+      orderId: order8.id,
+      quantity: 3,
+      price: 7.00,
+    },
+  });
+
 
   console.log('Seed executado com sucesso!');
 }

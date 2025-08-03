@@ -23,7 +23,7 @@ export class PaymentGateway implements PaymentGatewayInterface {
         qrCode,
       );
     } catch (error) {
-      console.error('Error creating payment:', error);
+      console.error('Error creating payment payment gateway:', error);
       throw error;
     }
   }
