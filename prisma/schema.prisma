@@ -55,6 +55,15 @@ model Item {
   isDeleted   Boolean       @default(false)
 
   orderItems  OrderItem[]
+
+ @@index([category, isDeleted], map: "idx_item_category_status")
+
+   /*
+   esse index precisa ser criado diretamento no dbeaver/Postgresql, 
+   o prima não aceita índices condicionais
+   CREATE INDEX idx_item_category_active ON public."Item" USING btree (category) WHERE ("isDeleted" = false);
+   */
+  
 }
 
 model Order {
@@ -69,6 +78,17 @@ model Order {
 
   orderItems   OrderItem[]
   payment      Payment?
+
+   @@index([customerId],map:"idx_order_customerid" )
+   @@index([status],map:"idx_order_status" )
+   /*
+   esse index precisa ser criado diretamento no dbeaver/Postgresql, 
+   o prima não aceita índices condicionais
+    CREATE INDEX idx_order_customer_status ON public."Order" USING btree ("customerId", status) WHERE ("customerId" IS NOT NULL);
+
+   */
+  
+   
 }
 
 model OrderItem {
@@ -81,6 +101,7 @@ model OrderItem {
   order    Order  @relation(fields: [orderId], references: [id])
 
   @@id([itemId, orderId])
+  @@index([orderId],map:"idx_orderitem_orderid")
 }
 
 model Payment {
@@ -92,6 +113,9 @@ model Payment {
 
   orderId     String        @unique
   order       Order         @relation(fields: [orderId], references: [id])
+  
+  @@index([status], name: "idx_payment_status")
+
 }
 
 model Customer {
@@ -117,6 +141,8 @@ model InternalUser {
 
   roleId              String
   role                Role     @relation(fields: [roleId], references: [id])
+
+  @@index([roleId], map: "idx_internaluser_roleid")
 }
 
 model Role {
@@ -127,4 +153,6 @@ model Role {
   updatedAt     DateTime       @updatedAt
 
   internalUsers InternalUser[]
+
+  @@index([type], map: "idx_role_type")
 }
