@@ -146,6 +146,13 @@ O sistema foi desenvolvido seguindo a *arquitetura limpa*, com uma estrutura mod
 
 ![Descrição da imagem](/desenho-infra.png)
 
+## Desenho do Banco de dados 
+
+
+([Documentação do Banco de dados](/DATABASE_README.md))
+
+![Descrição da imagem](/MER.png)
+
 
 ## Pré-requisitos
 
