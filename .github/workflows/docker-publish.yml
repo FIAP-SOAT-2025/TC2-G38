@@ -42,10 +42,11 @@ jobs:
             type=ref,event=tag
             
             # 2. Adiciona a tag 'latest' APENAS no branch 'main'
-            type=raw,value=latest,enable={{github.ref == format('refs/heads/{0}', 'main')}}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             
             # 3. Adiciona o SHA do commit para todas as outras versões
             type=sha,format=short,prefix=sha-
+              
       - name: 🔨 Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
