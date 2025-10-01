@@ -3,6 +3,7 @@ name: Docker Build and Push
 on:
   push:
     branches: [ "main" ]
+    
   
   # Permite que você execute o workflow manualmente na aba 'Actions'
   workflow_dispatch:
@@ -33,9 +34,17 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.DOCKER_IMAGE }}
+          
           tags: |
-            type=raw,value=latest,enable={{isSourceBranch 'main'}}
-            type=sha,format=short
+            type=ref,event=branch
+            type=ref,event=tag
+            
+            # Adiciona a tag 'latest' APENAS no branch 'main'
+            type=raw,value=latest,enable={{github.ref == format('refs/heads/{0}', 'main')}}
+            
+            # Adiciona o SHA do commit para todas as outras versões
+            type=sha,format=short,prefix=sha-
+
 
       - name: 🔨 Build and Push Docker Image
         uses: docker/build-push-action@v5
