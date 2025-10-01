@@ -3,8 +3,8 @@ name: Docker Build and Push
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+    # branches: [ "main" ]
   
   # Permite que você execute o workflow manualmente na aba 'Actions'
   workflow_dispatch:
