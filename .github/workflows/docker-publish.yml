@@ -30,23 +30,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 🏷️ Define Image Tags
+      - name: 🏷️ Define Image Tags (Simplificado para Main)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.DOCKER_IMAGE }}
           
           tags: |
-            # 1. Tag o branch/tag (ex: "main" ou "v1.0.0")
-            type=ref,event=branch
-            type=ref,event=tag
-            
-            # 2. Adiciona a tag 'latest' APENAS no branch 'main'
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
-            
-            # 3. Adiciona o SHA do commit para todas as outras versões
+            latest
             type=sha,format=short,prefix=sha-
-              
+
       - name: 🔨 Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
