@@ -1,0 +1,45 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches: [ "main" ]
+  
+  # Permite que você execute o workflow manualmente na aba 'Actions'
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/TC2-G38
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔑 Login to Docker Hub
+        # Ação oficial para autenticar na Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🏷️ Define Image Tags (Gera tags automáticas)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_IMAGE }}
+          tags: |
+            type=raw,value=latest,enable={{isSourceBranch 'main'}}
+            type=sha,format=short
+
+      - name: 🔨 Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
