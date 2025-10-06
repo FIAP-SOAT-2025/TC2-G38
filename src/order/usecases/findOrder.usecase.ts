@@ -3,7 +3,7 @@ import OrderGatewayInterface from '../interfaces/gateways';
 import Order, { OrderProps } from '../entities/order.entity';
 
 export default class FindOrderByIdUseCase {
-  constructor() { }
+  constructor() {}
   static async findOrder(
     id: string,
     orderGateway: OrderGatewayInterface,
@@ -19,11 +19,11 @@ export default class FindOrderByIdUseCase {
     }
 
     const orderFinal = new Order(order as unknown as OrderProps);
-
-    if (orderFinal.payment) {
-      orderFinal.addPayment(orderFinal.payment);
+    
+    if (!orderFinal.payment && order.payment) {
+      orderFinal.addPayment(order.payment);
     }
 
-    return order;
+    return orderFinal;
   }
 }

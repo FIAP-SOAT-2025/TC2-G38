@@ -28,7 +28,7 @@ export class PrismaPaymentRepository implements PaymentGatewayInterface {
         },
       });
     } catch (error) {
-      console.error('Error creating payment:', error);
+      console.error('Error creating payment, payment repository:', error);
       throw new Error('Failed to create payment');
     }
   }
