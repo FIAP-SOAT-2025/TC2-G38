@@ -1,14 +1,23 @@
 # 🍔 Sistema de Controle de Pedidos
 
-> **Tech Challenge FIAP - Fase 02 | Grupo  147**
+> **Tech Challenge FIAP - Fase 03 | Grupo  196**
 
-----
+
+## 📚 Recursos
+
+
+- [Collection Postman](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) 
+- [Event Storming: Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) 
+- [ Link com referência aos outros repositórios ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit?usp=sharing&ouid=100526488191911271749&rtpof=true&sd=true) 
+- [ Vídeo de demonstração ](https://drive.google.com/file/d/1QWixULYgKm5CAGgA9wQ31xZuC8yuYeRs/view?usp=sharing) 
+- [Documentação do Banco de dados](/DATABASE_README.md) 
+
+### 
 
 ## 📋 Sumário
 
 - [Objetivo](#-objetivo)
 - [Funcionalidades](#-funcionalidades)
-- [Documentação](#-documentação)
 - [Tecnologias](#️-tecnologias)
 - [Arquitetura](#️-arquitetura)
 - [Linguagem Ubíqua](#-linguagem-ubíqua)
@@ -18,7 +27,7 @@
 - [Execução](#️-execução)
 - [Order de Execução](#️-ordem-execução)
 - [Testes](#-testes)
-- [Equipe](#-equipe---grupo-38)
+- [Equipe](#-equipe)
 
 ---
 
@@ -47,20 +56,6 @@ Desenvolver um monolito para gerenciamento de pedidos de uma lanchonete, impleme
 ### Sistema de Pagamento
 - ✅ Integração com API de pagamento via QrCode com PIX do Mercado Pago
 - ✅ Webhook: Controle de status de pagamento mockado.
-
----
-
-## 📚 Documentação
-
-| Recurso | Link |
-|---------|------|
-| **Swagger** | [Swagger UI](http://localhost:3000/api) |
-| **Collection postman com exemplos de request** | [Collection Postman](https://drive.google.com/file/d/1ALtt8pY6O2XU1QKhaXTSMhZzP-9B-K7_/view?usp=sharing) |
-| **Event Storming** | [Miro Board](https://miro.com/app/board/uXjVIFyKlHg=/) |
-| **Variáveis de Ambiente** |  [ Google Docs ](https://docs.google.com/document/d/1VSRjj57Eax54N8XnDkh8X8qgpX06bfv8/edit#heading=h.7ahxszoxwf2) |
-| **Vídeo de demonstração da API** |  [ Google Drive ](https://drive.google.com/file/d/1JhdipvJSaBG3Y6AfwtVFg9SpMQWJFGbw/view?usp=drive_link) |
-
-### 
 
 ---
 
@@ -258,7 +253,7 @@ npm run test
 
 ---
 
-## 👥 Equipe - Grupo 38
+## 👥 Equipe
 
 | Nome | RM |
 |------|-----|
@@ -274,8 +269,3 @@ npm run test
 
 Este projeto foi desenvolvido como parte do Tech Challenge da FIAP - Pós-graduação em Software Architecture.
 
----
-
-<div align="center">
-  <strong>🍔 Desenvolvido com dedicação pelo Grupo 38 🍔 </strong>
-</div>
