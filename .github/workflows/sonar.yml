@@ -2,9 +2,9 @@ name: CI - SonarCloud Scan
 
 on:
   push:
-    branches: [ main ]
+    branches: [ feat/sonar-qube ]
   pull_request:
-    branches: [ main ]
+    branches: [ feat/sonar-qube ]
 
 jobs:
   sonarcloud:
